@@ -36,6 +36,11 @@ Point.prototype.coords = function()
     return [this.x, this.y];
 }
 
+Point.prototype.copy = function()
+{
+    return new Point(this.x, this.y);
+}
+
 function Vector(x, y)
 {
     this.x = x
@@ -79,10 +84,24 @@ Vector.prototype.rot = function (angle)
     return new Vector (cs * this.x - sn * this.y, sn * this.x + cs * this.y);
 }
 
+Vector.prototype.normalize = function()
+{
+    var size = this.size();
+    if (size > 0) {
+        return new Vector(this.x/size, this.y/size);
+    } else {
+        return Vector.zero();
+    }
+}
+
+Vector.prototype.copy = function()
+{
+    return new Vector(this.x, this.y);
+}
+
 function Angle(radians)
 {
     this.radians = radians;
-    var period = 2 * Math.PI;
 }
 
 Angle.zero = function()
@@ -124,6 +143,12 @@ Angle.prototype.transformation = function ()
 {
     return Transformation.rotation(Point.center(), this);
 }
+
+Angle.prototype.copy = function()
+{
+    return new Angle(this.radians);
+}
+
 
 function Transformation(center, angle, translation)
 {
@@ -191,6 +216,11 @@ Transformation.prototype.getTranslation = function ()
     return this.translation;
 }
 
+Transformation.prototype.copy = function(center, angle, translation)
+{
+    return new Transformation(this.center, this.angle, this.translation);
+}
+
 Transformation._atomic = function(name, args)
 {
     switch (name) {
@@ -256,3 +286,4 @@ Transformation.translation = function (v)
 {
     return new Transformation(Point.center(), Angle.zero(), v);
 }
+

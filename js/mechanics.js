@@ -47,7 +47,7 @@ Mechanics.prototype.setFixedPointConstraint = function (id, idPoint, fixedPoint)
 
 Mechanics.prototype.setDistanceConstraint = function (id, idPoint1, idPoint2, distance)
 {
-    this.setConstraint(id, function() {
+    this.setConstraint(id, function () {
         var distanceVector = this.getPoint(idPoint1).vectorTo(this.getPoint(idPoint2));
         var realDistance = distanceVector.size();
         distanceVector = distanceVector.normalize();
@@ -64,9 +64,13 @@ Mechanics.prototype.setDistanceConstraint = function (id, idPoint1, idPoint2, di
     });
 }
 
-Mechanics.prototype.setBinding = function (id, idPoint1, idPoint2, length)
+Mechanics.prototype.setLineConstraint = function (id, idPoint, linePoint, lineVector)
 {
-    this.bindings[id] = {"point1": idPoint1, "point2": idPoint2, "length": length}
+    var orthoVector = lineVector.rot(Math.PI / 2).normalize();
+    this.setConstraint(id, function () {
+        var p = this.getPoint(idPoint);
+        orthoVector.mul(-1 * p.vectorTo(linePoint).mulScalar(orthoVector));
+    });
 }
 
 Mechanics.prototype.solve = function ()

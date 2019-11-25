@@ -59,7 +59,12 @@ Vector.prototype.transformation = function()
 
 Vector.prototype.size = function ()
 {
-    return Math.sqrt(this.x*this.x + this.y*this.y);
+    return Math.sqrt(this.mulScalar(this));
+}
+
+Vector.prototype.mulScalar = function(v)
+{
+    return (this.x * v.x) + (this.y * v.y);
 }
 
 Vector.prototype.mul = function (scalar)

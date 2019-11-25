@@ -9,6 +9,12 @@ function initValveGear(svg)
 {
     model = new ValveGearModel(0);
     view = new ValveGearView(model, svg);
+    /*
+    setInterval(function() {
+        model.addDistance(30);
+        view.update();
+    }, 100);
+    */
 }
 
 

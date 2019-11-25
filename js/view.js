@@ -3,8 +3,21 @@ function ValveGearView (model, svg)
 {
     this.model = model;
     this.svg = svg;
+    this.points = {};
+    this.updatedPoints = {
+        'leftWheelCenter': 'red',
+        'mainWheelCenter': 'red',
+        'rightWheelCenter': 'red',
+        'smallWheel1Center': 'red',
+        'smallWheel2Center': 'red',
+        'leftWheelConnectPoint': 'blue',
+        'mainWheelConnectPoint': 'blue',
+        'rightWheelConnectPoint': 'blue',
+        'returnCrankConnectPoint': 'blue',
+    }
+    
     this.initialize();
-    this.update();
+    //this.update();
 }
 
 ValveGearView.prototype.initialize = function()
@@ -17,8 +30,11 @@ ValveGearView.prototype.initialize = function()
     this.mainWheel = this._circle(this.model.mainWheelCenter, this.model.mainWheelRadius).fill('transparent').stroke({color: "red", width: 2});
     this.rightWheel = this._circle(this.model.rightWheelCenter, this.model.mainWheelRadius).fill('transparent').stroke({color: "red", width: 2});
     this.smallWheel1 = this._circle(this.model.smallWheel1Center, this.model.smallWheelRadius).fill('transparent').stroke({color: "red", width: 2});
-    this.smallWheel1 = this._circle(this.model.smallWheel2Center, this.model.smallWheelRadius).fill('transparent').stroke({color: "red", width: 2});
-
+    this.smallWheel2 = this._circle(this.model.smallWheel2Center, this.model.smallWheelRadius).fill('transparent').stroke({color: "red", width: 2});
+    
+    for (var p in this.updatedPoints) {
+        this._putPoint(p, this.updatedPoints[p]);
+    }
 }
 
 ValveGearView.prototype._circle = function(center, radius)
@@ -27,10 +43,28 @@ ValveGearView.prototype._circle = function(center, radius)
     return circle;
 }
 
+ValveGearView.prototype._putPoint = function(pointId, color)
+{
+    var point = this.model[pointId];
+    var group = this.svg.group();
+    var size = 7;
+    group.line(-size, -size, size, size).stroke({color: color, width: 2});
+    group.line(-size, size, size, -size).stroke({color: color, width: 2});
+    group.center(point.x, point.y);
+    this.points[pointId] = group;
+}
+
+ValveGearView.prototype._updatePoint = function(pointId)
+{
+    var point = this.model[pointId];
+    this.points[pointId].center(point.x, point.y)
+}
+
 ValveGearView.prototype.update = function()
 {
-    //this.line.stroke({color: 'green'});
-    //$(this.line).attr("stroke", "green");
+    for (var p in this.updatedPoints) {
+        this._updatePoint(p);
+    }
 }
 
 

@@ -22,7 +22,16 @@ function ValveGearModel ()
     wheelVOffset = ySize - trackSize - this.smallWheelRadius;
     this.smallWheel1Center = new Point(492, wheelVOffset);
     this.smallWheel2Center = new Point(665, wheelVOffset);
-    this.recalc();
+
+    this.wheelConnectPointRadius = 30;
+    this.returnCrankConnectPointRadius = 20;
+
+    this._calcWheelConnectPoints();
+
+    //this.expansionLink1 = new Point(370, 143);
+    //this.expansionLinkFixed = new Point(363, 78);
+
+    //this.recalc();
 }
 
 ValveGearModel.prototype.addDistance = function(distance)
@@ -53,4 +62,18 @@ ValveGearModel.prototype._normalizeAngle = function(angle)
 
 ValveGearModel.prototype.recalc = function()
 {
+    this._calcWheelConnectPoints();
+}
+
+ValveGearModel.prototype._calcWheelConnectPoints = function()
+{
+    var v1 = new Vector(0, 1);
+    v1 = v1.rot(new Angle(this.mainWheelAngle)).mul(this.wheelConnectPointRadius);
+    var v2 = new Vector(1, 0);
+    v2 = v2.rot(new Angle(this.mainWheelAngle)).mul(this.returnCrankConnectPointRadius);
+
+    this.leftWheelConnectPoint = this.leftWheelCenter.addVector(v1);
+    this.mainWheelConnectPoint = this.mainWheelCenter.addVector(v1);
+    this.rightWheelConnectPoint = this.rightWheelCenter.addVector(v1);
+    this.returnCrankConnectPoint = this.mainWheelCenter.addVector(v2);
 }

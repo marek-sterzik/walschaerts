@@ -2,7 +2,7 @@ function Mechanics()
 {
     this.maxIterations = 100;
     this.maxError = 0.01;
-    this.globalConstraintWeight = 1;
+    this.globalConstraintWeight = .93;
     this.points = {};
     this.constraints = {};
     this.bindings = {};
@@ -20,10 +20,10 @@ Mechanics.prototype.getPoint = function (id)
 
 Mechanics.prototype.setConstraint = function (id, forcesFunction)
 {
-    if (! id in this.constraints) {
+    if (! (id in this.constraints)) {
         this.constraints[id] = {'forcesFunction': forcesFunction, 'weight': null};
     } else {
-        this.constraint[id]['forcesFunction'] = forcesFunction;
+        this.constraints[id]['forcesFunction'] = forcesFunction;
     }
 }
 
@@ -39,9 +39,9 @@ Mechanics.prototype.setConstraintWeight = function (id, weight)
 Mechanics.prototype.setFixedPointConstraint = function (id, idPoint, fixedPoint)
 {
     this.setConstraint(id, function() {
-        return {
-            idPoint: this.getPoint(idPoint).vectorTo(fixedPoint)
-        }; 
+        var forces = {};
+        forces[idPoint] = this.getPoint(idPoint).vectorTo(fixedPoint);
+        return forces;
     });
 }
 
@@ -56,11 +56,10 @@ Mechanics.prototype.setDistanceConstraint = function (id, idPoint1, idPoint2, di
         }
         
         var forceVector = distanceVector.mul((realDistance - distance)/2);
-
-        return {
-            idPoint1: forceVector,
-            idPoint2: forceVector.mul(-1),
-        }; 
+        var forces = {};
+        forces[idPoint1] = forceVector;
+        forces[idPoint2] = forceVector.mul(-1);
+        return forces;
     });
 }
 
@@ -69,12 +68,15 @@ Mechanics.prototype.setLineConstraint = function (id, idPoint, linePoint, lineVe
     var orthoVector = lineVector.rot(Math.PI / 2).normalize();
     this.setConstraint(id, function () {
         var p = this.getPoint(idPoint);
-        orthoVector.mul(-1 * p.vectorTo(linePoint).mulScalar(orthoVector));
+        var forces = {};
+        forces[idPoint] = orthoVector.mul(-1 * p.vectorTo(linePoint).mulScalar(orthoVector));
+        return forces;
     });
 }
 
 Mechanics.prototype.solve = function ()
 {
+    var t0 = performance.now();
     var error = this.solveIteration();
     iterations = 1;
     while (error > this.maxError && iterations < this.maxIterations)
@@ -82,6 +84,9 @@ Mechanics.prototype.solve = function ()
         error = this.solveIteration();
         iterations++;
     }
+    var t1 = performance.now();
+    var solveTime = t1 - t0;
+    console.log("mechanic model solved in "+iterations+" iterations in "+solveTime+"ms with a total error of "+error);
     return error;
 }
 
@@ -107,7 +112,7 @@ Mechanics.prototype.solveIteration = function ()
                 if (fSize > maxForce) {
                     maxForce = fSize;
                 }
-                forces[pf] = forces[pf].addVector(f.mul(weight));
+                forces[pf] = forces[pf].add(f.mul(constraintWeight));
                 fSize = forces[pf].size();
                 if (fSize > maxForce) {
                     maxForce = fSize;

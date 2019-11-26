@@ -23,6 +23,9 @@ function ValveGearModel ()
 
     //array of fixed point constraints of the mechanic model
     this.fixedPoints = [];
+    
+    //array of lineConstraints constraints of the mechanic model
+    this.lineConstraints = [];
 
     //array of point ids being copied out of the mechanic model
     this.outputPoints = [];
@@ -100,27 +103,46 @@ ValveGearModel.prototype._calcWheelConnectPoints = function()
 ValveGearModel.prototype._setupCalibration = function()
 {
     //setup the calibration points itself
+    this.calibration.mainWheelConnectPoint = this.points.mainWheelConnectPoint;
     this.calibration.returnCrankConnectPoint = this.points.returnCrankConnectPoint;
     this.calibration.expansionLinkFixed = new Point(360, 78);
     this.calibration.expansionLinkEnd = new Point(370, 143);
+    this.calibration.pistonConnectPoint = new Point(440, 149);
+    this.calibration.pistonCenter = new Point(576, 149);
+    this.calibration.pistonUnionLinkConnectPoint = new Point(440, 190);
+
+    var pistonMoveDirection = new Vector(1, 0);
 
     //setup all distance constraints
     this.distances.push(["returnCrankConnectPoint", "expansionLinkEnd"]);
     this.distances.push(["expansionLinkEnd", "expansionLinkFixed"]);
+    this.distances.push(["mainWheelConnectPoint", "pistonConnectPoint"]);
+    this.distances.push(["pistonConnectPoint", "pistonCenter"]);
+    this.distances.push(["pistonConnectPoint", "pistonUnionLinkConnectPoint"]);
+    this.distances.push(["pistonCenter", "pistonUnionLinkConnectPoint"]);
 
     //setup all fixed point constraints - second parameter means
     //if the constraint should be also updated
     this.fixedPoints.push(["expansionLinkFixed", false]);
     this.fixedPoints.push(["returnCrankConnectPoint", true]);
+    this.fixedPoints.push(["mainWheelConnectPoint", true]);
+
+    //setup all line constraints
+    this.lineConstraints.push(["pistonConnectPoint", pistonMoveDirection]);
+    this.lineConstraints.push(["pistonCenter", pistonMoveDirection]);
 
     //setup output points
     this.outputPoints.push('expansionLinkFixed');
     this.outputPoints.push('expansionLinkEnd');
+    this.outputPoints.push('pistonConnectPoint');
+    this.outputPoints.push('pistonCenter');
+    this.outputPoints.push('pistonUnionLinkConnectPoint');
 }
 
 ValveGearModel.prototype._initializeMechanics = function()
 {
     for (var p in this.calibration) {
+        console.log("point: "+p);
         this.mechanics.setPoint(p, this.calibration[p]);
     }
 
@@ -141,6 +163,14 @@ ValveGearModel.prototype._initializeMechanics = function()
             updatedFixedPoints.push(this.fixedPoints[i]);
         }
     }
+
+    for (var i = 0; i < this.lineConstraints.length; i++) {
+        var lc = this.lineConstraints[i];
+        var p = lc[0];
+        var vector = lc[1];
+        this.mechanics.setLineConstraint("_lineConstraint"+i, p, this.calibration[p], vector);
+    }
+
     this.fixedPoints = updatedFixedPoints;
 }
 

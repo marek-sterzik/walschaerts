@@ -17,13 +17,19 @@ function ValveGearView (model, svg)
         'returnCrankConnectPoint': {color: 'blue', width: 2},
         'expansionLinkFixed': {color: 'blue', width: 2},
         'expansionLinkEnd': {color: 'blue', width: 2},
+        'pistonConnectPoint': {color: 'blue', width: 2},
+        'pistonCenter': {color: 'blue', width: 2},
+        'pistonUnionLinkConnectPoint': {color: 'blue', width: 2},
     }
 
     this.updatedLines = {
         "returnCrank": {"p1": "mainWheelConnectPoint", "p2": "returnCrankConnectPoint", "stroke": {color: "blue", width: 3}},
         "couplinkRod": {"p1": "leftWheelConnectPoint", "p2": "rightWheelConnectPoint", "stroke": {color: "blue", width: 5}},
         "eccentricRod": {"p1": "returnCrankConnectPoint", "p2": "expansionLinkEnd", "stroke": {color: "blue", width: 3}},
-        "expansionLink": {"p1": "expansionLinkEnd", "p2": "expansionLinkFixed", "stroke": {color: "blue", width: 3}}
+        "expansionLink": {"p1": "expansionLinkEnd", "p2": "expansionLinkFixed", "stroke": {color: "blue", width: 3}},
+        "pistonRod": {"p1": "mainWheelConnectPoint", "p2": "pistonConnectPoint", "stroke": {color: "blue", width: 6}},
+        "piston": {"p1": "pistonConnectPoint", "p2": "pistonCenter", "stroke": {color: "blue", width: 6}},
+        "piston2": {"p1": "pistonConnectPoint", "p2": "pistonUnionLinkConnectPoint", "stroke": {color: "blue", width: 3}},
     }
     
     this.initialize();

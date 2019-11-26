@@ -1,6 +1,6 @@
 function Mechanics()
 {
-    this.maxIterations = 100;
+    this.maxIterations = 1000;
     this.maxError = 0.01;
     this.globalConstraintWeight = .93;
     this.points = {};
@@ -68,11 +68,11 @@ Mechanics.prototype.setDistanceConstraint = function (id, idPoint1, idPoint2, di
 
 Mechanics.prototype.setLineConstraint = function (id, idPoint, linePoint, lineVector)
 {
-    var orthoVector = lineVector.rot(Math.PI / 2).normalize();
+    var orthoVector = lineVector.rot(Angle.inDegrees(90)).normalize();
     this.setConstraint(id, function () {
         var p = this.getPoint(idPoint);
         var forces = {};
-        forces[idPoint] = orthoVector.mul(-1 * p.vectorTo(linePoint).mulScalar(orthoVector));
+        forces[idPoint] = orthoVector.mul(p.vectorTo(linePoint).mulScalar(orthoVector));
         return forces;
     });
 }

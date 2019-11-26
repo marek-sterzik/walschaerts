@@ -22,7 +22,7 @@ function setupCoords()
         var y;
         x = ev.pageX - Math.floor(offset.left);
         y = ev.pageY - Math.floor(offset.top);
-        $('#coords').html("coordinates: x=<strong>"+x+"</strong> y=<strong>"+x+"</strong>");
+        $('#coords').html("coordinates: x=<strong>"+x+"</strong> y=<strong>"+y+"</strong>");
     });
     $('#valvegear').bind("mouseout", function(ev){
         $('#coords').html(emptyText);

@@ -23,7 +23,7 @@ function ValveGearModel ()
 
     //array of fixed point constraints of the mechanic model
     this.fixedPoints = [];
-    
+
     //array of lineConstraints constraints of the mechanic model
     this.lineConstraints = [];
 

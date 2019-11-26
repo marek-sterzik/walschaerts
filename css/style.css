@@ -18,4 +18,21 @@ div#coords {
     margin: .5em auto;
     text-align: center;
 }
+div#controls {
+    width: 700px;
+    margin: .5em auto;
+    text-align: center;
+}
 
+#toggle-button {
+    font-size: 2rem;
+    background-color: '#c0c0c0';
+}
+
+#toggle-button.play span.pause {
+    display: none;
+}
+
+#toggle-button.pause span.play {
+    display: none;
+}

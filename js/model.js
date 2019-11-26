@@ -142,7 +142,6 @@ ValveGearModel.prototype._setupCalibration = function()
 ValveGearModel.prototype._initializeMechanics = function()
 {
     for (var p in this.calibration) {
-        console.log("point: "+p);
         this.mechanics.setPoint(p, this.calibration[p]);
     }
 

@@ -22,7 +22,7 @@ function setupCoords()
         var y;
         x = ev.pageX - Math.floor(offset.left);
         y = ev.pageY - Math.floor(offset.top);
-        $('#coords').html("coordinates: x="+x+" y="+x);
+        $('#coords').html("coordinates: x=<strong>"+x+"</strong> y=<strong>"+x+"</strong>");
     });
     $('#valvegear').bind("mouseout", function(ev){
         $('#coords').html(emptyText);
@@ -34,6 +34,7 @@ function WalschaertsValveGear(element)
     var svg = SVG().addTo(element).size('100%', '100%');
     this.model = new ValveGearModel(0);
     this.view = new ValveGearView(this.model, svg);
+    this.statView = new StatView(this.model, $('#statistics'));
     this.interval = null;
     this.speed = 30;
     
@@ -65,6 +66,7 @@ WalschaertsValveGear.prototype.stepFunction = function()
 {
     this.model.addDistance(30);
     this.view.update();
+    this.statView.update();
     
 }
 

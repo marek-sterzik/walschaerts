@@ -1,4 +1,3 @@
-
 function ValveGearModel ()
 {
     this.mainWheelAngle = 0;
@@ -13,7 +12,25 @@ function ValveGearModel ()
     this.mainWheelRadius = 70;
     this.smallWheelRadius = 33;
 
+    //points which will contain points of the valve gear model
     this.points = {};
+
+    //points which are used for calibration of the mechanic model
+    this.calibration = {};
+
+    //array of structures containing the distance constraints of the mechanic model
+    this.distances = [];
+
+    //array of fixed point constraints of the mechanic model
+    this.fixedPoints = [];
+
+    //array of point ids being copied out of the mechanic model
+    this.outputPoints = [];
+
+    //the mechanic model itself
+    this.mechanics = new Mechanics();
+
+    this.mStat = this.mechanics.statistics;
 
     var wheelVOffset = ySize - trackSize - this.mainWheelRadius;
 
@@ -29,11 +46,9 @@ function ValveGearModel ()
     this.returnCrankConnectPointRadius = 23;
 
     this._calcWheelConnectPoints();
-
-    //this.expansionLink1 = new Point(370, 143);
-    //this.expansionLinkFixed = new Point(363, 78);
-
-    //this.recalc();
+    this._setupCalibration();
+    this._initializeMechanics();
+    this._solveMechanics();
 }
 
 ValveGearModel.prototype.addDistance = function(distance)
@@ -65,6 +80,8 @@ ValveGearModel.prototype._normalizeAngle = function(angle)
 ValveGearModel.prototype.recalc = function()
 {
     this._calcWheelConnectPoints();
+    this._updateMechanics();
+    this._solveMechanics();
 }
 
 ValveGearModel.prototype._calcWheelConnectPoints = function()
@@ -78,4 +95,69 @@ ValveGearModel.prototype._calcWheelConnectPoints = function()
     this.points.mainWheelConnectPoint = this.points.mainWheelCenter.addVector(v1);
     this.points.rightWheelConnectPoint = this.points.rightWheelCenter.addVector(v1);
     this.points.returnCrankConnectPoint = this.points.mainWheelCenter.addVector(v2);
+}
+
+ValveGearModel.prototype._setupCalibration = function()
+{
+    //setup the calibration points itself
+    this.calibration.returnCrankConnectPoint = this.points.returnCrankConnectPoint;
+    this.calibration.expansionLinkFixed = new Point(360, 78);
+    this.calibration.expansionLinkEnd = new Point(370, 143);
+
+    //setup all distance constraints
+    this.distances.push(["returnCrankConnectPoint", "expansionLinkEnd"]);
+    this.distances.push(["expansionLinkEnd", "expansionLinkFixed"]);
+
+    //setup all fixed point constraints - second parameter means
+    //if the constraint should be also updated
+    this.fixedPoints.push(["expansionLinkFixed", false]);
+    this.fixedPoints.push(["returnCrankConnectPoint", true]);
+
+    //setup output points
+    this.outputPoints.push('expansionLinkFixed');
+    this.outputPoints.push('expansionLinkEnd');
+}
+
+ValveGearModel.prototype._initializeMechanics = function()
+{
+    for (var p in this.calibration) {
+        this.mechanics.setPoint(p, this.calibration[p]);
+    }
+
+    for (var i = 0; i < this.distances.length; i++) {
+        var distance = this.distances[i];
+        var p1 = distance[0];
+        var p2 = distance[1];
+        var distance = this.calibration[p1].vectorTo(this.calibration[p2]).size();
+        this.mechanics.setDistanceConstraint("_distanceConstraint"+i, p1, p2, distance);
+    }
+
+    var updatedFixedPoints = [];
+    for (var i = 0; i < this.fixedPoints.length; i++) {
+        var p = this.fixedPoints[i][0];
+        var update = this.fixedPoints[i][1];
+        this.mechanics.setFixedPointConstraint(p, p, this.calibration[p]);
+        if (update) {
+            updatedFixedPoints.push(this.fixedPoints[i]);
+        }
+    }
+    this.fixedPoints = updatedFixedPoints;
+}
+
+ValveGearModel.prototype._updateMechanics = function()
+{
+    for (var i = 0; i < this.fixedPoints.length; i++) {
+        var p = this.fixedPoints[i][0];
+        this.mechanics.setFixedPointConstraint(p, p, this.points[p]);
+    }
+}
+
+ValveGearModel.prototype._solveMechanics = function()
+{
+    this.mechanics.solve();
+
+    for (var i = 0; i < this.outputPoints.length; i++) {
+        var p = this.outputPoints[i];
+        this.points[p] = this.mechanics.getPoint(p);
+    }
 }

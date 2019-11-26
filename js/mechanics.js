@@ -6,6 +6,9 @@ function Mechanics()
     this.points = {};
     this.constraints = {};
     this.bindings = {};
+
+    this.meanValuesSteps = 20;
+    this.statistics = {};
 }
 
 Mechanics.prototype.setPoint = function (id, point)
@@ -86,7 +89,7 @@ Mechanics.prototype.solve = function ()
     }
     var t1 = performance.now();
     var solveTime = t1 - t0;
-    console.log("mechanic model solved in "+iterations+" iterations in "+solveTime+"ms with a total error of "+error);
+    this.putSolveStatistics(iterations, solveTime, error);
     return error;
 }
 
@@ -126,4 +129,20 @@ Mechanics.prototype.solveIteration = function ()
     }
 
     return maxForce;
+}
+
+Mechanics.prototype.putSolveStatistics = function(iterations, solveTime, error)
+{
+    this.updateMeanValue('iterations', iterations);
+    this.updateMeanValue('solveTime', solveTime);
+    this.updateMeanValue('meanError', error);
+}
+
+Mechanics.prototype.updateMeanValue = function(valueId, value)
+{
+    if (valueId in this.statistics) {
+        this.statistics[valueId] = this.statistics[valueId] + (value - this.statistics[valueId])/this.meanValuesSteps;
+    } else {
+        this.statistics[valueId] = value;
+    }
 }

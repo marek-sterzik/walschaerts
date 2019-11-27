@@ -99,10 +99,14 @@ Vector.prototype.normalize = function()
     }
 }
 
-Vector.prototype.angleTo = function()
+Vector.prototype.angleTo = function(v)
 {
-    //FIXME implement
-    return Angle.zero();
+    var angleRadians = Math.acos(this.mulScalar(v) / (this.size() * v.size()));
+    if (this.x * v.y - this.y * v.x < 0) {
+        angleRadians = 2*Math.PI - angleRadians;
+    }
+
+    return Angle.inRadians(angleRadians);
 }
 
 Vector.prototype.copy = function()

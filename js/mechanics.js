@@ -21,6 +21,11 @@ Mechanics.prototype.getPoint = function (id)
     return this.points[id];
 }
 
+Mechanics.prototype.isPointSet = function (id)
+{
+    return (id in this.points) ? true : false;
+}
+
 Mechanics.prototype.setConstraint = function (id, forcesFunction)
 {
     if (! (id in this.constraints)) {

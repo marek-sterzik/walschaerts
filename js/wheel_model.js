@@ -6,7 +6,23 @@ function WheelModel(calibrationData)
     this.constraintCounter = 0;
 }
 
+WheelModel.prototype.addPointDrivenWheel = function (referenceMovingPoint, wheelCenter, wheelPoints)
+{
+    var referenceVector = this.calibrationData[wheelCenter].vectorTo(this.calibrationData[referenceMovingPoint]);
+    this._addWheel(function(pointArray, paramsArray, wheelCenter) {
+        var vector = wheelCenter.vectorTo(pointArray[referenceMovingPoint]);
+        return referenceVector.angleTo(vector);
+    }, wheelCenter, wheelPoints);
+}
+
 WheelModel.prototype.addWheel = function (angleParam, wheelCenter, wheelPoints)
+{
+    this._addWheel(function(pointArray, paramsArray, wheelCenter) {
+        return Angle.inRadians(paramsArray[angleParam]);
+    }, wheelCenter, wheelPoints);
+}
+
+WheelModel.prototype._addWheel = function (angleCallback, wheelCenter, wheelPoints)
 {
     var wp = [];
     for (var i = 0; i < wheelPoints.length; i++) {
@@ -16,17 +32,18 @@ WheelModel.prototype.addWheel = function (angleParam, wheelCenter, wheelPoints)
         });
     }
     this.wheels.push({
-        "angleParam": angleParam,
+        "angleCallback": angleCallback,
         "wheelCenter": this.calibrationData[wheelCenter],
         "wheelPoints": wp,
     });
 }
 
+
 WheelModel.prototype.solve = function (pointArray, paramsArray)
 {
     for(var i = 0; i < this.wheels.length; i++) {
         var wheel = this.wheels[i];
-        var angle = Angle.inRadians(paramsArray[wheel.angleParam]);
+        var angle = wheel.angleCallback.call(this, pointArray, paramsArray, wheel.wheelCenter);
         var transformation = Transformation.rotation(wheel.wheelCenter, angle);
         for (var j = 0; j < wheel.wheelPoints.length; j++) {
             var p = wheel.wheelPoints[j].id;

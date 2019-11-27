@@ -20,9 +20,9 @@ function ValveGearView (model, svg)
         'pistonConnectPoint': {color: 'blue', width: 2},
         'pistonCenter': {color: 'blue', width: 2},
         'pistonUnionLinkConnectPoint': {color: 'blue', width: 2},
-        'calibration.expansionLinkTopEnd': {color: 'green', width: 2},
-        'calibration.expansionLinkBottomEnd': {color: 'green', width: 2},
-        'calibration.expansionLinkRadiusCenter': {color: 'green', width: 2},
+        'expansionLinkTopEnd': {color: 'blue', width: 2},
+        'expansionLinkBottomEnd': {color: 'blue', width: 2},
+        'expansionLinkRadiusCenter': {color: 'blue', width: 2},
     }
 
     this.updatedLines = {

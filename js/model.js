@@ -43,6 +43,7 @@ function ValveGearModel ()
     this._setupModel1();
     this._setupModel2();
     this._setupModel3();
+    this._setupModel4();
 
     this.recalc();
 }
@@ -182,6 +183,15 @@ ValveGearModel.prototype._setupModel3 = function()
 
     model.setInput('pistonConnectPoint');
     model.setOutputs(['pistonCenter', 'pistonUnionLinkConnectPoint']);
+}
+
+ValveGearModel.prototype._setupModel4 = function()
+{
+    var model = new WheelModel(this.calibration);
+    this.mechanicModels.push(model);
+
+    model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixed",
+                              ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"]);
 }
 
 ValveGearModel.prototype.recalc = function()

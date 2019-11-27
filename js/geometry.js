@@ -99,6 +99,12 @@ Vector.prototype.normalize = function()
     }
 }
 
+Vector.prototype.angleTo = function()
+{
+    //FIXME implement
+    return Angle.zero();
+}
+
 Vector.prototype.copy = function()
 {
     return new Vector(this.x, this.y);

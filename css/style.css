@@ -45,3 +45,7 @@ div#statistics {
 #toggle-button.pause span.play {
     display: none;
 }
+
+#expansion-control {
+    width: 5em;
+}

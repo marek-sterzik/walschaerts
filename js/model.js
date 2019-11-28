@@ -16,6 +16,7 @@ function ValveGearModel ()
     this.params = {
         "mainWheelAngle": 0,
         "smallWheelAngle": 0,
+        "expansion": 1,
     };
 
     //points which are used for calibration of the mechanic model
@@ -44,6 +45,7 @@ function ValveGearModel ()
     this._setupModel2();
     this._setupModel3();
     this._setupModel4();
+    this._setupModel5();
 
     this.recalc();
 }
@@ -53,6 +55,22 @@ ValveGearModel.prototype.addDistance = function(distance)
     this.params.mainWheelAngle = this._recalcAngle(this.params.mainWheelAngle, this.mainWheelRadius, distance);
     this.params.smallWheelAngle = this._recalcAngle(this.params.smallWheelAngle, this.smallWheelRadius, distance);
     this.recalc();
+}
+
+ValveGearModel.prototype.setExpansion = function(expansion)
+{
+    if (expansion > 1) {
+        expansion = 1;
+    } else if (expansion < -1) {
+        expansion = -1;
+    }
+    this.params.expansion = expansion;
+    this.recalc();
+}
+
+ValveGearModel.prototype.getExpansion = function()
+{
+    return this.params.expansion;
 }
 
 ValveGearModel.prototype._recalcAngle = function(originalAngle, radius, distance)
@@ -110,11 +128,11 @@ ValveGearModel.prototype._setupCalibration = function()
     this.calibration.returnCrankConnectPoint = this.calibration.returnCrankConnectPoint;
     this.calibration.expansionLinkFixed = new Point(360, 78);
     this.calibration.expansionLinkConnectPoint = new Point(370, 143);
-    this.calibration.pistonConnectPoint = new Point(440, 149);
+    this.calibration.crossheadConnectPoint = new Point(440, 149);
     this.calibration.pistonCenter = new Point(576, 149);
     this.calibration.pistonUnionLinkConnectPoint = new Point(440, 190);
-    this.calibration.expansionLinkTopEnd = new Point(353, 48);
-    this.calibration.expansionLinkBottomEnd = new Point(376, 107);
+    this.calibration.expansionLinkTopEnd = new Point(352, 48);
+    this.calibration.expansionLinkBottomEnd = new Point(375, 107);
 
     //recalibrate the expansionLinkBottomEnd so that it has the same distance
     //from the fixed point as the top end
@@ -128,6 +146,10 @@ ValveGearModel.prototype._setupCalibration = function()
         this.calibration.expansionLinkFixed,
         this.calibration.expansionLinkBottomEnd
     );
+
+    this.calibration.reverseArmCenter = new Point(378, 38);
+    this.calibration.reverseArmA = new Point(340, 65);
+    this.calibration.reverseArmB = new Point(394, 65);
 }
 
 
@@ -155,11 +177,11 @@ ValveGearModel.prototype._setupModel2 = function()
     model.addDistanceConstraints([
         ["returnCrankConnectPoint", "expansionLinkConnectPoint"],
         ["expansionLinkConnectPoint", "expansionLinkFixed"],
-        ["mainWheelConnectPoint", "pistonConnectPoint"]
+        ["mainWheelConnectPoint", "crossheadConnectPoint"]
     ]);
 
     model.addLineConstraints([
-        ['pistonConnectPoint', pistonMoveDirection],
+        ['crossheadConnectPoint', pistonMoveDirection],
         ['pistonCenter', pistonMoveDirection]
     ]);
 
@@ -170,7 +192,7 @@ ValveGearModel.prototype._setupModel2 = function()
     model.addOutputs([
         'expansionLinkFixed',
         'expansionLinkConnectPoint',
-        'pistonConnectPoint',
+        'crossheadConnectPoint',
         'pistonCenter',
         'pistonUnionLinkConnectPoint',
     ]);
@@ -181,7 +203,7 @@ ValveGearModel.prototype._setupModel3 = function()
     var model = new TranslationMechanics(this.calibration);
     this.mechanicModels.push(model);
 
-    model.setInput('pistonConnectPoint');
+    model.setInput('crossheadConnectPoint');
     model.setOutputs(['pistonCenter', 'pistonUnionLinkConnectPoint']);
 }
 
@@ -193,6 +215,18 @@ ValveGearModel.prototype._setupModel4 = function()
     model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixed",
                               ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"]);
 }
+
+ValveGearModel.prototype._setupModel5 = function()
+{
+    var model = new WheelModel(this.calibration);
+    this.mechanicModels.push(model);
+
+    var maxAngle = 1;
+
+    model.addWheelWithLinearAngleCompensation("expansion", -maxAngle/2, maxAngle/2, "reverseArmCenter",
+                                              ["reverseArmCenter", "reverseArmA", "reverseArmB"]);
+}
+
 
 ValveGearModel.prototype.recalc = function()
 {

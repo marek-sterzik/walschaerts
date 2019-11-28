@@ -17,24 +17,29 @@ function ValveGearView (model, svg)
         'returnCrankConnectPoint': {color: 'blue', width: 2},
         'expansionLinkFixed': {color: 'cyan', width: 2},
         'expansionLinkConnectPoint': {color: 'blue', width: 2},
-        'pistonConnectPoint': {color: 'magenta', width: 2},
+        'crossheadConnectPoint': {color: 'magenta', width: 2},
         'pistonCenter': {color: 'magenta', width: 2},
         'pistonUnionLinkConnectPoint': {color: 'magenta', width: 2},
         'expansionLinkTopEnd': {color: 'cyan', width: 2},
         'expansionLinkBottomEnd': {color: 'cyan', width: 2},
         'expansionLinkRadiusCenter': {color: 'cyan', width: 2},
+        'reverseArmCenter': {color: 'orange', width: 2},
+        'reverseArmA': {color: 'orange', width: 2},
+        'reverseArmB': {color: 'orange', width: 2},
     }
 
     this.updatedLines = {
         "returnCrank": {"p1": "mainWheelConnectPoint", "p2": "returnCrankConnectPoint", "stroke": {color: "blue", width: 3}},
         "couplinkRod": {"p1": "leftWheelConnectPoint", "p2": "rightWheelConnectPoint", "stroke": {color: "blue", width: 5}},
         "eccentricRod": {"p1": "returnCrankConnectPoint", "p2": "expansionLinkConnectPoint", "stroke": {color: "blue", width: 3}},
+        "reverseArm1": {"p1": "reverseArmA", "p2": "reverseArmCenter", "stroke": {color: "orange", width: 4}},
+        "reverseArm2": {"p1": "reverseArmB", "p2": "reverseArmCenter", "stroke": {color: "orange", width: 4}},
         "expansionLink1": {"p1": "expansionLinkConnectPoint", "p2": "expansionLinkBottomEnd", "stroke": {color: "blue", width: 3}},
         "expansionLink2": {"p1": "expansionLinkBottomEnd", "p2": "expansionLinkFixed", "stroke": {color: "cyan", width: 4}},
         "expansionLink3": {"p1": "expansionLinkFixed", "p2": "expansionLinkTopEnd", "stroke": {color: "cyan", width: 4}},
-        "pistonRod": {"p1": "mainWheelConnectPoint", "p2": "pistonConnectPoint", "stroke": {color: "magenta", width: 6}},
-        "piston": {"p1": "pistonConnectPoint", "p2": "pistonCenter", "stroke": {color: "magenta", width: 6}},
-        "piston2": {"p1": "pistonConnectPoint", "p2": "pistonUnionLinkConnectPoint", "stroke": {color: "magenta", width: 3}},
+        "pistonRod": {"p1": "mainWheelConnectPoint", "p2": "crossheadConnectPoint", "stroke": {color: "magenta", width: 6}},
+        "piston": {"p1": "crossheadConnectPoint", "p2": "pistonCenter", "stroke": {color: "magenta", width: 6}},
+        "piston2": {"p1": "crossheadConnectPoint", "p2": "pistonUnionLinkConnectPoint", "stroke": {color: "magenta", width: 3}},
     }
     
     this.initialize();

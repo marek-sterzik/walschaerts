@@ -22,6 +22,14 @@ WheelModel.prototype.addWheel = function (angleParam, wheelCenter, wheelPoints)
     }, wheelCenter, wheelPoints);
 }
 
+WheelModel.prototype.addWheelWithLinearAngleCompensation = function (angleParam, angleMultiplier, angleOffset, wheelCenter, wheelPoints)
+{
+    this._addWheel(function(pointArray, paramsArray, wheelCenter) {
+        return Angle.inRadians(angleMultiplier * paramsArray[angleParam] + angleOffset);
+    }, wheelCenter, wheelPoints);
+}
+
+
 WheelModel.prototype._addWheel = function (angleCallback, wheelCenter, wheelPoints)
 {
     var wp = [];

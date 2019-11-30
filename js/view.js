@@ -5,6 +5,8 @@ function ValveGearView (model, svg)
     this.svg = svg;
     this.points = {};
     this.lines = {};
+    this.arcs = {};
+
     this.updatedPoints = {
         'leftWheelCenter': {color: 'red', width: 2},
         'mainWheelCenter': {color: 'red', width: 2},
@@ -27,7 +29,7 @@ function ValveGearView (model, svg)
         'reverseArmA': {color: 'orange', width: 2},
         'reverseArmB': {color: 'orange', width: 2},
         'reachRodEnd': {color: 'orange', width: 2},
-    }
+    };
 
     this.updatedLines = {
         "returnCrank": {"p1": "mainWheelConnectPoint", "p2": "returnCrankConnectPoint", "stroke": {color: "blue", width: 3}},
@@ -37,12 +39,14 @@ function ValveGearView (model, svg)
         "reverseArm2": {"p1": "reverseArmB", "p2": "reverseArmCenter", "stroke": {color: "orange", width: 4}},
         "reachRod": {"p1": "reachRodEnd", "p2": "reverseArmB", "stroke": {color: "orange", width: 4}},
         "expansionLink1": {"p1": "expansionLinkConnectPoint", "p2": "expansionLinkBottomEnd", "stroke": {color: "blue", width: 3}},
-        "expansionLink2": {"p1": "expansionLinkBottomEnd", "p2": "expansionLinkFixed", "stroke": {color: "cyan", width: 4}},
-        "expansionLink3": {"p1": "expansionLinkFixed", "p2": "expansionLinkTopEnd", "stroke": {color: "cyan", width: 4}},
         "pistonRod": {"p1": "mainWheelConnectPoint", "p2": "crossheadConnectPoint", "stroke": {color: "magenta", width: 6}},
         "piston": {"p1": "crossheadConnectPoint", "p2": "pistonCenter", "stroke": {color: "magenta", width: 6}},
         "piston2": {"p1": "crossheadConnectPoint", "p2": "pistonUnionLinkConnectPoint", "stroke": {color: "magenta", width: 3}},
-    }
+    };
+
+    this.updatedArcs = {
+        "expansionLink2": {"from": "expansionLinkTopEnd", "to": "expansionLinkBottomEnd", "clokwise": false, "center": "expansionLinkRadiusCenter", "stroke": {color: "cyan", width: 4}},
+    };
     
     this.initialize();
     //this.update();
@@ -66,6 +70,10 @@ ValveGearView.prototype.initialize = function()
 
     for (var l in this.updatedLines) {
         this._putLine(l, this.updatedLines[l]);
+    }
+
+    for (var a in this.updatedArcs) {
+        this._putArc(a, this.updatedArcs[a]);
     }
 }
 
@@ -107,6 +115,27 @@ ValveGearView.prototype._putLine = function(lineId, lineDef)
     this.lines[lineId] = line;
 }
 
+ValveGearView.prototype._putArc = function(arcId, arcDef)
+{
+    var pathArray = this._getArcPathArray(arcDef);
+    var arc = this.svg.path(pathArray).stroke(arcDef.stroke).fill('none');
+    this.arcs[arcId] = arc;
+}
+
+ValveGearView.prototype._getArcPathArray = function(arcDef)
+{
+    var pFrom = this.getModelPoint(arcDef.from);
+    var pTo = this.getModelPoint(arcDef.to);
+    var pCenter = this.getModelPoint(arcDef.center);
+
+    var radius = pCenter.vectorTo(pFrom).size();
+
+    return new SVG.PathArray([
+        ['M', pFrom.x, pFrom.y],
+        ['A', radius, radius, 0, 0, arcDef.clokwise ? 1 : 0, pTo.x, pTo.y],
+    ]);
+}
+
 ValveGearView.prototype._updatePoint = function(pointId)
 {
     var point = this.getModelPoint(pointId);
@@ -120,6 +149,13 @@ ValveGearView.prototype._updateLine = function(lineId, lineDef)
     this.lines[lineId].plot(p1.x, p1.y, p2.x, p2.y);
 }
 
+ValveGearView.prototype._updateArc = function(arcId, arcDef)
+{
+    var pathArray = this._getArcPathArray(arcDef);
+    this.arcs[arcId].plot(pathArray);
+}
+
+
 ValveGearView.prototype.update = function()
 {
     for (var p in this.updatedPoints) {
@@ -127,6 +163,9 @@ ValveGearView.prototype.update = function()
     }
     for (var l in this.updatedLines) {
         this._updateLine(l, this.updatedLines[l]);
+    }
+    for (var a in this.updatedArcs) {
+        this._updateArc(a, this.updatedArcs[a]);
     }
 }
 

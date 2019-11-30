@@ -26,6 +26,7 @@ function ValveGearView (model, svg)
         'reverseArmCenter': {color: 'orange', width: 2},
         'reverseArmA': {color: 'orange', width: 2},
         'reverseArmB': {color: 'orange', width: 2},
+        'reachRodEnd': {color: 'orange', width: 2},
     }
 
     this.updatedLines = {
@@ -34,6 +35,7 @@ function ValveGearView (model, svg)
         "eccentricRod": {"p1": "returnCrankConnectPoint", "p2": "expansionLinkConnectPoint", "stroke": {color: "blue", width: 3}},
         "reverseArm1": {"p1": "reverseArmA", "p2": "reverseArmCenter", "stroke": {color: "orange", width: 4}},
         "reverseArm2": {"p1": "reverseArmB", "p2": "reverseArmCenter", "stroke": {color: "orange", width: 4}},
+        "reachRod": {"p1": "reachRodEnd", "p2": "reverseArmB", "stroke": {color: "orange", width: 4}},
         "expansionLink1": {"p1": "expansionLinkConnectPoint", "p2": "expansionLinkBottomEnd", "stroke": {color: "blue", width: 3}},
         "expansionLink2": {"p1": "expansionLinkBottomEnd", "p2": "expansionLinkFixed", "stroke": {color: "cyan", width: 4}},
         "expansionLink3": {"p1": "expansionLinkFixed", "p2": "expansionLinkTopEnd", "stroke": {color: "cyan", width: 4}},

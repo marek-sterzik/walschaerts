@@ -51,6 +51,7 @@ function ValveGearModel ()
     this._setupModel3();
     this._setupModel4();
     this._setupModel5();
+    this._setupModel6();
 
     this.recalc();
 }
@@ -155,6 +156,8 @@ ValveGearModel.prototype._setupCalibration = function()
     this.calibration.reverseArmCenter = new Point(378, 38);
     this.calibration.reverseArmA = new Point(340, 65);
     this.calibration.reverseArmB = new Point(394, 65);
+
+    this.calibration.reachRodEnd = new Point(230, 58);
 }
 
 ValveGearModel.prototype.addModel = function (name, model)
@@ -242,6 +245,28 @@ ValveGearModel.prototype._setupModel5 = function()
     
     this.addModel("reverseArm", model);
 }
+
+ValveGearModel.prototype._setupModel6 = function()
+{
+    var reachRodMoveDirection = this.calibration.reachRodEnd.vectorTo(this.calibration.reverseArmA);
+
+    var model = new CalibratedMechanics(this.calibration);
+
+    model.addDistanceConstraints([
+        ["reachRodEnd", "reverseArmB"],
+    ]);
+
+    model.addLineConstraints([
+        ['reachRodEnd', reachRodMoveDirection],
+    ]);
+
+    model.addInputs(['reverseArmB']);
+
+    model.addOutputs(['reachRodEnd']);
+
+    this.addModel("reachRod", model);
+}
+
 
 
 ValveGearModel.prototype.recalc = function()

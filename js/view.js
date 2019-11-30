@@ -29,6 +29,11 @@ function ValveGearView (model, svg)
         'reverseArmA': {color: 'orange', width: 2},
         'reverseArmB': {color: 'orange', width: 2},
         'reachRodEnd': {color: 'orange', width: 2},
+        'calibration.radiusBarA': {color: 'green', width: 2},
+        'calibration.combinationLeverA': {color: 'green', width: 2},
+        'calibration.combinationLeverB': {color: 'green', width: 2},
+        'calibration.valveCenter': {color: 'green', width: 2},
+        'calibration.valveConnectPoint': {color: 'green', width: 2},
     };
 
     this.updatedLines = {

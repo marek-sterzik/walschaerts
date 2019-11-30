@@ -158,6 +158,17 @@ ValveGearModel.prototype._setupCalibration = function()
     this.calibration.reverseArmB = new Point(394, 65);
 
     this.calibration.reachRodEnd = new Point(230, 58);
+
+    this.calibration.radiusBarA = new Point(349, 104);
+    this.calibration.combinationLeverA = new Point(496, 76);
+    this.calibration.combinationLeverB = new Point(487, 183);
+    this.calibration.valveCenter = new Point(586, 89);
+
+    var valveConnectPointRatio = (this.calibration.valveCenter.y - this.calibration.combinationLeverA.y) /
+                                 (this.calibration.combinationLeverB.y - this.calibration.combinationLeverA.y);
+
+    var combinationLeverVector = this.calibration.combinationLeverA.vectorTo(this.calibration.combinationLeverB);
+    this.calibration.valveConnectPoint = this.calibration.combinationLeverA.addVector(combinationLeverVector.mul(valveConnectPointRatio));
 }
 
 ValveGearModel.prototype.addModel = function (name, model)

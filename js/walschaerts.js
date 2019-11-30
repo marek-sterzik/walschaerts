@@ -33,8 +33,9 @@ function setExpansion(value)
     }
 
     var val = Math.round(walschaertsValveGear.getExpansion()*100).toString();
-    if (val != value) {
-        $('#expansion-control').val(val);
+    var ec = $('#expansion-control');
+    if (val != ec.val()) {
+        ec.val(val);
     }
 
 }

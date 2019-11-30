@@ -14,6 +14,16 @@ $(function () {
     $('#expansion-control').bind('change', function() {
         setExpansion($(this).val());
     });
+
+    $('#expansion_set_100').bind('click', function() {
+        setExpansion('100');
+    });
+    $('#expansion_set_0').bind('click', function() {
+        setExpansion('0');
+    });
+    $('#expansion_set_minus_100').bind('click', function() {
+        setExpansion('-100');
+    });
 });
 
 function setExpansion(value)

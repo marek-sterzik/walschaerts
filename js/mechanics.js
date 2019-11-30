@@ -138,16 +138,7 @@ Mechanics.prototype.solveIteration = function ()
 
 Mechanics.prototype.putSolveStatistics = function(iterations, solveTime, error)
 {
-    this.updateMeanValue('iterations', iterations);
-    this.updateMeanValue('solveTime', solveTime);
-    this.updateMeanValue('meanError', error);
-}
-
-Mechanics.prototype.updateMeanValue = function(valueId, value)
-{
-    if (valueId in this.statistics) {
-        this.statistics[valueId] = this.statistics[valueId] + (value - this.statistics[valueId])/this.meanValuesSteps;
-    } else {
-        this.statistics[valueId] = value;
-    }
+    this.statistics['iterations'] = iterations;
+    this.statistics['solveTime'] = solveTime;
+    this.statistics['error'] = error;
 }

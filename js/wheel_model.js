@@ -4,6 +4,7 @@ function WheelModel(calibrationData)
     this.input = null;
     this.wheels = [];
     this.constraintCounter = 0;
+    this.statistics = {};
 }
 
 WheelModel.prototype.addPointDrivenWheel = function (referenceMovingPoint, wheelCenter, wheelPoints)
@@ -49,6 +50,8 @@ WheelModel.prototype._addWheel = function (angleCallback, wheelCenter, wheelPoin
 
 WheelModel.prototype.solve = function (pointArray, paramsArray)
 {
+    var t0 = performance.now();
+
     for(var i = 0; i < this.wheels.length; i++) {
         var wheel = this.wheels[i];
         var angle = wheel.angleCallback.call(this, pointArray, paramsArray, wheel.wheelCenter);
@@ -59,4 +62,7 @@ WheelModel.prototype.solve = function (pointArray, paramsArray)
             pointArray[p] = transformation.transformPoint(point);
         }
     }
+
+    var t1 = performance.now();
+    this.statistics['solveTime'] = t1 - t0;
 }

@@ -25,6 +25,11 @@ function ValveGearModel ()
     //the mechanic models itself
     this.mechanicModels = [];
 
+    //statistics and averages
+    this.statistics = [];
+    this.averages = {};
+    this.averageCycles = 10;
+
 
     var wheelVOffset = ySize - trackSize - this.mainWheelRadius;
 
@@ -152,17 +157,25 @@ ValveGearModel.prototype._setupCalibration = function()
     this.calibration.reverseArmB = new Point(394, 65);
 }
 
+ValveGearModel.prototype.addModel = function (name, model)
+{
+    this.mechanicModels.push({
+        "name": name,
+        "model": model,
+    });
+}
 
 ValveGearModel.prototype._setupModel1 = function()
 {
     var model = new WheelModel(this.calibration);
-    this.mechanicModels.push(model);
 
     model.addWheel("mainWheelAngle", "leftWheelCenter", ["leftWheelCenter", "leftWheelConnectPoint"]);
     model.addWheel("mainWheelAngle", "mainWheelCenter", ["mainWheelCenter", "mainWheelConnectPoint", "returnCrankConnectPoint"]);
     model.addWheel("mainWheelAngle", "rightWheelCenter", ["rightWheelCenter", "rightWheelConnectPoint"]);
     model.addWheel("smallWheelAngle", "smallWheel1Center", ["smallWheel1Center"]);
     model.addWheel("smallWheelAngle", "smallWheel2Center", ["smallWheel2Center"]);
+
+    this.addModel("wheels", model);
 }
 
 
@@ -171,8 +184,6 @@ ValveGearModel.prototype._setupModel2 = function()
     var pistonMoveDirection = new Vector(1, 0);
 
     var model = new CalibratedMechanics(this.calibration);
-    this.mechanicModels.push(model);
-    this.mStat = model.statistics;
 
     model.addDistanceConstraints([
         ["returnCrankConnectPoint", "expansionLinkConnectPoint"],
@@ -196,44 +207,102 @@ ValveGearModel.prototype._setupModel2 = function()
         'pistonCenter',
         'pistonUnionLinkConnectPoint',
     ]);
+
+    this.addModel("wheelLinks", model);
 }
 
 ValveGearModel.prototype._setupModel3 = function()
 {
     var model = new TranslationMechanics(this.calibration);
-    this.mechanicModels.push(model);
 
     model.setInput('crossheadConnectPoint');
     model.setOutputs(['pistonCenter', 'pistonUnionLinkConnectPoint']);
+    
+    this.addModel("piston", model);
 }
 
 ValveGearModel.prototype._setupModel4 = function()
 {
     var model = new WheelModel(this.calibration);
-    this.mechanicModels.push(model);
 
     model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixed",
                               ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"]);
+    
+    this.addModel("expansionLink", model);
 }
 
 ValveGearModel.prototype._setupModel5 = function()
 {
     var model = new WheelModel(this.calibration);
-    this.mechanicModels.push(model);
 
     var maxAngle = 1;
 
     model.addWheelWithLinearAngleCompensation("expansion", -maxAngle/2, maxAngle/2, "reverseArmCenter",
                                               ["reverseArmCenter", "reverseArmA", "reverseArmB"]);
+    
+    this.addModel("reverseArm", model);
 }
 
 
 ValveGearModel.prototype.recalc = function()
 {
+    var t0 = performance.now();
+    
+    var statistics = [];
+
+    //push the total solve time slot into the statistics
+    //the real value will be computed last
+    statistics.push({
+        "model": "total",
+        "param": "solveTime",
+        "value": 0,
+    });
+
     for (var i = 0; i < this.mechanicModels.length; i++) {
-        var model = this.mechanicModels[i];
+        var model = this.mechanicModels[i].model;
+        var modelName = this.mechanicModels[i].name;
         model.solve(this.points, this.params);
+        for (var s in model.statistics) {
+            statistics.push({
+                "model": modelName,
+                "param": s,
+                "value": model.statistics[s],
+            });
+        }
     }
+
+    this._recalcStatistics(statistics, t0);
+}
+
+ValveGearModel.prototype._recalcStatistics = function (statistics, t0)
+{
+    var totalSolveTimeIndex = null;
+    for (var i = 0; i < statistics.length; i++) {
+        var statRecord = statistics[i];
+        if (statRecord.model == 'total' && statRecord.param == 'solveTime') {
+            totalSolveTimeIndex = i;
+        } else {
+            statRecord.value = this._updateAverage(statRecord.model+"."+statRecord.param, statRecord.value);
+        }
+    }
+
+    if (totalSolveTimeIndex != null) {
+        var totalSolveTime = performance.now() - t0;
+        var statRecord = statistics[totalSolveTimeIndex];
+        statRecord.value = this._updateAverage(statRecord.model+"."+statRecord.param, totalSolveTime);
+    }
+
+    this.statistics = statistics;
+}
+
+ValveGearModel.prototype._updateAverage = function (id, value)
+{
+    if (! (id in this.averages)) {
+        this.averages[id] = value;
+    } else {
+        this.averages[id] = this.averages[id] + (value - this.averages[id])/this.averageCycles;
+    }
+    return this.averages[id];
 }
 
 ValveGearModel.prototype.circleCenterFrom3Points = function(a, b, c)

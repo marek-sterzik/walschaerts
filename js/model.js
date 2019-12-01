@@ -169,6 +169,15 @@ ValveGearModel.prototype._setupCalibration = function()
 
     var combinationLeverVector = this.calibration.combinationLeverA.vectorTo(this.calibration.combinationLeverB);
     this.calibration.valveConnectPoint = this.calibration.combinationLeverA.addVector(combinationLeverVector.mul(valveConnectPointRatio));
+
+    var intersections = Geometry.lineCircleIntersections(
+        this.calibration.radiusBarA,
+        this.calibration.radiusBarA.vectorTo(this.calibration.combinationLeverA),
+        this.calibration.expansionLinkRadiusCenter,
+        this.calibration.expansionLinkRadiusCenter.vectorTo(this.calibration.expansionLinkFixed).size()
+    );
+
+    this.calibration.expansionLinkRadiusRod = intersections[0];
 }
 
 ValveGearModel.prototype.addModel = function (name, model)

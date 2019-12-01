@@ -51,4 +51,28 @@ GeometryObject.prototype.matrixLinearCombination = function (matrix, lineCoeffic
     return finalVector;
 }
 
+GeometryObject.prototype.lineCircleIntersections = function (linePoint, lineVector, circleCenter, circleRadius)
+{
+    var u = circleCenter.vectorTo(linePoint);
+
+    var a = lineVector.mulScalar(lineVector);
+    var b = 2*lineVector.mulScalar(u);
+    var c = u.mulScalar(u) - circleRadius * circleRadius;
+
+    var d = b*b - 4*a*c;
+    if (d < 0) {
+        return [];
+    }
+
+    var dSqrt = Math.sqrt(d);
+
+    var t1 = (-b - dSqrt)/(2*a);
+    var t2 = (-b + dSqrt)/(2*a);
+
+    var p1 = linePoint.addVector(lineVector.mul(t1));
+    var p2 = linePoint.addVector(lineVector.mul(t2));
+
+    return [p1, p2];
+}
+
 Geometry = new GeometryObject();

@@ -34,6 +34,7 @@ function ValveGearView (model, svg)
         'calibration.combinationLeverB': {color: 'green', width: 2},
         'calibration.valveCenter': {color: 'green', width: 2},
         'calibration.valveConnectPoint': {color: 'green', width: 2},
+        'calibration.expansionLinkRadiusRod': {color: 'green', width: 2},
     };
 
     this.updatedLines = {

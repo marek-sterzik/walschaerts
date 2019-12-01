@@ -84,11 +84,7 @@ WalschaertsValveGear.prototype.toggle = function()
 
 WalschaertsValveGear.prototype.running = function()
 {
-    if (this.interval != null) {
-        return true;
-    } else {
-        return false;
-    }
+    return this.runFlag;
 }
 
 WalschaertsValveGear.prototype.setExpansion = function(expansion)

@@ -75,4 +75,6 @@ GeometryObject.prototype.lineCircleIntersections = function (linePoint, lineVect
     return [p1, p2];
 }
 
-Geometry = new GeometryObject();
+const Geometry = new GeometryObject();
+
+export default Geometry

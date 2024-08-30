@@ -1,3 +1,5 @@
+import {Point} from "./geometry.js"
+import { PathArray } from '@svgdotjs/svg.js'
 
 function ValveGearView (model, svg)
 {
@@ -136,7 +138,7 @@ ValveGearView.prototype._getArcPathArray = function(arcDef)
 
     var radius = pCenter.vectorTo(pFrom).size();
 
-    return new SVG.PathArray([
+    return new PathArray([
         ['M', pFrom.x, pFrom.y],
         ['A', radius, radius, 0, 0, arcDef.clokwise ? 1 : 0, pTo.x, pTo.y],
     ]);
@@ -175,3 +177,4 @@ ValveGearView.prototype.update = function()
     }
 }
 
+export default ValveGearView

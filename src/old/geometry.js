@@ -302,3 +302,5 @@ Transformation.translation = function (v)
     return new Transformation(Point.center(), Angle.zero(), v);
 }
 
+export {Point, Vector, Angle, Transformation}
+

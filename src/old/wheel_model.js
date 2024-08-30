@@ -66,3 +66,5 @@ WheelModel.prototype.solve = function (pointArray, paramsArray)
     var t1 = performance.now();
     this.statistics['solveTime'] = t1 - t0;
 }
+
+export default WheelModel

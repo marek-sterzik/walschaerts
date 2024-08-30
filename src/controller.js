@@ -2,7 +2,7 @@ import $ from "jquery"
 import {SVG} from '@svgdotjs/svg.js'
 import ValveGearView from "./view/walschaerts.js"
 import ValveGearModel from "./model/walschaerts.js"
-import StatView from "./old/statview.js"
+import StatsView from "./view/stats.js"
 
 export default class
 {
@@ -12,7 +12,7 @@ export default class
         this.model = new ValveGearModel(0)
         this.expansion = this.model.getExpansion()
         this.view = new ValveGearView(this.model, svg)
-        this.statView = new StatView(this.model, $('#statistics'))
+        this.statView = new StatsView(this.model, $('#statistics'))
         this.interval = null
         this.speed = 30
         this.expansionChangingSpeed = 0.3

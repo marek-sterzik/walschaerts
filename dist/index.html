@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script type="text/javascript" src="walschaerts.js"></script>
+<script type="text/javascript" src="js-old/geometry.js"></script>
+<script type="text/javascript" src="js-old/geometry_object.js"></script>
+<script type="text/javascript" src="js-old/mechanics.js"></script>
+<script type="text/javascript" src="js-old/calibrated_mechanics.js"></script>
+<script type="text/javascript" src="js-old/translation_mechanics.js"></script>
+<script type="text/javascript" src="js-old/wheel_model.js"></script>
+<script type="text/javascript" src="js-old/model.js"></script>
+<script type="text/javascript" src="js-old/view.js"></script>
+<script type="text/javascript" src="js-old/statview.js"></script>
+<script type="text/javascript" src="js-old/walschaerts.js"></script>
+</head>
+<body>
+    <h1>Heusingerův rozvod / Walschaerts valve gear</h1>
+
+    <div id="valvegear"></div>
+    <div id="coords"></div>
+    <div id="controls">
+        <button id="toggle-button" class="play"><span class="play">&#9654;</span><span class="pause">&#9646;&#9646;</span></button><br/>
+        <label for="expansion-control">Expansion [-100; 100]:</label> <input id="expansion-control" type="text" value="" />
+        <button>Set</button>
+        <button id="expansion_set_100">100</button>
+        <button id="expansion_set_0">0</button>
+        <button id="expansion_set_minus_100">-100</button>
+    </div>
+    <div id="statistics"></div>
+</body>
+</html>

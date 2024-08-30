@@ -1,4 +1,4 @@
-import {Point} from "./geometry.js"
+import {Point} from "eeg2d"
 import {PathArray} from '@svgdotjs/svg.js'
 
 function ValveGearView (model, svg)

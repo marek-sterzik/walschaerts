@@ -1,4 +1,4 @@
-import {Point} from "./geometry.js"
+import {Point} from "eeg2d"
 
 function GeometryObject()
 {
@@ -57,9 +57,9 @@ GeometryObject.prototype.lineCircleIntersections = function (linePoint, lineVect
 {
     var u = circleCenter.vectorTo(linePoint);
 
-    var a = lineVector.mulScalar(lineVector);
-    var b = 2*lineVector.mulScalar(u);
-    var c = u.mulScalar(u) - circleRadius * circleRadius;
+    var a = lineVector.mul(lineVector);
+    var b = 2*lineVector.mul(u);
+    var c = u.mul(u) - circleRadius * circleRadius;
 
     var d = b*b - 4*a*c;
     if (d < 0) {

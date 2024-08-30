@@ -1,4 +1,4 @@
-import {Angle, Vector} from "./geometry.js"
+import {Angle, Vector} from "eeg2d"
 
 function Mechanics()
 {
@@ -15,7 +15,7 @@ function Mechanics()
 
 Mechanics.prototype.setPoint = function (id, point)
 {
-    this.points[id] = point.copy();
+    this.points[id] = point;
 }
 
 Mechanics.prototype.getPoint = function (id)
@@ -75,11 +75,11 @@ Mechanics.prototype.setDistanceConstraint = function (id, idPoint1, idPoint2, di
 
 Mechanics.prototype.setLineConstraint = function (id, idPoint, linePoint, lineVector)
 {
-    var orthoVector = lineVector.rot(Angle.inDegrees(90)).normalize();
+    var orthoVector = lineVector.rot(Angle.right()).normalize();
     this.setConstraint(id, function () {
         var p = this.getPoint(idPoint);
         var forces = {};
-        forces[idPoint] = orthoVector.mul(p.vectorTo(linePoint).mulScalar(orthoVector));
+        forces[idPoint] = orthoVector.mul(p.vectorTo(linePoint).mul(orthoVector));
         return forces;
     });
 }

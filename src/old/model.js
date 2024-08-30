@@ -1,4 +1,4 @@
-import {Point, Vector} from "./geometry.js"
+import {Point, Vector} from "eeg2d"
 import TranslationMechanics from "./translation_mechanics.js"
 import WheelModel from "./wheel_model.js"
 import CalibratedMechanics from "./calibrated_mechanics.js"

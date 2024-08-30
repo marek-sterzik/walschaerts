@@ -1,4 +1,4 @@
-import {Angle, Transformation} from "./geometry.js"
+import {Angle, Transformation} from "eeg2d"
 
 function WheelModel(calibrationData)
 {
@@ -21,14 +21,14 @@ WheelModel.prototype.addPointDrivenWheel = function (referenceMovingPoint, wheel
 WheelModel.prototype.addWheel = function (angleParam, wheelCenter, wheelPoints)
 {
     this._addWheel(function(pointArray, paramsArray, wheelCenter) {
-        return Angle.inRadians(paramsArray[angleParam]);
+        return Angle.rad(paramsArray[angleParam]);
     }, wheelCenter, wheelPoints);
 }
 
 WheelModel.prototype.addWheelWithLinearAngleCompensation = function (angleParam, angleMultiplier, angleOffset, wheelCenter, wheelPoints)
 {
     this._addWheel(function(pointArray, paramsArray, wheelCenter) {
-        return Angle.inRadians(angleMultiplier * paramsArray[angleParam] + angleOffset);
+        return Angle.rad(angleMultiplier * paramsArray[angleParam] + angleOffset);
     }, wheelCenter, wheelPoints);
 }
 
@@ -57,7 +57,7 @@ WheelModel.prototype.solve = function (pointArray, paramsArray)
     for(var i = 0; i < this.wheels.length; i++) {
         var wheel = this.wheels[i];
         var angle = wheel.angleCallback.call(this, pointArray, paramsArray, wheel.wheelCenter);
-        var transformation = Transformation.rotation(wheel.wheelCenter, angle);
+        var transformation = Transformation.rotate(angle, wheel.wheelCenter);
         for (var j = 0; j < wheel.wheelPoints.length; j++) {
             var p = wheel.wheelPoints[j].id;
             var point = wheel.wheelPoints[j].point;

@@ -1,3 +1,4 @@
+console.log(eeg2d, mech2d)
 function WheelModel(calibrationData)
 {
     this.calibrationData = calibrationData;

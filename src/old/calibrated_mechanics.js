@@ -1,3 +1,5 @@
+import Mechanics from "./mechanics.js"
+
 function CalibratedMechanics(calibrationData)
 {
     this.mechanics = new Mechanics;
@@ -99,3 +101,5 @@ CalibratedMechanics.prototype.solve = function(pointArray, paramsArray)
         pointArray[p] = this.mechanics.getPoint(p);
     }
 }
+
+export default CalibratedMechanics

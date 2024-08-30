@@ -86,7 +86,7 @@ Mechanics.prototype.solve = function ()
 {
     var t0 = performance.now();
     var error = this.solveIteration();
-    iterations = 1;
+    var iterations = 1;
     while (error > this.maxError && iterations < this.maxIterations)
     {
         error = this.solveIteration();
@@ -142,3 +142,5 @@ Mechanics.prototype.putSolveStatistics = function(iterations, solveTime, error)
     this.statistics['solveTime'] = solveTime;
     this.statistics['error'] = error;
 }
+
+export default Mechanics

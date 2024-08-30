@@ -68,3 +68,4 @@ StatView.prototype.round = function (value, rounding)
     return value;
 }
 
+export default StatView

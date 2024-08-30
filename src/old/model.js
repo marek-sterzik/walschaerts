@@ -1,3 +1,8 @@
+import {Point, Vector} from "./geometry.js"
+import TranslationMechanics from "./translation_mechanics.js"
+import WheelModel from "./wheel_model.js"
+import CalibratedMechanics from "./calibrated_mechanics.js"
+
 function ValveGearModel ()
 {
     var xSize = 700;
@@ -350,3 +355,4 @@ ValveGearModel.prototype._updateAverage = function (id, value)
     return this.averages[id];
 }
 
+export default ValveGearModel

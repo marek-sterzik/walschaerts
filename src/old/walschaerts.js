@@ -1,3 +1,10 @@
+import $ from "jquery"
+import ValveGearView from "./view.js"
+import ValveGearModel from "./model.js"
+import StatView from "./statview.js"
+
+var walschaertsValveGear
+
 $(function () {
     setupCoords();
     walschaertsValveGear = new WalschaertsValveGear('#valvegear');

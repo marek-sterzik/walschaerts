@@ -7,6 +7,9 @@ import TranslationMechanics from "./old/translation_mechanics.js"
 import WheelModel from "./old/wheel_model.js"
 import ValveGearView from "./old/view.js"
 
+
 const exports = {SVG, $, jQuery: $, CalibratedMechanics, Point, Vector, Angle, Transformation, Geometry, TranslationMechanics, WheelModel, ValveGearView}
 
 Object.assign(window, exports)
+
+import "./old/walschaerts.js"

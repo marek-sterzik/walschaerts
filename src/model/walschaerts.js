@@ -1,8 +1,8 @@
 import {Point, Vector} from "eeg2d"
+import {circleCenterFrom3Points, lineCircleIntersections} from "./geometry.js"
 import TranslationMechanics from "../old/translation_mechanics.js"
 import WheelModel from "../old/wheel_model.js"
 import CalibratedMechanics from "../old/calibrated_mechanics.js"
-import Geometry from "../old/geometry_object.js"
 
 export default class
 {
@@ -155,7 +155,7 @@ export default class
         bottomRangeVector = bottomRangeVector.normalize().mul(expansionLinkRange);
         this.calibration.expansionLinkBottomEnd = this.calibration.expansionLinkFixed.addVector(bottomRangeVector);
 
-        this.calibration.expansionLinkRadiusCenter = Geometry.circleCenterFrom3Points(
+        this.calibration.expansionLinkRadiusCenter = circleCenterFrom3Points(
             this.calibration.expansionLinkTopEnd,
             this.calibration.expansionLinkFixed,
             this.calibration.expansionLinkBottomEnd
@@ -178,7 +178,7 @@ export default class
         var combinationLeverVector = this.calibration.combinationLeverA.vectorTo(this.calibration.combinationLeverB);
         this.calibration.valveConnectPoint = this.calibration.combinationLeverA.addVector(combinationLeverVector.mul(valveConnectPointRatio));
 
-        var intersections = Geometry.lineCircleIntersections(
+        var intersections = lineCircleIntersections(
             this.calibration.radiusBarA,
             this.calibration.radiusBarA.vectorTo(this.calibration.combinationLeverA),
             this.calibration.expansionLinkRadiusCenter,

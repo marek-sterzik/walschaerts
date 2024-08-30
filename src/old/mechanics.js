@@ -1,3 +1,5 @@
+import {Angle, Vector} from "./geometry.js"
+
 function Mechanics()
 {
     this.maxIterations = 1000;

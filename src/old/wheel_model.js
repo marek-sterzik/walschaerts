@@ -1,3 +1,5 @@
+import {Angle, Transformation} from "./geometry.js"
+
 function WheelModel(calibrationData)
 {
     this.calibrationData = calibrationData;

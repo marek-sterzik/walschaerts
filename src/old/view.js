@@ -1,5 +1,5 @@
 import {Point} from "./geometry.js"
-import { PathArray } from '@svgdotjs/svg.js'
+import {PathArray} from '@svgdotjs/svg.js'
 
 function ValveGearView (model, svg)
 {

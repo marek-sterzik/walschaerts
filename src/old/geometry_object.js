@@ -1,3 +1,5 @@
+import {Point} from "./geometry.js"
+
 function GeometryObject()
 {
 }

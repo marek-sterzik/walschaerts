@@ -1,3 +1,4 @@
+import {SVG} from '@svgdotjs/svg.js'
 import $ from "jquery"
 import ValveGearView from "./view.js"
 import ValveGearModel from "./model.js"

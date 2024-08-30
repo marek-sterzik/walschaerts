@@ -2,6 +2,7 @@ import {Point, Vector} from "./geometry.js"
 import TranslationMechanics from "./translation_mechanics.js"
 import WheelModel from "./wheel_model.js"
 import CalibratedMechanics from "./calibrated_mechanics.js"
+import Geometry from "./geometry_object.js"
 
 function ValveGearModel ()
 {

@@ -1,6 +1,6 @@
 import $ from "jquery"
 import {SVG} from '@svgdotjs/svg.js'
-import ValveGearView from "./old/view.js"
+import ValveGearView from "./view/walschaerts.js"
 import ValveGearModel from "./old/model.js"
 import StatView from "./old/statview.js"
 

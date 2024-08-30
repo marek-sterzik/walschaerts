@@ -1,5 +1,5 @@
 import $ from "jquery"
-import WalschaertsValveGear from "./walschaerts_valve_gear.js"
+import WalschaertsValveGear from "./controller.js"
 
 var walschaertsValveGear
 

@@ -43,11 +43,11 @@ const updatedLines = {
 }
 
 const updatedCircles = {
-    "leftWheel": {center: "leftWheelCenter", radius: "_.mainWheelRadius", stroke: {color: "red", width: 2}},
-    "mainWheel": {center: "mainWheelCenter", radius: "_.mainWheelRadius", stroke: {color: "red", width: 2}},
-    "rightWheel": {center: "rightWheelCenter", radius: "_.mainWheelRadius", stroke: {color: "red", width: 2}},
-    "smallWheel1": {center: "smallWheel1Center", radius: "_.smallWheelRadius", stroke: {color: "red", width: 2}},
-    "smallWheel2": {center: "smallWheel2Center", radius: "_.smallWheelRadius", stroke: {color: "red", width: 2}},
+    "leftWheel": {center: "leftWheelCenter", radius: "consts.mainWheelRadius", stroke: {color: "red", width: 2}},
+    "mainWheel": {center: "mainWheelCenter", radius: "consts.mainWheelRadius", stroke: {color: "red", width: 2}},
+    "rightWheel": {center: "rightWheelCenter", radius: "consts.mainWheelRadius", stroke: {color: "red", width: 2}},
+    "smallWheel1": {center: "smallWheel1Center", radius: "consts.smallWheelRadius", stroke: {color: "red", width: 2}},
+    "smallWheel2": {center: "smallWheel2Center", radius: "consts.smallWheelRadius", stroke: {color: "red", width: 2}},
 }
 
 const updatedArcs = {

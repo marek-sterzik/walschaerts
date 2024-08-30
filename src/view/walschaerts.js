@@ -12,7 +12,7 @@ const dataAccessor = (model) => (id) => {
         group = splitted[0]
         id = splitted[1]
     }
-    return (group === '_') ? model[id] : model[group][id]
+    return model[group][id]
 }
 
 export default class

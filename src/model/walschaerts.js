@@ -3,9 +3,6 @@ import {calibration, consts} from "./calibration.js"
 import {distanceToAngle} from "./geometry.js"
 import {wheelCenterModel, wheelsModel, wheelLinkModel, pistonModel, expansionLinkModel, reverseArmModel, reachRodModel} from "./mechanics.js"
 
-import CalibratedMechanics from "./mechanics/calibrated.js"
-
-
 export default class
 {
     constructor()

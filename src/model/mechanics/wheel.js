@@ -8,7 +8,6 @@ export default class
         this.input = null
         this.wheels = []
         this.constraintCounter = 0
-        this.statistics = {}
     }
 
     addPointDrivenWheel(referenceMovingPoint, wheelCenter, wheelPoints)
@@ -52,8 +51,6 @@ export default class
 
     solve(pointArray, paramsArray)
     {
-        var t0 = performance.now()
-
         for(var i = 0; i < this.wheels.length; i++) {
             var wheel = this.wheels[i]
             var angle = wheel.angleCallback.call(this, pointArray, paramsArray, wheel.wheelCenter)
@@ -64,8 +61,5 @@ export default class
                 pointArray[p] = transformation.transformPoint(point)
             }
         }
-
-        var t1 = performance.now()
-        this.statistics['solveTime'] = t1 - t0
     }
 }

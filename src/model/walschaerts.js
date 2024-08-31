@@ -90,13 +90,22 @@ export default class
         for (var i = 0; i < this.mechanicModels.length; i++) {
             var model = this.mechanicModels[i].model
             var modelName = this.mechanicModels[i].name
+            var lt0 = performance.now()
             model.solve(this.points, this.params)
-            for (var s in model.statistics) {
-                statistics.push({
-                    "model": modelName,
-                    "param": s,
-                    "value": model.statistics[s],
-                })
+            var lt1 = performance.now()
+            statistics.push({
+                "model": modelName,
+                "param": "solveTime",
+                "value": lt1 - lt0
+            })
+            if ("statistics" in model) {
+                for (var s in model.statistics) {
+                    statistics.push({
+                        "model": modelName,
+                        "param": s,
+                        "value": model.statistics[s],
+                    })
+                }
             }
         }
 

@@ -6,7 +6,6 @@ export default class
         this.input = null;
         this.points = {};
         this.constraintCounter = 0;
-        this.statistics = {};
     }
 
     setInput(pointId)
@@ -25,8 +24,6 @@ export default class
 
     solve(pointArray, paramsArray)
     {
-        var t0 = performance.now();
-        
         var translationVector = this.points[this.input].vectorTo(pointArray[this.input]);
         for (var p in this.points) {
             if (p != this.input) {
@@ -35,6 +32,5 @@ export default class
         }
 
         var t1 = performance.now();
-        this.statistics['solveTime'] = t1 - t0;
     }
 }

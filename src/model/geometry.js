@@ -1,4 +1,4 @@
-import {Point} from "eeg2d"
+import {Point, Angle} from "eeg2d"
 
 const matrixLinearCombination = (matrix, lineCoefficients) => {
     const rows = matrix.length;
@@ -70,4 +70,6 @@ const lineCircleIntersections = (linePoint, lineVector, circleCenter, circleRadi
     return [p1, p2];
 }
 
-export {circleCenterFrom3Points, lineCircleIntersections}
+const distanceToAngle = (distance, radius) => Angle.rad(distance / radius).normalize()
+
+export {circleCenterFrom3Points, lineCircleIntersections, distanceToAngle}

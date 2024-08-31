@@ -1,10 +1,11 @@
-import {Vector} from "eeg2d"
+import {Vector, Angle} from "eeg2d"
 import {calibration, consts} from "./calibration.js"
+import {distanceToAngle} from "./geometry.js"
+import {wheelsModel, expansionLinkModel} from "./mechanics.js"
 
+import WheelModel from "./mechanics/wheel.js"
+import CalibratedMechanics from "./mechanics/calibrated.js"
 import TranslationMechanics from "../old/translation_mechanics.js"
-import WheelModel from "../old/wheel_model.js"
-import CalibratedMechanics from "../old/calibrated_mechanics.js"
-
 
 
 export default class
@@ -19,8 +20,8 @@ export default class
 
         //params contain other parameters of the valve gear model
         this.params = {
-            "mainWheelAngle": 0,
-            "smallWheelAngle": 0,
+            "mainWheelAngle": Angle.zero(),
+            "smallWheelAngle": Angle.zero(),
             "expansion": 1,
         };
 
@@ -39,11 +40,8 @@ export default class
         this.points.smallWheel1Center = calibration.smallWheel1Center
         this.points.smallWheel2Center = calibration.smallWheel2Center
 
-        this.wheelConnectPointRadius = consts.wheelConnectPointRadius
-        this.returnCrankConnectPointRadius = consts.returnCrankConnectPointRadius
-
-        this._setupModel1()
-        this._setupModel2()
+        this.addModel("wheels", wheelsModel(this.calibration))
+        this.addModel("expansionLink", expansionLinkModel(this.calibration))
         this._setupModel3()
         this._setupModel4()
         this._setupModel5()
@@ -54,9 +52,9 @@ export default class
 
     addDistance(distance)
     {
-        this.params.mainWheelAngle = this._recalcAngle(this.params.mainWheelAngle, this.consts.mainWheelRadius, distance);
-        this.params.smallWheelAngle = this._recalcAngle(this.params.smallWheelAngle, this.consts.smallWheelRadius, distance);
-        this.recalc();
+        this.params.mainWheelAngle = this.params.mainWheelAngle.add(distanceToAngle(distance, this.consts.mainWheelRadius)) 
+        this.params.smallWheelAngle = this.params.smallWheelAngle.add(distanceToAngle(distance, this.consts.smallWheelRadius))
+        this.recalc()
     }
 
     setExpansion(expansion)
@@ -103,52 +101,6 @@ export default class
         });
     }
 
-    _setupModel1()
-    {
-        var model = new WheelModel(this.calibration);
-
-        model.addWheel("mainWheelAngle", "leftWheelCenter", ["leftWheelCenter", "leftWheelConnectPoint"]);
-        model.addWheel("mainWheelAngle", "mainWheelCenter", ["mainWheelCenter", "mainWheelConnectPoint", "returnCrankConnectPoint"]);
-        model.addWheel("mainWheelAngle", "rightWheelCenter", ["rightWheelCenter", "rightWheelConnectPoint"]);
-        model.addWheel("smallWheelAngle", "smallWheel1Center", ["smallWheel1Center"]);
-        model.addWheel("smallWheelAngle", "smallWheel2Center", ["smallWheel2Center"]);
-
-        this.addModel("wheels", model);
-    }
-
-
-    _setupModel2()
-    {
-        var pistonMoveDirection = new Vector(1, 0);
-
-        var model = new CalibratedMechanics(this.calibration);
-
-        model.addDistanceConstraints([
-            ["returnCrankConnectPoint", "expansionLinkConnectPoint"],
-            ["expansionLinkConnectPoint", "expansionLinkFixed"],
-            ["mainWheelConnectPoint", "crossheadConnectPoint"]
-        ]);
-
-        model.addLineConstraints([
-            ['crossheadConnectPoint', pistonMoveDirection],
-            ['pistonCenter', pistonMoveDirection]
-        ]);
-
-        model.addFixedPointConstraints(['expansionLinkFixed']);
-
-        model.addInputs(['returnCrankConnectPoint', 'mainWheelConnectPoint']);
-
-        model.addOutputs([
-            'expansionLinkFixed',
-            'expansionLinkConnectPoint',
-            'crossheadConnectPoint',
-            'pistonCenter',
-            'pistonUnionLinkConnectPoint',
-        ]);
-
-        this.addModel("wheelLinks", model);
-    }
-
     _setupModel3()
     {
         var model = new TranslationMechanics(this.calibration);
@@ -175,7 +127,7 @@ export default class
 
         var maxAngle = 1;
 
-        model.addWheelWithLinearAngleCompensation("expansion", -maxAngle/2, maxAngle/2, "reverseArmCenter",
+        model.addWheelWithLinearAngleCompensation("expansion", Angle.rad(-maxAngle/2), Angle.rad(maxAngle/2), "reverseArmCenter",
                                                   ["reverseArmCenter", "reverseArmA", "reverseArmB"]);
         
         this.addModel("reverseArm", model);

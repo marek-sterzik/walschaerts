@@ -30,64 +30,64 @@ export default class
 
     running()
     {
-        return this.runFlag;
+        return this.runFlag
     }
     
     setExpansion(expansion)
     {
         if (expansion < -1) {
-            expansion = -1;
+            expansion = -1
         }else if (expansion > 1) {
-            expansion = 1;
+            expansion = 1
         }
-        this.expansion = expansion;
-        return this;
+        this.expansion = expansion
+        return this
     }
 
     getExpansion()
     {
-        return this.expansion;
+        return this.expansion
     }
 
     stepFunction()
     {
-        var s1 = this.updateDistance();
-        var s2 = this.updateExpansion();
+        var s1 = this.updateDistance()
+        var s2 = this.updateExpansion()
         if (s1 || s2) {
-            this.view.update();
-            this.statView.update();
+            this.view.update()
+            this.statView.update()
         }
     }
     
     updateDistance()
     {
         if (this.runFlag) {
-            this.model.addDistance(30);
-            return true;
+            this.model.addDistance(30)
+            return true
         }
-        return false;
+        return false
     }
 
     updateExpansion()
     {
-        var realExpansion = this.model.getExpansion();
+        var realExpansion = this.model.getExpansion()
 
         if (Math.abs(realExpansion - this.expansion) > this.expansionTolerance) {
             if (realExpansion > this.expansion) {
-                realExpansion -= this.expansionChangingSpeed;
+                realExpansion -= this.expansionChangingSpeed
                 if (realExpansion < this.expansion) {
-                    realExpansion = this.expansion;
+                    realExpansion = this.expansion
                 }
             }else {
-                realExpansion += this.expansionChangingSpeed;
+                realExpansion += this.expansionChangingSpeed
                 if (realExpansion > this.expansion) {
-                    realExpansion = this.expansion;
+                    realExpansion = this.expansion
                 }
             }
-            this.model.setExpansion(realExpansion);
-            return true;
+            this.model.setExpansion(realExpansion)
+            return true
         }
-        return false;
+        return false
         
     }
 }

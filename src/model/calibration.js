@@ -60,7 +60,9 @@ calibration.reverseArmCenter = new Point(378, 38)
 calibration.reverseArmA = new Point(340, 65)
 calibration.reverseArmB = new Point(394, 65)
 
-calibration.reachRodEnd = new Point(230, 58)
+calibration.reachRodEndMax = new Point(230, 58)
+calibration.reachRodEndMin = new Point(200, 58)
+calibration.reachRodEnd = calibration.reachRodEndMax
 
 calibration.radiusBarA = new Point(349, 104)
 calibration.combinationLeverA = new Point(496, 76)

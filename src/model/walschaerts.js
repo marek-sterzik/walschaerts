@@ -1,11 +1,9 @@
-import {Vector, Angle} from "eeg2d"
+import {Angle} from "eeg2d"
 import {calibration, consts} from "./calibration.js"
 import {distanceToAngle} from "./geometry.js"
-import {wheelsModel, expansionLinkModel} from "./mechanics.js"
+import {wheelsModel, wheelLinkModel, pistonModel, expansionLinkModel, reverseArmModel, reachRodModel} from "./mechanics.js"
 
-import WheelModel from "./mechanics/wheel.js"
 import CalibratedMechanics from "./mechanics/calibrated.js"
-import TranslationMechanics from "../old/translation_mechanics.js"
 
 
 export default class
@@ -41,11 +39,11 @@ export default class
         this.points.smallWheel2Center = calibration.smallWheel2Center
 
         this.addModel("wheels", wheelsModel(this.calibration))
+        this.addModel("wheelLink", wheelLinkModel(this.calibration))
+        this.addModel("piston", pistonModel(this.calibration))
         this.addModel("expansionLink", expansionLinkModel(this.calibration))
-        this._setupModel3()
-        this._setupModel4()
-        this._setupModel5()
-        this._setupModel6()
+        this.addModel("reverseArm", reverseArmModel(this.calibration))
+        this.addModel("reachRod", reachRodModel(this.calibration))
 
         this.recalc()
     }
@@ -100,61 +98,6 @@ export default class
             "model": model,
         });
     }
-
-    _setupModel3()
-    {
-        var model = new TranslationMechanics(this.calibration);
-
-        model.setInput('crossheadConnectPoint');
-        model.setOutputs(['pistonCenter', 'pistonUnionLinkConnectPoint']);
-        
-        this.addModel("piston", model);
-    }
-
-    _setupModel4()
-    {
-        var model = new WheelModel(this.calibration);
-
-        model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixed",
-                                  ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"]);
-        
-        this.addModel("expansionLink", model);
-    }
-
-    _setupModel5()
-    {
-        var model = new WheelModel(this.calibration);
-
-        var maxAngle = 1;
-
-        model.addWheelWithLinearAngleCompensation("expansion", Angle.rad(-maxAngle/2), Angle.rad(maxAngle/2), "reverseArmCenter",
-                                                  ["reverseArmCenter", "reverseArmA", "reverseArmB"]);
-        
-        this.addModel("reverseArm", model);
-    }
-
-    _setupModel6()
-    {
-        var reachRodMoveDirection = this.calibration.reachRodEnd.vectorTo(this.calibration.reverseArmA);
-
-        var model = new CalibratedMechanics(this.calibration);
-
-        model.addDistanceConstraints([
-            ["reachRodEnd", "reverseArmB"],
-        ]);
-
-        model.addLineConstraints([
-            ['reachRodEnd', reachRodMoveDirection],
-        ]);
-
-        model.addInputs(['reverseArmB']);
-
-        model.addOutputs(['reachRodEnd']);
-
-        this.addModel("reachRod", model);
-    }
-
-
 
     recalc()
     {

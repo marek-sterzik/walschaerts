@@ -4,6 +4,7 @@ import CalibratedMechanics from "./mechanics/calibrated.js"
 import TranslationMechanics from "./mechanics/translation.js"
 import ConstantMechanics from "./mechanics/constant.js"
 import InterpolateModel from "./mechanics/interpolate.js"
+import Mech2dModel from "./mechanics/mech2d.js"
 
 const wheelCenterModel = (calibration) => {
     const model = new ConstantMechanics(calibration)
@@ -81,6 +82,18 @@ const reverseArmModel = (calibration) => {
     
     return model
 }
+/*
+const reverseArmModel = (calibration) => {
+    const model = new Mech2dModel(calibration)
+    model.inputPoint("reachRodEnd", "reachRod")
+    model.outputPoint("reverseArmA", "reverseArm")
+    model.outputPoint("reverseArmB", "reverseArm")
+    model.outputPoint("reverseArmCenter", "reverseArm")
+    model.link("reachRod", "reverseArmB", "reverseArm")
+    model.link("reverseArm", "reverseArmCenter", null)
+    return model
+}
+*/
 
 const reachRodModel = (calibration) => {
     const model = new InterpolateModel(calibration)

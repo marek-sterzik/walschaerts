@@ -72,4 +72,18 @@ const lineCircleIntersections = (linePoint, lineVector, circleCenter, circleRadi
 
 const distanceToAngle = (distance, radius) => Angle.rad(distance / radius).normalize()
 
-export {circleCenterFrom3Points, lineCircleIntersections, distanceToAngle}
+const calcMassCenter = (points, defaultMassCenter = null) => {
+    const n = points.length
+    if (n === 0) {
+        return defaultMassCenter
+    }
+    var x = 0
+    var y = 0
+    for (var point of points) {
+        x += point.x
+        y += point.y
+    }
+    return new Point(x/n, y/n)
+}
+
+export {circleCenterFrom3Points, lineCircleIntersections, distanceToAngle, calcMassCenter}

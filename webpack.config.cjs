@@ -5,5 +5,5 @@ module.exports = {
   output: {
     filename: 'walschaerts.js',
   },
-  mode: 'production'
+  mode: 'development'
 };

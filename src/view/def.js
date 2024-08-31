@@ -27,8 +27,8 @@ const updatedPoints = {
     'calibration.valveCenter': {color: 'green', width: 2},
     'calibration.valveConnectPoint': {color: 'green', width: 2},
     'calibration.expansionLinkRadiusRod': {color: 'green', width: 2},
-    'calibration.reachRodEndMin': {color: 'blue', width: 2},
-    'calibration.reachRodEndMax': {color: 'blue', width: 2},
+    'calibration.reachRodEndMin': {color: 'green', width: 2},
+    'calibration.reachRodEndMax': {color: 'green', width: 2},
 }
 
 const updatedLines = {

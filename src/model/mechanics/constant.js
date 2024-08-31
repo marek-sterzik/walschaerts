@@ -25,7 +25,5 @@ export default class
         for (var point of this.points) {
             pointArray[point] = this.calibration[point]
         }
-
-        var t1 = performance.now()
     }
 }

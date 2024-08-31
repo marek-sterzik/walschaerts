@@ -3,6 +3,7 @@ import WheelModel from "./mechanics/wheel.js"
 import CalibratedMechanics from "./mechanics/calibrated.js"
 import TranslationMechanics from "./mechanics/translation.js"
 import ConstantMechanics from "./mechanics/constant.js"
+import InterpolateModel from "./mechanics/interpolate.js"
 
 const wheelCenterModel = (calibration) => {
     const model = new ConstantMechanics(calibration)
@@ -82,21 +83,8 @@ const reverseArmModel = (calibration) => {
 }
 
 const reachRodModel = (calibration) => {
-    const reachRodMoveDirection = calibration.reachRodEnd.vectorTo(calibration.reverseArmA)
-    const model = new CalibratedMechanics(calibration)
-
-    model.addDistanceConstraints([
-        ["reachRodEnd", "reverseArmB"],
-    ])
-
-    model.addLineConstraints([
-        ['reachRodEnd', reachRodMoveDirection],
-    ])
-
-    model.addInputs(['reverseArmB'])
-
-    model.addOutputs(['reachRodEnd'])
-
+    const model = new InterpolateModel(calibration)
+    model.addInterpolation("reachRodEndMin", "reachRodEndMax", "reachRodEnd", (params) => (params.expansion + 1) / 2)
     return model
 }
 

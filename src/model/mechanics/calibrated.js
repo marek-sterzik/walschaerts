@@ -1,4 +1,4 @@
-import Mechanics from "../../old/mechanics.js"
+import Mechanics from "./lib/mechanics.js"
 
 export default class
 {

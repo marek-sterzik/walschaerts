@@ -16,7 +16,7 @@ const consts = {
 const calibration = {}
 
 consts.wheelVOffset = consts.ySize - consts.trackSize - consts.mainWheelRadius
-consts.smallWheelVOffset = consts.ySize - consts.trackSize - consts.smallWheelRadius;
+consts.smallWheelVOffset = consts.ySize - consts.trackSize - consts.smallWheelRadius
 
 calibration.leftWheelCenter = new Point(consts.xOffset + consts.mainWheelRadius, consts.wheelVOffset)
 

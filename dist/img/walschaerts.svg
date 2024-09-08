@@ -18,6 +18,34 @@
      id="defs6">
     <linearGradient
        inkscape:collect="always"
+       id="linearGradient94276">
+      <stop
+         style="stop-color:#adada5;stop-opacity:1"
+         offset="0"
+         id="stop94272" />
+      <stop
+         style="stop-color:#adada5;stop-opacity:1"
+         offset="0.63665807"
+         id="stop94442" />
+      <stop
+         style="stop-color:#d1d1d1;stop-opacity:1"
+         offset="1"
+         id="stop94508" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5007">
+      <stop
+         style="stop-color:#f7f6f6;stop-opacity:1"
+         offset="0"
+         id="stop5003" />
+      <stop
+         style="stop-color:#a0a0a0;stop-opacity:1"
+         offset="1"
+         id="stop5005" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
        id="linearGradient95087">
       <stop
          style="stop-color:#e4e1e1;stop-opacity:1"
@@ -336,6 +364,24 @@
        y2="84.364883"
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(0.16029932)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5007"
+       id="linearGradient5009"
+       x1="240.9304"
+       y1="32.868034"
+       x2="240.85208"
+       y2="34.920918"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient94276"
+       id="linearGradient94278"
+       x1="254.71594"
+       y1="45.577637"
+       x2="252.31776"
+       y2="46.208988"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="namedview4"
@@ -348,19 +394,19 @@
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-global="true"
+     inkscape:snap-global="false"
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="false"
-     inkscape:zoom="7.9999999"
-     inkscape:cx="243"
-     inkscape:cy="46.1875"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="248.19448"
+     inkscape:cy="3.7123106"
      inkscape:window-width="1866"
      inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g8"
+     inkscape:current-layer="g113987"
      inkscape:snap-object-midpoints="true">
     <sodipodi:guide
        position="105.10003,21.430371"
@@ -423,17 +469,9 @@
        orientation="1,0"
        id="guide26172" />
     <sodipodi:guide
-       position="407.67809,94.457942"
-       orientation="0,-1"
-       id="guide29108" />
-    <sodipodi:guide
        position="380.37499,90.209021"
        orientation="0,-1"
        id="guide33477" />
-    <sodipodi:guide
-       position="274,41.084022"
-       orientation="1,0"
-       id="guide44309" />
     <sodipodi:guide
        position="302.28814,35.583684"
        orientation="1,0"
@@ -482,6 +520,26 @@
        position="278.875,78.20902"
        orientation="1,0"
        id="guide139353" />
+    <sodipodi:guide
+       position="332.15625,73.11527"
+       orientation="1,0"
+       id="guide55572" />
+    <sodipodi:guide
+       position="255.25,60.17777"
+       orientation="0,-1"
+       id="guide55760" />
+    <sodipodi:guide
+       position="255.16492,59.510534"
+       orientation="1,0"
+       id="guide55762" />
+    <sodipodi:guide
+       position="266.84045,61.804236"
+       orientation="1,0"
+       id="guide111372" />
+    <sodipodi:guide
+       position="267.22021,62.438757"
+       orientation="0,-1"
+       id="guide111374" />
   </sodipodi:namedview>
   <g
      inkscape:groupmode="layer"
@@ -606,78 +664,38 @@
       <text
          xml:space="preserve"
          style="font-size:16px;line-height:1.25;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';letter-spacing:0px;word-spacing:0px"
-         x="66.092941"
-         y="-105.06659"
-         id="text51326"><tspan
-           sodipodi:role="line"
-           x="66.092941"
-           y="-105.06659"
-           id="tspan51526"> </tspan><tspan
-           sodipodi:role="line"
-           x="66.092941"
-           y="-85.066589"
-           id="tspan51528">3 - reach rod</tspan><tspan
-           sodipodi:role="line"
-           x="66.092941"
-           y="-65.066589"
-           id="tspan51530">4 - lifting line </tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:16px;line-height:1.25;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';letter-spacing:0px;word-spacing:0px"
-         x="234.43468"
-         y="-104.64453"
-         id="text53646"><tspan
-           sodipodi:role="line"
-           id="tspan53644"
-           x="234.43468"
-           y="-104.64453">5 - lifting arm</tspan><tspan
-           sodipodi:role="line"
-           x="234.43468"
-           y="-84.644531"
-           id="tspan53648">6 - reverse arm</tspan><tspan
-           sodipodi:role="line"
-           x="234.43468"
-           y="-64.644531"
-           id="tspan53650">7 - expansion link</tspan><tspan
-           sodipodi:role="line"
-           x="234.43468"
-           y="-44.644531"
-           id="tspan53652">8 - radius bar</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:16px;line-height:1.25;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';letter-spacing:0px;word-spacing:0px"
-         x="388.6192"
+         x="348.65338"
          y="-106.1347"
          id="text55548"><tspan
            sodipodi:role="line"
            id="tspan55546"
-           x="388.6192"
+           x="348.65338"
            y="-106.1347" /><tspan
            sodipodi:role="line"
-           x="388.6192"
+           x="348.65338"
            y="-86.134697"
            id="tspan55550">10 - valve steam guide</tspan><tspan
            sodipodi:role="line"
-           x="388.6192"
+           x="348.65338"
            y="-66.134697"
            id="tspan55552">11 - union link</tspan><tspan
            sodipodi:role="line"
-           x="388.6192"
+           x="348.65338"
            y="-46.134697"
            id="tspan55554">12 - combination lever</tspan></text>
       <text
          xml:space="preserve"
          style="font-size:16px;line-height:1.25;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';letter-spacing:0px;word-spacing:0px"
-         x="579.62341"
-         y="-107.17959"
+         x="349.30084"
+         y="-24.424788"
          id="text58864"><tspan
            sodipodi:role="line"
            id="tspan58862"
-           x="579.62341"
-           y="-107.17959">13 - valve stem</tspan><tspan
+           x="349.30084"
+           y="-24.424788">13 - valve stem</tspan><tspan
            sodipodi:role="line"
-           x="579.62341"
-           y="-87.179588"
+           x="349.30084"
+           y="-4.4247885"
            id="tspan99090">14 - valve spindle</tspan></text>
     </g>
     <text
@@ -1270,11 +1288,63 @@
        cx="270.1875"
        cy="20.6875"
        r="1.8533928" />
+    <g
+       id="reach-rod">
+      <path
+         id="rect1393"
+         style="fill:url(#linearGradient5009);stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1;stroke-opacity:1"
+         d="M 202.65234 31.064453 L 199.79297 33.318359 L 277.69531 37.337891 A 1.7177734 1.7177734 0 0 0 278.85352 37.789062 A 1.7177734 1.7177734 0 0 0 280.57031 36.072266 A 1.7177734 1.7177734 0 0 0 278.85352 34.353516 A 1.7177734 1.7177734 0 0 0 277.64453 34.857422 L 202.65234 31.064453 z " />
+      <ellipse
+         style="fill:#858585;fill-opacity:1;stroke:#858585;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="path5609"
+         cx="278.875"
+         cy="36"
+         rx="1.2304746"
+         ry="1.1425792" />
+    </g>
+    <g
+       id="lifting-line">
+      <path
+         id="path82614"
+         style="opacity:1;fill:url(#linearGradient94278);fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 250.125,34.431641 c -0.86601,4.03e-4 -1.56796,0.702345 -1.56836,1.568359 0.0279,1.258689 1.30563,1.914111 1.75586,2.953125 0.45795,1.032187 3.74311,13.830105 3.73511,15.368164 -0.0225,1.074361 -0.30961,1.060529 -0.23125,1.959961 0,0.744288 0.60336,1.347653 1.34765,1.347656 0.74429,2e-6 1.36794,-0.603362 1.36794,-1.347654 0.007,-1.310865 -1.28264,-1.716041 -1.46364,-2.357424 -0.20376,-0.778975 -3.60147,-14.242886 -3.60547,-15.039062 -0.0812,-0.953017 0.1563,-2.00186 0.23047,-2.884766 0.0742,-0.882906 -0.70235,-1.567956 -1.56836,-1.568359 z"
+         sodipodi:nodetypes="cccccsccczcc" />
+      <circle
+         style="opacity:1;fill:#858585;fill-opacity:1;stroke:#858585;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path102975"
+         cx="250.125"
+         cy="36"
+         r="0.73132247" />
+      <circle
+         style="opacity:1;fill:#858585;fill-opacity:1;stroke:#858585;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="circle110627"
+         cx="255.16492"
+         cy="56.28125"
+         r="0.73132247" />
+    </g>
     <path
        id="reverse-arm"
        style="fill:#c6c6c6;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 270.06055,17.808594 c -0.87713,0.0092 -1.64514,0.326313 -2.76563,1.443359 -1.23641,1.232603 -15.30924,13.223074 -17.25586,14.507813 -1.94662,1.284739 -2.17764,2.785243 -1.16601,3.597656 1.01163,0.812413 2.38725,-0.05019 3.20312,-0.458984 0.81587,-0.408797 11.72228,-7.282611 12.83789,-7.949219 1.11561,-0.666608 2.38061,-1.024177 3.57813,-1.003907 1.19752,0.02027 1.82036,0.678382 3.05469,2.294922 1.23432,1.61654 4.29939,5.491055 5.16601,6.808594 0.86662,1.317539 2.46876,1.530707 3.32422,0.923828 0.85545,-0.60688 1.4991,-1.972655 0.65234,-3.324218 -0.54136,-0.864096 -6.03662,-11.010108 -7.31836,-13.5625 -1.28174,-2.552393 -2.03652,-3.215422 -3.03515,-3.269532 -0.0936,-0.0051 -0.18466,-0.0088 -0.27539,-0.0078 z m 0.12695,1.310547 c 0.86614,10e-5 1.56826,0.702219 1.56836,1.568359 -10e-5,0.86614 -0.70222,1.568259 -1.56836,1.568359 -0.86614,-10e-5 -1.56826,-0.702219 -1.56836,-1.568359 10e-5,-0.86614 0.70222,-1.568259 1.56836,-1.568359 z m 8.6875,15.757812 c 0.6203,-1.38e-4 1.12319,0.502748 1.12305,1.123047 1.4e-4,0.620299 -0.50275,1.123185 -1.12305,1.123047 -0.6203,1.38e-4 -1.12319,-0.502748 -1.12305,-1.123047 -1.4e-4,-0.620299 0.50275,-1.123185 1.12305,-1.123047 z m -28.75,0.34375 c 0.43054,-3.4e-4 0.77964,0.348762 0.7793,0.779297 3.4e-4,0.430535 -0.34876,0.779637 -0.7793,0.779297 -0.43054,3.4e-4 -0.77964,-0.348762 -0.7793,-0.779297 -3.4e-4,-0.430535 0.34876,-0.779637 0.7793,-0.779297 z"
        sodipodi:nodetypes="ssssssssssssssccccccccccccccc" />
+    <g
+       id="radius-bar">
+      <path
+         id="path55758"
+         style="opacity:1;fill:#e7dede;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         d="M 332.15625 39.041016 C 330.866 39.375942 330.68513 40.107401 329.45117 40.345703 L 257.11133 54.330078 C 256.4398 54.411078 255.82583 54.500331 255.16406 54.486328 C 254.17303 54.465358 253.36927 55.289998 253.36914 56.28125 C 253.36927 57.272502 254.18081 58.201837 255.16406 58.076172 C 256.04726 57.963294 256.52294 57.757411 257.50391 57.460938 C 267.23758 55.507216 329.80129 42.947755 330.12305 42.84375 C 330.47195 42.730969 331.49888 42.662784 332.15625 42.714844 C 333.16754 42.794934 333.99351 41.893366 333.99414 40.878906 C 333.99458 39.863683 333.17147 39.040571 332.15625 39.041016 z M 332.15625 40.111328 A 0.76708865 0.76708865 0 0 1 332.92383 40.878906 A 0.76708865 0.76708865 0 0 1 332.15625 41.644531 A 0.76708865 0.76708865 0 0 1 331.38867 40.878906 A 0.76708865 0.76708865 0 0 1 332.15625 40.111328 z M 255.25 55.628906 A 0.65234298 0.65234298 0 0 1 255.90234 56.28125 A 0.65234298 0.65234298 0 0 1 255.25 56.933594 A 0.65234298 0.65234298 0 0 1 254.59766 56.28125 A 0.65234298 0.65234298 0 0 1 255.25 55.628906 z " />
+      <circle
+         style="opacity:1;fill:#e7dede;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path111398"
+         cx="266.84045"
+         cy="54.020264"
+         r="1.6002231" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 277.50663,50.475962 0.56856,2.793389"
+         id="path127854"
+         sodipodi:nodetypes="cc" />
+    </g>
     <g
        id="expansion-link">
       <path

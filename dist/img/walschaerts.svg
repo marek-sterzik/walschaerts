@@ -524,13 +524,13 @@
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-global="false"
+     inkscape:snap-global="true"
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="false"
-     inkscape:zoom="4"
-     inkscape:cx="261"
-     inkscape:cy="64.375"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="268.34702"
+     inkscape:cy="25.632621"
      inkscape:window-width="1866"
      inkscape:window-height="1016"
      inkscape:window-x="0"
@@ -678,6 +678,14 @@
        position="331.67727,68.243177"
        orientation="1,0"
        id="guide8288" />
+    <sodipodi:guide
+       position="327.90625,18.896522"
+       orientation="0,-1"
+       id="guide1502" />
+    <sodipodi:guide
+       position="326.78125,18.365272"
+       orientation="1,0"
+       id="guide1504" />
   </sodipodi:namedview>
   <g
      inkscape:groupmode="layer"
@@ -927,6 +935,31 @@
          r="0.61196375"
          cy="99.20446"
          cx="420.47479" />
+    </g>
+    <g
+       id="combination-lever">
+      <path
+         id="path1181"
+         style="opacity:1;fill:#e7dede;stroke:#121314;stroke-width:0.4;stroke-linecap:round;fill-opacity:1"
+         d="M 332.15625 38.777344 A 2.1011963 2.1011963 0 0 0 330.05469 40.878906 L 330.05273 40.878906 L 325.19727 97.162109 A 1.6363477 1.6363477 0 0 0 325.14453 97.5625 A 1.6363477 1.6363477 0 0 0 326.78125 99.199219 A 1.6363477 1.6363477 0 0 0 328.41797 97.5625 A 1.6363477 1.6363477 0 0 0 328.41797 97.523438 L 334.19727 41.357422 A 2.1011963 2.1011963 0 0 0 334.25781 40.878906 A 2.1011963 2.1011963 0 0 0 332.15625 38.777344 z " />
+      <circle
+         style="opacity:1;fill:#888888;fill-opacity:1;stroke:#888888;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6856"
+         cx="331.67728"
+         cy="48.147156"
+         r="0.97867" />
+      <circle
+         style="opacity:1;fill:#888888;fill-opacity:1;stroke:#888888;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="circle20290"
+         cx="332.15625"
+         cy="40.878124"
+         r="0.97867" />
+      <circle
+         style="opacity:1;fill:#888888;fill-opacity:1;stroke:#888888;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="circle20292"
+         cx="326.78125"
+         cy="97.5625"
+         r="0.97867" />
     </g>
     <g
        id="valve-piston-block">
@@ -1320,7 +1353,7 @@
       </g>
     </g>
     <g
-       id="g95809">
+       id="seal-ring-1">
       <rect
          style="fill:#121314;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect95432"
@@ -1644,17 +1677,18 @@
       <rect
          style="fill:url(#linearGradient7428);fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect7349"
-         width="27.922943"
-         height="2.4374976"
-         x="334.22931"
-         y="46.913586" />
+         width="27.621595"
+         height="2.3499982"
+         x="334.5307"
+         y="47.001083" />
       <path
          id="path8312"
          style="fill:#787676;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="M 331.67773 46.638672 C 330.79927 46.637572 330.16862 47.313251 330.16797 48.146484 C 330.16754 48.980481 330.8181 49.6358 331.67773 49.65625 C 332.53736 49.6767 333.55583 49.675781 334.47656 49.675781 L 334.47656 46.640625 C 333.54693 46.641461 332.55619 46.639805 331.67773 46.638672 z M 331.67773 47.455078 A 0.69268829 0.69268829 0 0 1 332.36914 48.146484 A 0.69268829 0.69268829 0 0 1 331.67773 48.839844 A 0.69268829 0.69268829 0 0 1 330.98438 48.146484 A 0.69268829 0.69268829 0 0 1 331.67773 47.455078 z " />
+         d="m 331.67773,46.638672 c -0.87846,-0.0011 -1.50911,0.674579 -1.50976,1.507812 -4.3e-4,0.833997 0.65013,1.489316 1.50976,1.509766 0.85963,0.02045 2.40843,0.01953 3.32916,0.01953 v -3.035156 c -0.92963,8.36e-4 -2.4507,-8.2e-4 -3.32916,-0.002 z m 0,0.816406 c 0.38156,7.03e-4 0.6907,0.309844 0.69141,0.691406 3.7e-4,0.382325 -0.30909,0.692655 -0.69141,0.69336 -0.38308,3.66e-4 -0.69372,-0.310278 -0.69335,-0.69336 7.1e-4,-0.382319 0.31103,-0.691772 0.69335,-0.691406 z"
+         sodipodi:nodetypes="scsccsccccc" />
     </g>
     <g
-       id="g8284"
+       id="seal-ring-2"
        transform="matrix(0.73978802,0,0,0.73978802,88.104731,-10.343634)">
       <rect
          style="fill:#121314;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -1679,5 +1713,9 @@
          x="345.15616"
          y="73.894394" />
     </g>
+    <path
+       id="path20736"
+       style="opacity:1;fill:#e7dede;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 326.94727 95.892578 C 326.89239 95.894462 326.83741 95.900275 326.78125 95.910156 C 319.68482 97.15865 312.46609 98.343815 305.32031 99.539062 C 304.1368 99.567872 303.33521 99.022309 302.28906 98.875 C 300.83877 98.874455 299.66264 100.04971 299.66211 101.5 C 299.66264 102.95029 300.83877 104.12555 302.28906 104.125 C 303.79181 104.1564 304.76346 102.60318 305.82422 102.48633 C 312.79718 101.80684 319.74 100.40383 326.78125 99.214844 C 327.68093 99.062925 328.43322 98.474911 328.43359 97.5625 C 328.43325 96.707115 327.77047 95.864314 326.94727 95.892578 z M 326.78125 96.828125 A 0.73388666 0.73388666 0 0 1 327.51562 97.5625 A 0.73388666 0.73388666 0 0 1 326.78125 98.296875 A 0.73388666 0.73388666 0 0 1 326.04688 97.5625 A 0.73388666 0.73388666 0 0 1 326.78125 96.828125 z M 302.28906 100.51758 A 0.98339832 0.98339832 0 0 1 303.27148 101.5 A 0.98339832 0.98339832 0 0 1 302.28906 102.48242 A 0.98339832 0.98339832 0 0 1 301.30469 101.5 A 0.98339832 0.98339832 0 0 1 302.28906 100.51758 z " />
   </g>
 </svg>

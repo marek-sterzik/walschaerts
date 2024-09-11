@@ -28,6 +28,11 @@ export default class
         this.runFlag = !this.runFlag
     }
 
+    togglePoints()
+    {
+        this.view.togglePoints()
+    }
+
     running()
     {
         return this.runFlag

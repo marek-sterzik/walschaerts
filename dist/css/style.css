@@ -32,7 +32,7 @@ div#statistics {
     text-align: center;
 }
 
-#toggle-button {
+.toggle-button {
     font-size: 2rem;
     background-color: '#c0c0c0';
 }

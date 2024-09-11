@@ -1,5 +1,15 @@
 const updatedComponents = [
     {component: "left-wheel", p1: "leftWheelCenter", p2: "leftWheelConnectPoint"},
+    {component: "main-wheel", p1: "mainWheelCenter", p2: "mainWheelConnectPoint"},
+    {component: "right-wheel", p1: "rightWheelCenter", p2: "rightWheelConnectPoint"},
+    {component: "coupling-rod", p1: "leftWheelConnectPoint", p2: "rightWheelConnectPoint"},
+    {component: "eccentric-crank", p1: "mainWheelConnectPoint", p2: "returnCrankConnectPoint"},
+    {component: "main-rod", p1: "mainWheelConnectPoint", p2: "crossheadConnectPoint"},
+    {component: "piston-crosshead", p1: "crossheadConnectPoint", p2: "pistonCenter"},
+    {component: "eccentric-rod", p1: "returnCrankConnectPoint", p2: "expansionLinkConnectPoint"},
+    {component: "expansion-link", p1: "expansionLinkConnectPoint", p2: "expansionLinkFixedPoint"},
+    {component: "reverse-arm", p1: "reverseArmA", p2: "reverseArmB"},
+    {component: "reach-rod", p1: "reverseArmB", p2: "reachRodEnd"},
 ]
 
 

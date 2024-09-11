@@ -27,26 +27,72 @@ export default class
         this.points = {}
         this.lines = {}
         this.arcs = {}
+        this.objectsCreated = false
+        this.pointsVisible = false
 
+        this.initialize()
+    }
+
+    togglePoints()
+    {
+        this.pointsVisible = !this.pointsVisible
+        this.initialize()
+    }
+
+    enablePoints()
+    {
+        this.pointsVisible = true
+        this.initialize()
+    }
+
+    disablePoints()
+    {
+        this.pointsVisible = false
         this.initialize()
     }
 
     initialize()
     {
-        for (var c in updatedCircles) {
-            this._putCircle(c, updatedCircles[c])
-        }
+        if (this.pointsVisible && !this.objectsCreated) {
+            for (var c in updatedCircles) {
+                this._putCircle(c, updatedCircles[c])
+            }
 
-        for (var p in updatedPoints) {
-            this._putPoint(p, updatedPoints[p])
-        }
+            for (var p in updatedPoints) {
+                this._putPoint(p, updatedPoints[p])
+            }
 
-        for (var l in updatedLines) {
-            this._putLine(l, updatedLines[l])
-        }
+            for (var l in updatedLines) {
+                this._putLine(l, updatedLines[l])
+            }
 
-        for (var a in updatedArcs) {
-            this._putArc(a, updatedArcs[a])
+            for (var a in updatedArcs) {
+                this._putArc(a, updatedArcs[a])
+            }
+            this.objectsCreated = true
+        }
+        if (this.objectsCreated) {
+            for (var c in this.circles) {
+                this._updateVisibility(this.circles[c])
+            }
+            for (var p in this.points) {
+                this._updateVisibility(this.points[p])
+            }
+            for (var l in this.lines) {
+                this._updateVisibility(this.lines[l])
+            }
+            for (var a in this.arcs) {
+                this._updateVisibility(this.arcs[a])
+            }
+        }
+    }
+
+    _updateVisibility(object)
+    {
+        if (this.pointsVisible) {
+            object.show()
+        } else {
+            object.hide()
         }
     }
 
@@ -139,14 +185,16 @@ export default class
 
     update()
     {
-        for (var p in updatedPoints) {
-            this._updatePoint(p)
-        }
-        for (var l in updatedLines) {
-            this._updateLine(l, updatedLines[l])
-        }
-        for (var a in updatedArcs) {
-            this._updateArc(a, updatedArcs[a])
+        if (this.pointsVisible && this.objectsCreated) {
+            for (var p in updatedPoints) {
+                this._updatePoint(p)
+            }
+            for (var l in updatedLines) {
+                this._updateLine(l, updatedLines[l])
+            }
+            for (var a in updatedArcs) {
+                this._updateArc(a, updatedArcs[a])
+            }
         }
         for (var c in updatedComponents) {
             this._updateComponent(updatedComponents[c])

@@ -5,7 +5,6 @@ var walschaertsValveGear
 
 $(window).on("load", () => {
         console.log("start")
-        setupCoords()
         walschaertsValveGear = new WalschaertsValveGear('#valvegear')
         $('#toggle-button').bind("click", function() {
             walschaertsValveGear.toggle()
@@ -30,6 +29,9 @@ $(window).on("load", () => {
         $('#expansion_set_minus_100').bind('click', function() {
             setExpansion('-100')
         })
+        $('#toggle-points').bind("click", function() {
+            walschaertsValveGear.togglePoints()
+        })
 })
 
 function setExpansion(value)
@@ -47,19 +49,3 @@ function setExpansion(value)
 }
 
 
-function setupCoords()
-{
-    var emptyText = "coordinates: out of the box"
-    $('#coords').html(emptyText)
-    $('#valvegear').bind("mousemove", function(ev){
-        var offset = $(this).offset()
-        var x
-        var y
-        x = ev.pageX - Math.floor(offset.left)
-        y = ev.pageY - Math.floor(offset.top)
-        $('#coords').html("coordinates: x=<strong>"+x+"</strong> y=<strong>"+y+"</strong>")
-    })
-    $('#valvegear').bind("mouseout", function(ev){
-        $('#coords').html(emptyText)
-    })
-}

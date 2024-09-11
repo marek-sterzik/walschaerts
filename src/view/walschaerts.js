@@ -37,12 +37,14 @@ export default class
     {
         this.pointsVisible = !this.pointsVisible
         this.initialize()
+        this.update()
     }
 
     enablePoints()
     {
         this.pointsVisible = true
         this.initialize()
+        this.update()
     }
 
     disablePoints()

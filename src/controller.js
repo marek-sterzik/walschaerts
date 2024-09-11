@@ -8,8 +8,8 @@ export default class
 {
     constructor(element)
     {
-        var svg = SVG().addTo(element).size('100%', '100%')
-        this.model = new ValveGearModel(0)
+        const svg = SVG($($("#valvegear-image")[0].contentDocument).find("svg")[0])
+        this.model = new ValveGearModel(svg)
         this.expansion = this.model.getExpansion()
         this.view = new ValveGearView(this.model, svg)
         this.statView = new StatsView(this.model, $('#statistics'))
@@ -62,7 +62,7 @@ export default class
     updateDistance()
     {
         if (this.runFlag) {
-            this.model.addDistance(30)
+            this.model.addDistance(15)
             return true
         }
         return false

@@ -1,14 +1,15 @@
 import {Angle} from "eeg2d"
-import {calibration, consts} from "./calibration.js"
+import createCalibrationData from "./calibration.js"
 import {distanceToAngle} from "./geometry.js"
 import {wheelCenterModel, wheelsModel, wheelLinkModel, pistonModel, expansionLinkModel, reverseArmModel, reachRodModel} from "./mechanics.js"
 
 export default class
 {
-    constructor()
+    constructor(svg)
     {
-        this.calibration = calibration
-        this.consts = consts
+        const calibrationData = createCalibrationData(svg)
+        this.calibration = calibrationData.calibration
+        this.consts = calibrationData.consts
         
         //points which will contain points of the valve gear model
         this.points = {}

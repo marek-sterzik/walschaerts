@@ -527,13 +527,13 @@
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-global="false"
+     inkscape:snap-global="true"
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="false"
-     inkscape:zoom="8.0000004"
-     inkscape:cx="168.62499"
-     inkscape:cy="0.68749997"
+     inkscape:zoom="16.000001"
+     inkscape:cx="131.68749"
+     inkscape:cy="24.218749"
      inkscape:window-width="1866"
      inkscape:window-height="1016"
      inkscape:window-x="0"
@@ -545,7 +545,18 @@
      fit-margin-top="1"
      fit-margin-left="1"
      fit-margin-right="1"
-     fit-margin-bottom="1" />
+     fit-margin-bottom="1"
+     inkscape:snap-page="true"
+     inkscape:lockguides="false">
+    <sodipodi:guide
+       position="112.31249,64.283974"
+       orientation="1,0"
+       id="guide1186" />
+    <sodipodi:guide
+       position="129.29961,86.148424"
+       orientation="0,-1"
+       id="guide1188" />
+  </sodipodi:namedview>
   <g
      inkscape:groupmode="layer"
      inkscape:label="Image"
@@ -1328,35 +1339,49 @@
     </g>
     <circle
        style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-7-4"
+       id="pt.expansion-link-bottom-end"
        cx="267.84601"
        cy="55.586498"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-7-4-6"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.expansion-link-top-end"
        cx="256.61969"
        cy="27.566845"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-93"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.reverse-arm-a"
        cx="250.125"
        cy="36"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-6"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.reach-rod-end-max"
+       cx="199.79297"
+       cy="33.318359"
+       r="0.43280602"
+       class="pt" />
+    <circle
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.reach-rod-end-min"
+       cx="182.80585"
+       cy="33.318359"
+       r="0.43280602"
+       class="pt" />
+    <circle
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.reverse-arm-fixed-point"
        cx="270.1875"
        cy="20.6875"
        r="0.43280602"
        class="pt" />
     <circle
        style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-06"
+       id="pt.reverse-arm-b"
        cx="278.875"
        cy="36"
        r="0.43280602"
@@ -1452,22 +1477,22 @@
          r="0.63650155" />
     </g>
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-18"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.expansion-link-fixed-point"
        cx="260.6203"
        cy="40.878124"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-7"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.expansion-link-radius-bar-connect-point"
        cx="266.84045"
        cy="54.020264"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-92"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.combination-lever-b"
        cx="326.78125"
        cy="97.5625"
        r="0.43280602"
@@ -1522,8 +1547,8 @@
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-361-0"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.main-wheel-rail"
        cx="188.61624"
        cy="116.7478"
        r="0.43280602"
@@ -1543,36 +1568,43 @@
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-361-5"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.small-wheel-2-rail"
        cx="420.47479"
        cy="116.7478"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-063"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.small-wheel-2-flange"
        cx="420.47479"
        cy="118.03398"
        r="0.43280602"
        class="pt" />
     <circle
        style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-59"
+       id="pt.page"
+       cx="440.22208"
+       cy="119.46679"
+       r="0.43280602"
+       class="pt " />
+    <circle
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.piston-center"
        cx="374.07767"
        cy="79.46875"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-22"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.valve-connect-point"
        cx="331.67728"
        cy="48.147156"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-8"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.combination-lever-a"
        cx="332.15625"
        cy="40.878124"
        r="0.43280602"
@@ -1652,29 +1684,29 @@
          sodipodi:nodetypes="scsccsccccc" />
     </g>
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-36"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.valve-b"
        cx="367.75177"
        cy="48.154938"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-12"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.valve-c"
        cx="391.8204"
        cy="48.154938"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-931"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.valve-d"
        cx="396.77936"
        cy="48.154938"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-94"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.valve-a"
        cx="362.79282"
        cy="48.154938"
        r="0.43280602"
@@ -1760,7 +1792,7 @@
        class="pt" />
     <circle
        style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-2"
+       id="pt.expansion-link-connect-point"
        cx="265.97263"
        cy="76.279144"
        r="0.43280602"
@@ -1773,15 +1805,15 @@
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-1"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.crosshead-connect-point"
        cx="302.28815"
        cy="79.46875"
        r="0.43280602"
        class="pt" />
     <circle
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="pt.left-wheel-center-7-27"
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.crosshead-union-link-connect-point"
        cx="302.28815"
        cy="101.5"
        r="0.43280602"

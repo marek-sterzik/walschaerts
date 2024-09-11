@@ -32,7 +32,7 @@ const wheelLinkModel = (calibration) => {
 
     model.addDistanceConstraints([
         ["returnCrankConnectPoint", "expansionLinkConnectPoint"],
-        ["expansionLinkConnectPoint", "expansionLinkFixed"],
+        ["expansionLinkConnectPoint", "expansionLinkFixedPoint"],
         ["mainWheelConnectPoint", "crossheadConnectPoint"]
     ])
 
@@ -41,16 +41,16 @@ const wheelLinkModel = (calibration) => {
         ['pistonCenter', pistonMoveDirection]
     ])
 
-    model.addFixedPointConstraints(['expansionLinkFixed'])
+    model.addFixedPointConstraints(['expansionLinkFixedPoint'])
 
     model.addInputs(['returnCrankConnectPoint', 'mainWheelConnectPoint'])
 
     model.addOutputs([
-        'expansionLinkFixed',
+        'expansionLinkFixedPoint',
         'expansionLinkConnectPoint',
         'crossheadConnectPoint',
         'pistonCenter',
-        'pistonUnionLinkConnectPoint',
+        'crossheadUnionLinkConnectPoint',
     ])
     return model
 }
@@ -59,7 +59,7 @@ const pistonModel = (calibration) => {
     const model = new TranslationMechanics(calibration)
 
     model.setInput('crossheadConnectPoint')
-    model.setOutputs(['pistonCenter', 'pistonUnionLinkConnectPoint'])
+    model.setOutputs(['pistonCenter', 'crossheadUnionLinkConnectPoint'])
 
     return model
 }
@@ -67,33 +67,33 @@ const pistonModel = (calibration) => {
 const expansionLinkModel = (calibration) => {
     const model = new WheelModel(calibration)
 
-    model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixed",
+    model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixedPoint",
                               ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"])
     
     return model
 }
 
+/*
 const reverseArmModel = (calibration) => {
     const model = new WheelModel(calibration)
     const maxAngle = 1
 
-    model.addWheelWithLinearAngleCompensation("expansion", Angle.rad(-maxAngle/2), Angle.rad(maxAngle/2), "reverseArmCenter",
-                                              ["reverseArmCenter", "reverseArmA", "reverseArmB"])
+    model.addWheelWithLinearAngleCompensation("expansion", Angle.rad(-maxAngle/2), Angle.rad(maxAngle/2), "reverseArmFixedPoint",
+                                              ["reverseArmFixedPoint", "reverseArmA", "reverseArmB"])
     
     return model
 }
-/*
+*/
 const reverseArmModel = (calibration) => {
     const model = new Mech2dModel(calibration)
     model.inputPoint("reachRodEnd", "reachRod")
     model.outputPoint("reverseArmA", "reverseArm")
     model.outputPoint("reverseArmB", "reverseArm")
-    model.outputPoint("reverseArmCenter", "reverseArm")
+    model.outputPoint("reverseArmFixedPoint", "reverseArm")
     model.link("reachRod", "reverseArmB", "reverseArm")
-    model.link("reverseArm", "reverseArmCenter", null)
+    model.link("reverseArm", "reverseArmFixedPoint", null)
     return model
 }
-*/
 
 const reachRodModel = (calibration) => {
     const model = new InterpolateModel(calibration)

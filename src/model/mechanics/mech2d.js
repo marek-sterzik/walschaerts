@@ -111,6 +111,23 @@ export default class
     {
         this.mechanics.tQuantum = 1
         this.mechanics.maxIterations = 100000
+        const iteration = this.mechanics.iteration
+        this.mechanics.iteration = () => {
+            this.beforeIteration()
+            const ret = iteration.call(this.mechanics)
+            this.afterIteration()
+            return ret
+        }
+    }
+
+    beforeIteration()
+    {
+        console.log("before iteration!!!")
+    }
+
+    afterIteration()
+    {
+        console.log("after iteration!!!")
     }
 
     copyOutput()

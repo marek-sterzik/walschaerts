@@ -64,7 +64,7 @@ export default class
     {
         var point = this.model(pointId)
         var group = this.svg.group()
-        var size = 7
+        var size = 3.5
         group.line(-size, -size, size, size).stroke(stroke)
         group.line(-size, size, size, -size).stroke(stroke)
         group.center(point.x, point.y)

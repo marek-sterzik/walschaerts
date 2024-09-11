@@ -3,32 +3,33 @@ import WalschaertsValveGear from "./controller.js"
 
 var walschaertsValveGear
 
-$(function () {
-    setupCoords()
-    walschaertsValveGear = new WalschaertsValveGear('#valvegear')
-    $('#toggle-button').bind("click", function() {
-        walschaertsValveGear.toggle()
-        if (walschaertsValveGear.running()) {
-            $(this).removeClass('play').addClass('pause')
-        } else {
-            $(this).removeClass('pause').addClass('play')
-        }
-    })
+$(window).on("load", () => {
+        console.log("start")
+        setupCoords()
+        walschaertsValveGear = new WalschaertsValveGear('#valvegear')
+        $('#toggle-button').bind("click", function() {
+            walschaertsValveGear.toggle()
+            if (walschaertsValveGear.running()) {
+                $(this).removeClass('play').addClass('pause')
+            } else {
+                $(this).removeClass('pause').addClass('play')
+            }
+        })
 
-    setExpansion("")
-    $('#expansion-control').bind('change', function() {
-        setExpansion($(this).val())
-    })
+        setExpansion("")
+        $('#expansion-control').bind('change', function() {
+            setExpansion($(this).val())
+        })
 
-    $('#expansion_set_100').bind('click', function() {
-        setExpansion('100')
-    })
-    $('#expansion_set_0').bind('click', function() {
-        setExpansion('0')
-    })
-    $('#expansion_set_minus_100').bind('click', function() {
-        setExpansion('-100')
-    })
+        $('#expansion_set_100').bind('click', function() {
+            setExpansion('100')
+        })
+        $('#expansion_set_0').bind('click', function() {
+            setExpansion('0')
+        })
+        $('#expansion_set_minus_100').bind('click', function() {
+            setExpansion('-100')
+        })
 })
 
 function setExpansion(value)

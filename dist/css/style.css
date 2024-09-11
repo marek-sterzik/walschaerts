@@ -2,16 +2,15 @@ h1 {
     text-align: center;
 }
 
-div#valvegear {
+div.valvegear {
     width: 700px;
     height: 222px;
     margin: auto;
     border: 1px solid black;
-    background-image: url('../img/static-light.png');
     position: relative;
 }
 
-div#valvegear svg {
+div.valvegear object {
     width: 100%;
     height: 100%;
 }

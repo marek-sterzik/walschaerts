@@ -14,12 +14,12 @@ export default class
         this.view = new ValveGearView(this.model, svg)
         this.statView = new StatsView(this.model, $('#statistics'))
         this.interval = null
-        this.speed = 30
+        this.speed = 7
         this.expansionChangingSpeed = 0.3
         this.expansionTolerance = 0.0001
         this.interval = setInterval(() => {
             this.stepFunction()
-        }, 100)
+        }, 40)
         this.runFlag = false
     }
     
@@ -62,7 +62,7 @@ export default class
     updateDistance()
     {
         if (this.runFlag) {
-            this.model.addDistance(15)
+            this.model.addDistance(this.speed)
             return true
         }
         return false

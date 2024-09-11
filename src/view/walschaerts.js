@@ -1,7 +1,9 @@
-import {Point} from "eeg2d"
+import {Point, Vector, Transformation} from "eeg2d"
 import {PathArray} from '@svgdotjs/svg.js'
 
-import {updatedPoints, updatedLines, updatedCircles, updatedArcs} from "./def.js"
+import {updatedComponents, updatedPoints, updatedLines, updatedCircles, updatedArcs} from "./def.js"
+
+import {setTransform} from "../util/transform.js"
 
 const dataAccessor = (model) => (id) => {
     var splitted = id.split(/\./, 2)
@@ -106,6 +108,22 @@ export default class
         this.points[pointId].center(point.x, point.y)
     }
 
+    _updateComponent(componentDef)
+    {
+        const p1Id = componentDef.p1
+        const p2Id = componentDef.p2
+        const components = this.svg.find("#" + componentDef.component)
+        if (components.length > 0) {
+            const component = components[0]
+            const a1 = this.model("calibration." + p1Id)
+            const b1 = this.model("calibration." + p2Id)
+            const a2 = this.model(p1Id)
+            const b2 = this.model(p2Id)
+            const transformation = Transformation.twoPoint(a1, b1, a2, b2)
+            setTransform(component, transformation)
+        }
+    }
+
     _updateLine(lineId, lineDef)
     {
         var p1 = this.model(lineDef.p1)
@@ -129,6 +147,9 @@ export default class
         }
         for (var a in updatedArcs) {
             this._updateArc(a, updatedArcs[a])
+        }
+        for (var c in updatedComponents) {
+            this._updateComponent(updatedComponents[c])
         }
     }
 }

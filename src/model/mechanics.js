@@ -73,7 +73,6 @@ const expansionLinkModel = (calibration) => {
     return model
 }
 
-/*
 const reverseArmModel = (calibration) => {
     const model = new WheelModel(calibration)
     const maxAngle = 1
@@ -83,7 +82,7 @@ const reverseArmModel = (calibration) => {
     
     return model
 }
-*/
+/*
 const reverseArmModel = (calibration) => {
     const model = new Mech2dModel(calibration)
     model.inputPoint("reachRodEnd", "reachRod")
@@ -94,6 +93,7 @@ const reverseArmModel = (calibration) => {
     model.link("reverseArm", "reverseArmFixedPoint", null)
     return model
 }
+*/
 
 const reachRodModel = (calibration) => {
     const model = new InterpolateModel(calibration)

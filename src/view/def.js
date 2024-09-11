@@ -1,3 +1,7 @@
+const updatedComponents = [
+    {component: "left-wheel", p1: "leftWheelCenter", p2: "leftWheelConnectPoint"},
+]
+
 
 const updatedPoints = {
     'leftWheelCenter': {color: 'red', width: 1},
@@ -62,4 +66,4 @@ const updatedArcs = {
     },
 }
 
-export {updatedPoints, updatedLines, updatedCircles, updatedArcs}
+export {updatedComponents, updatedPoints, updatedLines, updatedCircles, updatedArcs}

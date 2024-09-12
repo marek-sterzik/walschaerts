@@ -1,7 +1,12 @@
+#configuration
+/.config.env
+/.config.env.new
+/invoke
+
 /node_modules/
 /yarn-error.log
-/dist/walschaerts.js
-/dist/walschaerts.js.*
+/public/walschaerts.js
+/public/walschaerts.js.*
 
 .*.swp
 .swp

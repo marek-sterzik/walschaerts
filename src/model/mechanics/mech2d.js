@@ -1,4 +1,4 @@
-import {Mechanics, Body} from "mech2d"
+import {Mechanics, Body} from "../../mech2d/mech2d.js"
 import {Point} from "eeg2d"
 import {calcMassCenter} from "../geometry.js"
 
@@ -14,6 +14,11 @@ export default class
         this.links = []
         this.points = {}
         this.statistics = {}
+    }
+
+    factor()
+    {
+        return 0.5
     }
 
     inputPoint(point, body)
@@ -34,6 +39,9 @@ export default class
 
     link(body1, point1, body2, point2 = undefined)
     {
+        if (point2 === undefined || point2 === null) {
+            point2 = point1
+        }
         this.ensureBody(body1).ensureBody(body2)
         this.links.push({body1, point1, body2, point2})
     }
@@ -72,11 +80,9 @@ export default class
             var bodyName = this.outputs[pointName].bodyName
             if (bodyName !== null && bodyName !== undefined) {
                 var body = this.bodies[bodyName]
-                this.outputs[pointName].body = body
-                this.outputs[pointName].point = body.universalToBodyCoords(this.calibration[pointName])
+                this.outputs[pointName].point = body.getPoint(this.calibration[pointName])
             } else {
-                this.outputs[pointName].body = null
-                this.outputs[pointName].point = this.calibration[pointName]
+                this.outputs[pointName].point = () => this.calibration[pointName]
             }
         }
 
@@ -84,7 +90,7 @@ export default class
             var pointName = input.point
             var point = this.calibration[pointName]
             var body = this.bodies[input.body]
-            body.link(null, point, () => this.points[pointName])
+            body.link(point, point, 1)
         }
         this.inputs = null
 
@@ -93,52 +99,46 @@ export default class
             var body2 = link.body2
             if (body2 !== null && body2 !== undefined) {
                 body2 = this.bodies[body2]
+            } else {
+                body2 = null
             }
             var point1 = link.point1
             if (typeof point1 === 'string') {
                 point1 = this.calibration[point1]
+            } else {
+                throw "point bound to a body must be static"
             }
             var point2 = link.point2
             if (typeof point2 === 'string') {
                 point2 = this.calibration[point2]
+            } else {
+                if (body2 !== null) {
+                    throw "point bound to a body must be static"
+                }
             }
-            body1.link(body2, point1, point2)
+
+            if (body2 !== null) {
+                body1.link(point1, body2.getPoint(point2), this.factor())
+            } else {
+                body1.link(point1, point2, this.factor())
+            }
+
+            if (body2 !== null) {
+                body2.link(point2, point1, this.factor())
+            }
         }
         this.links = null
     }
 
     tuneMechanics()
     {
-        this.mechanics.tQuantum = 1
-        this.mechanics.maxIterations = 100000
-        const iteration = this.mechanics.iteration
-        this.mechanics.iteration = () => {
-            this.beforeIteration()
-            const ret = iteration.call(this.mechanics)
-            this.afterIteration()
-            return ret
-        }
-    }
-
-    beforeIteration()
-    {
-        console.log("before iteration!!!")
-    }
-
-    afterIteration()
-    {
-        console.log("after iteration!!!")
     }
 
     copyOutput()
     {
         for (var pointName in this.outputs) {
-            var body = this.outputs[pointName].body
             var point = this.outputs[pointName].point
-            if (body !== null && body !== undefined) {
-                point = body.bodyToUniversalCoords(point)
-            }
-            this.points[pointName] = point
+            this.points[pointName] = point()
         }
     }
 
@@ -147,7 +147,6 @@ export default class
         this.ensureMechanicsCreated()
         this.points = pointArray
         this.statistics.iterations = this.mechanics.solve()
-        console.log(this.mechanics)
         this.copyOutput()
     }
 }

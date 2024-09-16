@@ -4,7 +4,7 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "@svgdotjs/svg.js": "^3.2.4",
-    "eeg2d": "^0.3.0",
+    "eeg2d": "^0.3.1",
     "install": "^0.13.0",
     "jquery": "^3.7.1",
     "mech2d": "^0.0.4",

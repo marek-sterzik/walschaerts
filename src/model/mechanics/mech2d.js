@@ -127,6 +127,7 @@ export default class
                 body2.link(point2, point1, this.factor())
             }
         }
+        console.log(this.bodies, this.outputs)
         this.links = null
     }
 

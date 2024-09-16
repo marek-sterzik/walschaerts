@@ -168,6 +168,9 @@ export default class
             const a2 = this.model(p1Id)
             const b2 = this.model(p2Id)
             const transformation = Transformation.twoPoint(a1, b1, a2, b2)
+            if (componentDef.component === 'reach-rod') {
+                console.log(a1, b1, a2, b2, transformation)
+            }
             setTransform(component, transformation)
         }
     }

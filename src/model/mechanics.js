@@ -5,8 +5,9 @@ import TranslationMechanics from "./mechanics/translation.js"
 import ConstantMechanics from "./mechanics/constant.js"
 import InterpolateModel from "./mechanics/interpolate.js"
 import Mech2dModel from "./mechanics/mech2d.js"
+import {nearestPointOnLine} from "./geometry.js"
 
-const fixedPointsModel = (calibration) => {
+const fixedPoints = (calibration) => {
     const model = new ConstantMechanics(calibration)
     model.addPoints(["leftWheelCenter", "mainWheelCenter", "rightWheelCenter"])
     model.addPoints(["smallWheel1Center", "smallWheel2Center"])
@@ -14,7 +15,7 @@ const fixedPointsModel = (calibration) => {
     return model
 }
 
-const wheelsModel = (calibration) => {
+const wheels = (calibration) => {
     const model = new WheelModel(calibration)
 
     model.addWheel("mainWheelAngle", "leftWheelCenter", ["leftWheelCenter", "leftWheelConnectPoint"])
@@ -26,7 +27,7 @@ const wheelsModel = (calibration) => {
     return model
 }
 
-const wheelLinkModel = (calibration) => {
+const wheelLink = (calibration) => {
     const pistonMoveDirection = new Vector(1, 0)
 
     const model = new CalibratedMechanics(calibration)
@@ -54,20 +55,28 @@ const wheelLinkModel = (calibration) => {
 }
 
 /*
-const wheelLinkModel = (calibration) => {
+const wheelLink = (calibration) => {
+    const crossheadMovementPoint = calibration.crossheadConnectPoint
+    const crossheadMovement = Vector.create(1, 0)
     const model = new Mech2dModel(calibration)
+    model.massCenter(calibration.returnCrankConnectPoint.interpolate(calibration.crossheadConnectPoint), "radiusBar")
+    model.massCenter(calibration.returnCrankConnectPoint.interpolate(calibration.expansionLinkConnectPoint), "eccentricRod")
+    model.massCenter(calibration.expansionLinkConnectPoint.interpolate(calibration.expansionLinkFixedPoint), "expansionLink")
     model.inputPoint("returnCrankConnectPoint", "eccentricRod")
+    model.inputPoint("mainWheelConnectPoint", "mainRod")
     model.outputPoint("expansionLinkConnectPoint", "expansionLink")
     model.outputPoint("expansionLinkTopEnd", "expansionLink")
     model.outputPoint("expansionLinkBottomEnd", "expansionLink")
     model.outputPoint("expansionLinkRadiusCenter", "expansionLink")
+    model.outputPoint("crossheadConnectPoint", "mainRod")
     model.link("eccentricRod", "expansionLinkConnectPoint", "expansionLink")
     model.link("expansionLink", "expansionLinkFixedPoint", null)
+    model.link("mainRod", "crossheadConnectPoint", null, (pt) => nearestPointOnLine(pt, crossheadMovementPoint, crossheadMovement))
     return model
 }
 */
 
-const pistonModel = (calibration) => {
+const piston = (calibration) => {
     const model = new TranslationMechanics(calibration)
 
     model.setInput('crossheadConnectPoint')
@@ -76,7 +85,7 @@ const pistonModel = (calibration) => {
     return model
 }
 
-const expansionLinkModel = (calibration) => {
+const expansionLink = (calibration) => {
     const model = new WheelModel(calibration)
 
     model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixedPoint",
@@ -85,7 +94,7 @@ const expansionLinkModel = (calibration) => {
     return model
 }
 
-const reverseArmModel = (calibration) => {
+const reverseArm = (calibration) => {
     const model = new Mech2dModel(calibration)
     model.inputPoint("reachRodEnd", "reachRod")
     model.outputPoint("reverseArmA", "reverseArm")
@@ -95,18 +104,13 @@ const reverseArmModel = (calibration) => {
     return model
 }
 
-const reachRodModel = (calibration) => {
+const reachRod = (calibration) => {
     const model = new InterpolateModel(calibration)
     model.addInterpolation("reachRodEndMin", "reachRodEndMax", "reachRodEnd", (params) => (params.expansion + 1) / 2)
     return model
 }
 
-const nearestPointOnLine = (point, linePoint, lineVector) => {
-    const ortho = lineVector.rot(Angle.right()).normalize()
-    return point.addVector(ortho.mul(point.vectorTo(linePoint).mul(ortho)))
-}
-
-const valveModel = (calibration) => {
+const valve = (calibration) => {
     const valveMovement = Vector.create(1, 0)
     const valveMovementPoint = calibration.valveConnectPoint
     const model = new Mech2dModel(calibration)
@@ -128,7 +132,7 @@ const valveModel = (calibration) => {
     return model
 }
 
-const valveMovementModel = (calibration) => {
+const valveMovement = (calibration) => {
     const model = new TranslationMechanics(calibration)
 
     model.setInput('valveConnectPoint')
@@ -137,4 +141,4 @@ const valveMovementModel = (calibration) => {
     return model
 }
 
-export {fixedPointsModel, wheelsModel, wheelLinkModel, pistonModel, expansionLinkModel, reverseArmModel, reachRodModel, valveModel, valveMovementModel}
+export default {fixedPoints, wheels, wheelLink, piston, expansionLink, reverseArm, reachRod, valve, valveMovement}

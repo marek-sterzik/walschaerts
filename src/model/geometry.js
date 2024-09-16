@@ -86,4 +86,9 @@ const calcMassCenter = (points, defaultMassCenter = null) => {
     return new Point(x/n, y/n)
 }
 
-export {circleCenterFrom3Points, lineCircleIntersections, distanceToAngle, calcMassCenter}
+const nearestPointOnLine = (point, linePoint, lineVector) => {
+    const ortho = lineVector.rot(Angle.right()).normalize()
+    return point.addVector(ortho.mul(point.vectorTo(linePoint).mul(ortho)))
+}
+
+export {circleCenterFrom3Points, lineCircleIntersections, distanceToAngle, calcMassCenter, nearestPointOnLine}

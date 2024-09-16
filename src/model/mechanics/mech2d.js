@@ -16,9 +16,9 @@ export default class
         this.statistics = {}
     }
 
-    factor()
+    factor(interBody = true)
     {
-        return 0.5
+        return interBody ? 1.5 : 1
     }
 
     inputPoint(point, body)
@@ -90,7 +90,7 @@ export default class
             var pointName = input.point
             var point = this.calibration[pointName]
             var body = this.bodies[input.body]
-            body.link(point, point, 1)
+            body.link(point, this.getPoint(pointName), this.factor(false))
         }
         this.inputs = null
 
@@ -118,20 +118,26 @@ export default class
             }
 
             if (body2 !== null) {
-                body1.link(point1, body2.getPoint(point2), this.factor())
+                body1.link(point1, body2.getPoint(point2), this.factor(true))
             } else {
-                body1.link(point1, point2, this.factor())
+                body1.link(point1, point2, this.factor(false))
             }
 
             if (body2 !== null) {
-                body2.link(point2, point1, this.factor())
+                body2.link(point2, body1.getPoint(point1), this.factor(true))
             }
         }
         this.links = null
     }
 
+    getPoint(name)
+    {
+        return () => this.points[name]
+    }
+
     tuneMechanics()
     {
+        this.mechanics.immediateCommit = true
     }
 
     copyOutput()

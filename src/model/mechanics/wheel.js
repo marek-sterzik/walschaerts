@@ -26,13 +26,6 @@ export default class
         }, wheelCenter, wheelPoints)
     }
 
-    addWheelWithLinearAngleCompensation(angleParam, angleMultiplier, angleOffset, wheelCenter, wheelPoints)
-    {
-        this._addWheel(function(pointArray, paramsArray, wheelCenter) {
-            return angleMultiplier.mul(paramsArray[angleParam]).add(angleOffset)
-        }, wheelCenter, wheelPoints)
-    }
-
     _addWheel(angleCallback, wheelCenter, wheelPoints)
     {
         var wp = []

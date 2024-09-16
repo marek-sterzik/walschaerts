@@ -18,7 +18,7 @@ export default class
 
     factor(interBody = true)
     {
-        return interBody ? 1.5 : 1
+        return interBody ? 1.2 : 1.2
     }
 
     inputPoint(point, body)
@@ -26,6 +26,12 @@ export default class
         this.ensureBody(body)
         this.bodies[body].points.push(point)
         this.inputs.push({point, body})
+    }
+
+    massCenter(point, body)
+    {
+        this.ensureBody(body)
+        this.bodies[body].massCenter = point
     }
 
     outputPoint(point, body)
@@ -55,7 +61,7 @@ export default class
             return this
         }
         if (!(body in this.bodies)) {
-            this.bodies[body] = {points: []}
+            this.bodies[body] = {points: [], massCenter: null}
         }
         return this
     }
@@ -67,8 +73,12 @@ export default class
         }
         for (var bodyName in this.bodies) {
             var bodyDescriptor = this.bodies[bodyName]
-            var points = bodyDescriptor.points.map((name) => this.calibration[name])
-            this.bodies[bodyName] = new Body(calcMassCenter(points, Point.origin()))
+            var massCenter = bodyDescriptor.massCenter
+            if (massCenter === null) {
+                var points = bodyDescriptor.points.map((name) => this.calibration[name])
+                massCenter = calcMassCenter(points, Point.origin())
+            }
+            this.bodies[bodyName] = new Body(massCenter)
         }
         this.mechanics = new Mechanics()
         this.tuneMechanics()

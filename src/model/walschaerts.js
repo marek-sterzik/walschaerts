@@ -1,7 +1,7 @@
 import {Angle} from "eeg2d"
 import createCalibrationData from "./calibration.js"
 import {distanceToAngle} from "./geometry.js"
-import {wheelCenterModel, wheelsModel, wheelLinkModel, pistonModel, expansionLinkModel, reverseArmModel, reachRodModel} from "./mechanics.js"
+import {fixedPointsModel, wheelsModel, wheelLinkModel, pistonModel, expansionLinkModel, reverseArmModel, reachRodModel, valveModel, valveMovementModel} from "./mechanics.js"
 
 export default class
 {
@@ -29,13 +29,15 @@ export default class
         this.averages = {}
         this.averageCycles = 10
 
-        this.addModel("wheelCenters", wheelCenterModel)
+        this.addModel("fixedPoints", fixedPointsModel)
         this.addModel("wheels", wheelsModel)
         this.addModel("wheelLink", wheelLinkModel)
         this.addModel("piston", pistonModel)
         this.addModel("expansionLink", expansionLinkModel)
         this.addModel("reachRod", reachRodModel)
         this.addModel("reverseArm", reverseArmModel)
+        this.addModel("valveModel", valveModel)
+        this.addModel("valveMovementModel", valveMovementModel)
 
         this.recalc()
     }

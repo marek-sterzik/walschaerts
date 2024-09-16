@@ -10,8 +10,12 @@ const updatedComponents = [
     {component: "expansion-link", p1: "expansionLinkConnectPoint", p2: "expansionLinkFixedPoint"},
     {component: "reverse-arm", p1: "reverseArmA", p2: "reverseArmB"},
     {component: "reach-rod", p1: "reverseArmB", p2: "reachRodEnd"},
+    {component: "lifting-line", p1: "reverseArmA", p2: "radiusBarA"},
+    {component: "radius-bar", p1: "radiusBarA", p2: "combinationLeverA"},
+    {component: "combination-lever", p1: "combinationLeverA", p2: "combinationLeverB"},
+    {component: "union-link", p1: "crossheadUnionLinkConnectPoint", p2: "combinationLeverB"},
+    {component: "valve-stem", p1: "valveConnectPoint", p2: "valveCenter"},
 ]
-
 
 const updatedPoints = {
     'leftWheelCenter': {color: 'red', width: 1},
@@ -35,11 +39,11 @@ const updatedPoints = {
     'reverseArmA': {color: 'orange', width: 1},
     'reverseArmB': {color: 'orange', width: 1},
     'reachRodEnd': {color: 'orange', width: 1},
-    'calibration.radiusBarA': {color: 'green', width: 1},
-    'calibration.combinationLeverA': {color: 'green', width: 1},
-    'calibration.combinationLeverB': {color: 'green', width: 1},
-    'calibration.valveCenter': {color: 'green', width: 1},
-    'calibration.valveConnectPoint': {color: 'green', width: 1},
+    'radiusBarA': {color: 'brown', width: 1},
+    'combinationLeverA': {color: 'brown', width: 1},
+    'combinationLeverB': {color: 'brown', width: 1},
+    'valveConnectPoint': {color: 'brown', width: 1},
+    'valveCenter': {color: 'yellow', width: 1},
     'calibration.expansionLinkRadiusRod': {color: 'green', width: 1},
     'calibration.reachRodEndMin': {color: 'green', width: 1},
     'calibration.reachRodEndMax': {color: 'green', width: 1},
@@ -56,6 +60,11 @@ const updatedLines = {
     "pistonRod": {"p1": "mainWheelConnectPoint", "p2": "crossheadConnectPoint", "stroke": {color: "magenta", width: 3}},
     "piston": {"p1": "crossheadConnectPoint", "p2": "pistonCenter", "stroke": {color: "magenta", width: 3}},
     "piston2": {"p1": "crossheadConnectPoint", "p2": "crossheadUnionLinkConnectPoint", "stroke": {color: "magenta", width: 2}},
+    "liftingLine": {"p1": "reverseArmA", "p2": "radiusBarA", "stroke": {color: "brown", width: 2}},
+    "radiusBar": {"p1": "radiusBarA", "p2": "combinationLeverA", "stroke": {color: "brown", width: 2}},
+    "combinationLever": {"p1": "combinationLeverA", "p2": "combinationLeverB", "stroke": {color: "brown", width: 2}},
+    "unionLink": {"p1": "crossheadUnionLinkConnectPoint", "p2": "combinationLeverB", "stroke": {color: "brown", width: 2}},
+    "valve": {"p1": "valveConnectPoint", "p2": "valveCenter", "stroke": {color: "yellow", width: 2}},
 }
 
 const updatedCircles = {

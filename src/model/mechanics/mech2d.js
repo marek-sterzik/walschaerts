@@ -2,6 +2,7 @@ import {Mechanics, Body} from "../../mech2d/mech2d.js"
 import {Point} from "eeg2d"
 import {calcMassCenter} from "../geometry.js"
 
+const createPointGetter = (mechanics) => (pointName) => mechanics.points[pointName]
 export default class
 {
     constructor(calibration)
@@ -116,15 +117,18 @@ export default class
             if (typeof point1 === 'string') {
                 point1 = this.calibration[point1]
             } else {
-                throw "point bound to a body must be static"
+                throw "point linked with a body must be static"
             }
             var point2 = link.point2
             if (typeof point2 === 'string') {
                 point2 = this.calibration[point2]
             } else {
                 if (body2 !== null) {
-                    throw "point bound to a body must be static"
+                    throw "point linked with a body must be static"
                 }
+                const getPoint = createPointGetter(this)
+                const pointCallback = point2
+                point2 = (pt) => pointCallback(pt, getPoint)
             }
 
             if (body2 !== null) {
@@ -140,6 +144,7 @@ export default class
         this.links = null
     }
 
+
     getPoint(name)
     {
         return () => this.points[name]
@@ -148,6 +153,7 @@ export default class
     tuneMechanics()
     {
         this.mechanics.immediateCommit = true
+        this.mechanics.maxIterations = 1000
     }
 
     copyOutput()

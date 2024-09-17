@@ -44,7 +44,7 @@ const updatedPoints = {
     'combinationLeverB': {color: 'brown', width: 1},
     'valveConnectPoint': {color: 'brown', width: 1},
     'valveCenter': {color: 'yellow', width: 1},
-    'calibration.expansionLinkRadiusRod': {color: 'green', width: 1},
+    'expansionLinkRadiusBarConnectPoint': {color: 'brown', width: 2},
     'calibration.reachRodEndMin': {color: 'green', width: 1},
     'calibration.reachRodEndMax': {color: 'green', width: 1},
 }

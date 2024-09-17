@@ -91,4 +91,30 @@ const nearestPointOnLine = (point, linePoint, lineVector) => {
     return point.addVector(ortho.mul(point.vectorTo(linePoint).mul(ortho)))
 }
 
-export {circleCenterFrom3Points, lineCircleIntersections, distanceToAngle, calcMassCenter, nearestPointOnLine}
+const nearestPointOnArc = (point, arcCenter, arcStart, arcEnd) => {
+    if (arcStart instanceof Point) {
+        arcStart = arcCenter.vectorTo(arcStart)
+    }
+    if (arcEnd instanceof Point) {
+        arcEnd = arcCenter.vectorTo(arcEnd)
+    }
+    if (point instanceof Point) {
+        point = arcCenter.vectorTo(point)
+    }
+    if (point.mul(arcStart.rot()) >= 0 && point.mul(arcEnd.rot()) <= 0) {
+        if (!point.isZero()) {
+            return arcCenter.add(point.mul(arcStart.size()/point.size()))
+        } else {
+            return arcCenter.add(arcStart)
+        }
+    } else {
+        arcEnd = arcEnd.mul(arcStart.size()/arcEnd.size())
+        if (arcStart.sub(point).sizeSquare() >= arcEnd.sub(point).sizeSquare()) {
+            return arcCenter.add(arcEnd)
+        } else {
+            return arcCenter.add(arcStart)
+        }
+    }
+}
+
+export {circleCenterFrom3Points, lineCircleIntersections, distanceToAngle, calcMassCenter, nearestPointOnLine, nearestPointOnArc}

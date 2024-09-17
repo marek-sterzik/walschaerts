@@ -531,9 +531,9 @@
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="false"
-     inkscape:zoom="1.9158196"
-     inkscape:cx="145.62958"
-     inkscape:cy="48.282208"
+     inkscape:zoom="28.994138"
+     inkscape:cx="121.78324"
+     inkscape:cy="30.644126"
      inkscape:window-width="1866"
      inkscape:window-height="1016"
      inkscape:window-x="0"
@@ -549,13 +549,13 @@
      inkscape:snap-page="true"
      inkscape:lockguides="false">
     <sodipodi:guide
-       position="112.31249,64.283974"
-       orientation="1,0"
-       id="guide1186" />
-    <sodipodi:guide
        position="129.29961,86.148424"
        orientation="0,-1"
        id="guide1188" />
+    <sodipodi:guide
+       position="109.36693,85.456358"
+       orientation="1,0"
+       id="guide1484" />
   </sodipodi:namedview>
   <g
      inkscape:groupmode="layer"
@@ -1368,7 +1368,7 @@
     <circle
        style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="pt.reach-rod-end-min"
-       cx="182.80585"
+       cx="179.86029"
        cy="33.318359"
        r="0.43280602"
        class="pt" />

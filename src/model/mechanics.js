@@ -6,7 +6,8 @@ import ConstantMechanics from "./mechanics/constant.js"
 import InterpolateModel from "./mechanics/interpolate.js"
 import UnionModel from "./mechanics/union.js"
 import Mech2dModel from "./mechanics/mech2d.js"
-import {nearestPointOnLine} from "./geometry.js"
+import CallbackModel from "./mechanics/callback.js"
+import {nearestPointOnLine, nearestPointOnArc} from "./geometry.js"
 
 const fixedPoints = (calibration) => {
     const model = new ConstantMechanics(calibration)
@@ -113,7 +114,8 @@ const valve = (calibration) => {
     const valveMovement = Vector.create(1, 0)
     const valveMovementPoint = calibration.valveConnectPoint
     const model = new Mech2dModel(calibration)
-    model.massCenter(calibration.radiusBarA.interpolate(calibration.combinationLeverA), "radiusBar")
+    //model.massCenter(calibration.radiusBarA.interpolate(calibration.combinationLeverA), "radiusBar")
+    model.massCenter(calibration.expansionLinkRadiusBarConnectPoint, "radiusBar")
     model.massCenter(calibration.combinationLeverA.interpolate(calibration.combinationLeverB), "combinationLever")
     model.massCenter(calibration.reverseArmA.interpolate(calibration.radiusBarA), "liftingLine")
     model.massCenter(calibration.crossheadUnionLinkConnectPoint.interpolate(calibration.combinationLeverB), "unionLink")
@@ -123,11 +125,19 @@ const valve = (calibration) => {
     model.link("radiusBar", "combinationLeverA", "combinationLever")
     model.link("combinationLever", "combinationLeverB", "unionLink")
     model.link("combinationLever", "valveConnectPoint", null, (pt) => nearestPointOnLine(pt, valveMovementPoint, valveMovement))
+    model.link("radiusBar", "expansionLinkRadiusBarConnectPoint", null, (pt, getPoint) => nearestPointOnArc(
+        pt,
+        getPoint("expansionLinkRadiusCenter"),
+        getPoint("expansionLinkBottomEnd"),
+        getPoint("expansionLinkTopEnd")
+    ))
         
     model.outputPoint("radiusBarA", "liftingLine")
     model.outputPoint("combinationLeverA", "combinationLever")
     model.outputPoint("combinationLeverB", "combinationLever")
     model.outputPoint("valveConnectPoint", "combinationLever")
+    model.outputPoint("expansionLinkRadiusBarConnectPoint", "radiusBar")
+
     return model
 }
 

@@ -33,7 +33,6 @@ export default class
         this.addModel("wheels", Models.wheels)
         this.addModel("wheelLink", Models.wheelLink)
         this.addModel("piston", Models.piston)
-        this.addModel("expansionLink", Models.expansionLink)
         this.addModel("reachRod", Models.reachRod)
         this.addModel("reverseArm", Models.reverseArm)
         this.addModel("valveModel", Models.valve)

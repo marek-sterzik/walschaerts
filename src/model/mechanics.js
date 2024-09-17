@@ -4,6 +4,7 @@ import CalibratedMechanics from "./mechanics/calibrated.js"
 import TranslationMechanics from "./mechanics/translation.js"
 import ConstantMechanics from "./mechanics/constant.js"
 import InterpolateModel from "./mechanics/interpolate.js"
+import UnionModel from "./mechanics/union.js"
 import Mech2dModel from "./mechanics/mech2d.js"
 import {nearestPointOnLine} from "./geometry.js"
 
@@ -27,34 +28,41 @@ const wheels = (calibration) => {
     return model
 }
 
+/*
 const wheelLink = (calibration) => {
     const pistonMoveDirection = new Vector(1, 0)
 
-    const model = new CalibratedMechanics(calibration)
+    const model1 = new CalibratedMechanics(calibration)
 
-    model.addDistanceConstraints([
+    model1.addDistanceConstraints([
         ["returnCrankConnectPoint", "expansionLinkConnectPoint"],
         ["expansionLinkConnectPoint", "expansionLinkFixedPoint"],
         ["mainWheelConnectPoint", "crossheadConnectPoint"]
     ])
 
-    model.addLineConstraints([
+    model1.addLineConstraints([
         ['crossheadConnectPoint', pistonMoveDirection],
         ['pistonCenter', pistonMoveDirection]
     ])
 
-    model.addFixedPointConstraints(['expansionLinkFixedPoint'])
+    model1.addFixedPointConstraints(['expansionLinkFixedPoint'])
 
-    model.addInputs(['returnCrankConnectPoint', 'mainWheelConnectPoint'])
+    model1.addInputs(['returnCrankConnectPoint', 'mainWheelConnectPoint'])
 
-    model.addOutputs([
+    model1.addOutputs([
         'expansionLinkConnectPoint',
         'crossheadConnectPoint',
     ])
-    return model
-}
 
-/*
+    const model2 = new WheelModel(calibration)
+
+    model2.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixedPoint",
+                              ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"])
+    
+    return new UnionModel([model1, model2])
+}
+*/
+
 const wheelLink = (calibration) => {
     const crossheadMovementPoint = calibration.crossheadConnectPoint
     const crossheadMovement = Vector.create(1, 0)
@@ -74,7 +82,7 @@ const wheelLink = (calibration) => {
     model.link("mainRod", "crossheadConnectPoint", null, (pt) => nearestPointOnLine(pt, crossheadMovementPoint, crossheadMovement))
     return model
 }
-*/
+
 
 const piston = (calibration) => {
     const model = new TranslationMechanics(calibration)
@@ -82,15 +90,6 @@ const piston = (calibration) => {
     model.setInput('crossheadConnectPoint')
     model.setOutputs(['pistonCenter', 'crossheadUnionLinkConnectPoint'])
 
-    return model
-}
-
-const expansionLink = (calibration) => {
-    const model = new WheelModel(calibration)
-
-    model.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixedPoint",
-                              ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"])
-    
     return model
 }
 
@@ -141,4 +140,4 @@ const valveMovement = (calibration) => {
     return model
 }
 
-export default {fixedPoints, wheels, wheelLink, piston, expansionLink, reverseArm, reachRod, valve, valveMovement}
+export default {fixedPoints, wheels, wheelLink, piston, reverseArm, reachRod, valve, valveMovement}

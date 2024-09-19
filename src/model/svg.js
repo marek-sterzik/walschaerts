@@ -10,13 +10,13 @@ const loadPointsFromSvg = (svg) => {
     const points = {}
 
     svg.find(".pt").each((pt) => {
-        pt.remove()
         const bbox = pt.bbox()
         const x = bbox.x + bbox.width/2
         const y = bbox.y + bbox.height/2
         const point = new Point(x, y)
         const name = toCamelCase(pt.id().replace(/^pt\./, ''))
         points[name] = getParentTransform(pt).transformPoint(point)
+        pt.remove()
     })
     Object.freeze(points)
     return points

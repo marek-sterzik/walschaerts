@@ -7,6 +7,7 @@ import InterpolateModel from "./mechanics/interpolate.js"
 import UnionModel from "./mechanics/union.js"
 import Mech2dModel from "./mechanics/mech2d.js"
 import CallbackModel from "./mechanics/callback.js"
+//import TempModel from "./temp.js"
 import {nearestPointOnLine, nearestPointOnArc} from "./geometry.js"
 
 const fixedPoints = (calibration) => {
@@ -149,5 +150,12 @@ const valveMovement = (calibration) => {
 
     return model
 }
+
+//const mainModel = (model, priv) => {
+//}
+
+//const temp = (calibration) => {
+//    return new TempModel(calibration, mainModel)
+//}
 
 export default {fixedPoints, wheels, wheelLink, piston, reverseArm, reachRod, valve, valveMovement}

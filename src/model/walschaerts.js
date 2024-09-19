@@ -29,6 +29,7 @@ export default class
         this.averages = {}
         this.averageCycles = 10
 
+        //this.addModel("temp", Models.temp)
         this.addModel("fixedPoints", Models.fixedPoints)
         this.addModel("wheels", Models.wheels)
         this.addModel("wheelLink", Models.wheelLink)

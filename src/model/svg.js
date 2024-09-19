@@ -10,7 +10,7 @@ const loadPointsFromSvg = (svg) => {
     const points = {}
 
     svg.find(".pt").each((pt) => {
-        pt.hide()
+        pt.remove()
         const bbox = pt.bbox()
         const x = bbox.x + bbox.width/2
         const y = bbox.y + bbox.height/2

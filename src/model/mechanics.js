@@ -1,12 +1,11 @@
 import {Vector} from "eeg2d"
-import {MovementMechanics, ConstantMechanics, NamedMechanics, WheelMechanics, ComposedMechanics, InterpolationMechanics} from "./mechanics/constant.js"
+import Components from "./components.js"
 import TempModel from "./temp.js"
 import {nearestPointOnLine, nearestPointOnArc} from "./geometry.js"
-import Mech2dMechanics from "./mechanics/mech2d_new.js"
 
-const valveMovement = MovementMechanics("valveConnectPoint", ["valveCenter"])
+const valveMovement = Components.Movement("valveConnectPoint", ["valveCenter"])
 
-const valve = Mech2dMechanics((builder, calibration) => {
+const valve = Components.Mech2d((builder, calibration) => {
     const valveMovement = Vector.create(1, 0)
     const valveMovementPoint = calibration("valveConnectPoint")
     //builder.massCenter(calibration("radiusBarA").interpolate(calibration("combinationLeverA")), "radiusBar")
@@ -34,9 +33,9 @@ const valve = Mech2dMechanics((builder, calibration) => {
     builder.outputPoint("expansionLinkRadiusBarConnectPoint", "radiusBar")
 })
 
-const reachRod = InterpolationMechanics("reachRodEndMin", "reachRodEndMax", "reachRodEnd", (model) => (model.param("expansion") + 1) / 2)
+const reachRod = Components.Interpolation("reachRodEndMin", "reachRodEndMax", "reachRodEnd", (model) => (model.param("expansion") + 1) / 2)
 
-const reverseArm = Mech2dMechanics((builder, calibration) => {
+const reverseArm = Components.Mech2d((builder, calibration) => {
     builder.inputPoint("reachRodEnd", "reachRod")
     builder.outputPoint("reverseArmA", "reverseArm")
     builder.outputPoint("reverseArmB", "reverseArm")
@@ -44,9 +43,9 @@ const reverseArm = Mech2dMechanics((builder, calibration) => {
     builder.link("reverseArm", "reverseArmFixedPoint", null)
 })
 
-const piston = MovementMechanics("crossheadConnectPoint", ["pistonCenter", "crossheadUnionLinkConnectPoint"])
+const piston = Components.Movement("crossheadConnectPoint", ["pistonCenter", "crossheadUnionLinkConnectPoint"])
 
-const wheelLink = Mech2dMechanics((builder, calibration) => {
+const wheelLink = Components.Mech2d((builder, calibration) => {
     const crossheadMovementPoint = calibration("crossheadConnectPoint")
     const crossheadMovement = Vector.create(1, 0)
     
@@ -66,23 +65,23 @@ const wheelLink = Mech2dMechanics((builder, calibration) => {
     builder.link("mainRod", "crossheadConnectPoint", null, (pt) => nearestPointOnLine(pt, crossheadMovementPoint, crossheadMovement))
 })
 
-const wheels = ComposedMechanics
-    .add(WheelMechanics("mainWheelAngle", "leftWheelCenter", ["leftWheelCenter", "leftWheelConnectPoint"]))
-    .add(WheelMechanics("mainWheelAngle", "mainWheelCenter", ["mainWheelCenter", "mainWheelConnectPoint", "returnCrankConnectPoint"]))
-    .add(WheelMechanics("mainWheelAngle", "rightWheelCenter", ["rightWheelCenter", "rightWheelConnectPoint"]))
-    .add(WheelMechanics("smallWheelAngle", "smallWheel1Center", ["smallWheel1Center"]))
-    .add(WheelMechanics("smallWheelAngle", "smallWheel2Center", ["smallWheel2Center"]))
+const wheels = Components.Compose
+    .add(Components.Wheel("mainWheelAngle", "leftWheelCenter", ["leftWheelCenter", "leftWheelConnectPoint"]))
+    .add(Components.Wheel("mainWheelAngle", "mainWheelCenter", ["mainWheelCenter", "mainWheelConnectPoint", "returnCrankConnectPoint"]))
+    .add(Components.Wheel("mainWheelAngle", "rightWheelCenter", ["rightWheelCenter", "rightWheelConnectPoint"]))
+    .add(Components.Wheel("smallWheelAngle", "smallWheel1Center", ["smallWheel1Center"]))
+    .add(Components.Wheel("smallWheelAngle", "smallWheel2Center", ["smallWheel2Center"]))
     .create(true)
 
 
-const fixedPoints = ConstantMechanics([
+const fixedPoints = Components.Constant([
     "leftWheelCenter", "mainWheelCenter", "rightWheelCenter",
     "smallWheel1Center", "smallWheel2Center",
     "expansionLinkFixedPoint", "reverseArmFixedPoint",
     "reachRodEndMin", "reachRodEndMax"
 ])
 
-const mainModel = ComposedMechanics
+const mainModel = Components.Compose
     .add(fixedPoints, "fixedPoints")
     .add(wheels, "wheels")
     .add(wheelLink, "wheelLink")
@@ -94,7 +93,7 @@ const mainModel = ComposedMechanics
     .create()
 
 const temp = (calibration) => {
-    return new TempModel(calibration, NamedMechanics("main", mainModel))
+    return new TempModel(calibration, Components.Name("main", mainModel))
 }
 
 export default {temp, valveMovement}

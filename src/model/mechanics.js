@@ -1,6 +1,5 @@
 import {Vector} from "eeg2d"
 import Components from "./components.js"
-import TempModel from "./temp.js"
 import {nearestPointOnLine, nearestPointOnArc} from "./geometry.js"
 
 const valveMovement = Components.Movement("valveConnectPoint", ["valveCenter"])
@@ -81,7 +80,7 @@ const fixedPoints = Components.Constant([
     "reachRodEndMin", "reachRodEndMax"
 ])
 
-const mainModel = Components.Compose
+const mainModel = Components.Name("main", Components.Compose
     .add(fixedPoints, "fixedPoints")
     .add(wheels, "wheels")
     .add(wheelLink, "wheelLink")
@@ -91,9 +90,6 @@ const mainModel = Components.Compose
     .add(valve, "valve")
     .add(valveMovement, "valveMovement")
     .create()
+)
 
-const temp = (calibration) => {
-    return new TempModel(calibration, Components.Name("main", mainModel))
-}
-
-export default {temp, valveMovement}
+export default mainModel

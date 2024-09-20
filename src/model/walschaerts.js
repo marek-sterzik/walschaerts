@@ -1,7 +1,35 @@
 import {Angle} from "eeg2d"
 import createCalibrationData from "./calibration.js"
 import {distanceToAngle} from "./geometry.js"
-import Models from "./mechanics.js"
+import walschaertsModel from "./mechanics.js"
+import Model from "./model.js"
+
+class TempModel
+{
+    constructor(calibration, mainModel)
+    {
+        this.model = new Model(calibration)
+        this.mainModel = mainModel
+        this.statistics = {}
+    }
+
+    solve(pointArray, paramsArray)
+    {
+        this.model.param("mainWheelAngle", paramsArray['mainWheelAngle'])
+        this.model.param("smallWheelAngle", paramsArray['smallWheelAngle'])
+        this.model.param("expansion", paramsArray['expansion'])
+        this.model.apply(this.mainModel)
+        this.statistics = this.model.allStats()
+        const points = this.model.allPoints()
+        for (var name in points) {
+            pointArray[name] = points[name]
+        }
+    }
+}
+
+const temp = (calibration) => {
+    return new TempModel(calibration, walschaertsModel)
+}
 
 export default class
 {
@@ -29,12 +57,7 @@ export default class
         this.averages = {}
         this.averageCycles = 10
 
-        this.addModel("temp", Models.temp)
-        //this.addModel("piston", Models.piston)
-        //this.addModel("reachRod", Models.reachRod)
-        //this.addModel("reverseArm", Models.reverseArm)
-        //this.addModel("valveModel", Models.valve)
-        //this.addModel("valveMovementModel", Models.valveMovement)
+        this.addModel("temp", temp)
 
         this.recalc()
     }

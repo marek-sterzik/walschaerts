@@ -169,5 +169,27 @@ export default class Model
         }
     }
 
+    universalGetter(allowMissing = false)
+    {
+        return (name) => {
+            const splitted = name.split(/\./, 2)
+            var group
+            if (splitted.length < 2) {
+                group = 'point'
+            } else {
+                group = splitted[0]
+                name = splitted[1]
+            }
+            if (group === 'calibration') {
+                group = "calib"
+            }
+            if (["calib", "point", "param", "stat"].includes(group)) {
+                return this[group].apply(this, [name, allowMissing ? Model.ALLOW_MISSING : undefined])
+            } else {
+                throw "trying to access invalid group"
+            }
+        }
+    }
+
     static ALLOW_MISSING = Object.freeze({})
 }

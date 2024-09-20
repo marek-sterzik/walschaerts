@@ -5,23 +5,11 @@ import {updatedComponents, updatedPoints, updatedLines, updatedCircles, updatedA
 
 import {setTransform} from "../util/transform.js"
 
-const dataAccessor = (model) => (id) => {
-    var splitted = id.split(/\./, 2)
-    var group
-    if (splitted.length < 2) {
-        group = 'points'
-    } else {
-        group = splitted[0]
-        id = splitted[1]
-    }
-    return model[group][id]
-}
-
 export default class
 {
     constructor(model, svg)
     {
-        this.model = dataAccessor(model)
+        this.model = model.data.universalGetter()
         this.svg = svg
         this.circles = {}
         this.points = {}

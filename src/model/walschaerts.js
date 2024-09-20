@@ -4,33 +4,6 @@ import {distanceToAngle} from "./geometry.js"
 import walschaertsModel from "./mechanics.js"
 import Model from "./model.js"
 
-class TempModel
-{
-    constructor(calibration, mainModel)
-    {
-        this.model = new Model(calibration)
-        this.mainModel = mainModel
-        this.statistics = {}
-    }
-
-    solve(pointArray, paramsArray)
-    {
-        this.model.param("mainWheelAngle", paramsArray['mainWheelAngle'])
-        this.model.param("smallWheelAngle", paramsArray['smallWheelAngle'])
-        this.model.param("expansion", paramsArray['expansion'])
-        this.model.apply(this.mainModel)
-        this.statistics = this.model.allStats()
-        const points = this.model.allPoints()
-        for (var name in points) {
-            pointArray[name] = points[name]
-        }
-    }
-}
-
-const temp = (calibration) => {
-    return new TempModel(calibration, walschaertsModel)
-}
-
 export default class
 {
     constructor(svg)
@@ -39,33 +12,24 @@ export default class
         this.calibration = calibrationData.calibration
         this.consts = calibrationData.consts
         
-        //points which will contain points of the valve gear model
-        this.points = {}
+        this.data = new Model(this.calibration)
 
-        //params contain other parameters of the valve gear model
-        this.params = {
-            "mainWheelAngle": Angle.zero(),
-            "smallWheelAngle": Angle.zero(),
-            "expansion": 1,
-        }
-
-        //the mechanic models itself
-        this.mechanicModels = []
+        this.data.param("mainWheelAngle", Angle.zero())
+        this.data.param("smallWheelAngle", Angle.zero())
+        this.data.param("expansion", 1)
 
         //statistics and averages
         this.statistics = []
         this.averages = {}
         this.averageCycles = 10
 
-        this.addModel("temp", temp)
-
         this.recalc()
     }
 
     addDistance(distance)
     {
-        this.params.mainWheelAngle = this.params.mainWheelAngle.add(distanceToAngle(distance, this.consts.mainWheelRadius)) 
-        this.params.smallWheelAngle = this.params.smallWheelAngle.add(distanceToAngle(distance, this.consts.smallWheelRadius))
+        this.data.param("mainWheelAngle", this.data.param("mainWheelAngle").add(distanceToAngle(distance, this.consts.mainWheelRadius)))
+        this.data.param("smallWheelAngle", this.data.param("smallWheelAngle").add(distanceToAngle(distance, this.consts.mainWheelRadius)))
         this.recalc()
     }
 
@@ -76,21 +40,13 @@ export default class
         } else if (expansion < -1) {
             expansion = -1
         }
-        this.params.expansion = expansion
+        this.data.param("expansion", expansion)
         this.recalc()
     }
 
     getExpansion()
     {
-        return this.params.expansion
-    }
-
-    addModel (name, model)
-    {
-        this.mechanicModels.push({
-            "name": name,
-            "model": model(this.calibration),
-        })
+        return this.data.param("expansion")
     }
 
     recalc()
@@ -107,26 +63,21 @@ export default class
             "value": 0,
         })
 
-        for (var i = 0; i < this.mechanicModels.length; i++) {
-            var model = this.mechanicModels[i].model
-            var modelName = this.mechanicModels[i].name
-            var lt0 = performance.now()
-            model.solve(this.points, this.params)
-            var lt1 = performance.now()
+        var lt0 = performance.now()
+        this.data.apply(walschaertsModel)
+        var lt1 = performance.now()
+        statistics.push({
+            "model": "model",
+            "param": "solveTime",
+            "value": lt1 - lt0
+        })
+        const modelStats = this.data.allStats()
+        for (var s in modelStats) {
             statistics.push({
-                "model": modelName,
-                "param": "solveTime",
-                "value": lt1 - lt0
+                "model": "model",
+                "param": s,
+                "value": modelStats[s],
             })
-            if ("statistics" in model) {
-                for (var s in model.statistics) {
-                    statistics.push({
-                        "model": modelName,
-                        "param": s,
-                        "value": model.statistics[s],
-                    })
-                }
-            }
         }
 
         this._recalcStatistics(statistics, t0)

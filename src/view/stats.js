@@ -55,7 +55,7 @@ export default class
 
     getRecordUnit(statRecord)
     {
-        if (statRecord.param == 'solveTime') {
+        if (statRecord.param == 'solveTime' || statRecord.param == 'totalTime') {
             return 'ms'
         } else {
             return ''

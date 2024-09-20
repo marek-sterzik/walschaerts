@@ -13,9 +13,9 @@ export default class
     {
         this.model.param("mainWheelAngle", paramsArray['mainWheelAngle'])
         this.model.param("smallWheelAngle", paramsArray['smallWheelAngle'])
+        this.model.param("expansion", paramsArray['expansion'])
         this.model.apply(this.mainModel)
         this.statistics = this.model.allStats()
-        console.log(this.statistics)
         const points = this.model.allPoints()
         for (var name in points) {
             pointArray[name] = points[name]

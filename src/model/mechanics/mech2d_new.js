@@ -2,19 +2,14 @@ import {Mechanics, Body} from "../../mech2d/mech2d.js"
 import {Point} from "eeg2d"
 import {calcMassCenter} from "../geometry.js"
 
-const createPointGetter = (mechanics) => (pointName) => mechanics.points[pointName]
-export default class
+class Mech2dBuilder
 {
-    constructor(calibration)
+    constructor()
     {
-        this.calibration = calibration
-        this.mechanics = null
         this.bodies = {}
         this.inputs = []
         this.outputs = {}
         this.links = []
-        this.points = {}
-        this.statistics = {}
     }
 
     factor(interBody = true)
@@ -27,12 +22,14 @@ export default class
         this.ensureBody(body)
         this.bodies[body].points.push(point)
         this.inputs.push({point, body})
+        return this
     }
 
     massCenter(point, body)
     {
         this.ensureBody(body)
         this.bodies[body].massCenter = point
+        return this
     }
 
     outputPoint(point, body)
@@ -42,6 +39,7 @@ export default class
             this.bodies[body].points.push(point)
         }
         this.outputs[point] = {bodyName: body}
+        return this
     }
 
     link(body1, point1, body2, point2 = undefined)
@@ -51,13 +49,11 @@ export default class
         }
         this.ensureBody(body1).ensureBody(body2)
         this.links.push({body1, point1, body2, point2})
+        return this
     }
 
     ensureBody(body)
     {
-        if (this.mechanics !== null) {
-            throw "cannot change already working model"
-        }
         if (body === null || body === undefined) {
             return this
         }
@@ -67,43 +63,40 @@ export default class
         return this
     }
 
-    ensureMechanicsCreated()
+    createMechanics(model)
     {
-        if (this.mechanics !== null) {
-            return
-        }
         for (var bodyName in this.bodies) {
             var bodyDescriptor = this.bodies[bodyName]
             var massCenter = bodyDescriptor.massCenter
             if (massCenter === null) {
-                var points = bodyDescriptor.points.map((name) => this.calibration[name])
+                var points = bodyDescriptor.points.map((name) => model.calib(name))
                 massCenter = calcMassCenter(points, Point.origin())
             }
             this.bodies[bodyName] = new Body(massCenter)
         }
-        this.mechanics = new Mechanics()
-        this.tuneMechanics()
+        const mechanics = new Mechanics()
+        this.tuneMechanics(mechanics)
         for (var body in this.bodies) {
-            this.mechanics.addBody(this.bodies[body])
+            mechanics.addBody(this.bodies[body])
         }
         
+        const outputs = {}
         for (var pointName in this.outputs) {
             var bodyName = this.outputs[pointName].bodyName
             if (bodyName !== null && bodyName !== undefined) {
                 var body = this.bodies[bodyName]
-                this.outputs[pointName].point = body.getPoint(this.calibration[pointName])
+                outputs[pointName] = body.getPoint(model.calib(pointName))
             } else {
-                this.outputs[pointName].point = () => this.calibration[pointName]
+                outputs[pointName] = model.calibGetter(pointName)
             }
         }
 
         for (var input of this.inputs) {
             var pointName = input.point
-            var point = this.calibration[pointName]
+            var point = model.calib(pointName)
             var body = this.bodies[input.body]
-            body.link(point, this.getPoint(pointName), this.factor(false))
+            body.link(point, model.pointGetter(pointName), this.factor(false))
         }
-        this.inputs = null
 
         for (var link of this.links) {
             var body1 = this.bodies[link.body1]
@@ -115,20 +108,19 @@ export default class
             }
             var point1 = link.point1
             if (typeof point1 === 'string') {
-                point1 = this.calibration[point1]
+                point1 = model.calib(point1)
             } else {
                 throw "point linked with a body must be static"
             }
             var point2 = link.point2
             if (typeof point2 === 'string') {
-                point2 = this.calibration[point2]
+                point2 = model.calib(point2)
             } else {
                 if (body2 !== null) {
                     throw "point linked with a body must be static"
                 }
-                const getPoint = createPointGetter(this)
                 const pointCallback = point2
-                point2 = (pt) => pointCallback(pt, getPoint)
+                point2 = (pt) => pointCallback(pt, model.allPointsGetter())
             }
 
             if (body2 !== null) {
@@ -141,34 +133,33 @@ export default class
                 body2.link(point2, body1.getPoint(point1), this.factor(true))
             }
         }
-        this.links = null
+        return [mechanics, outputs]
     }
 
 
-    getPoint(name)
+    tuneMechanics(mechanics)
     {
-        return () => this.points[name]
-    }
-
-    tuneMechanics()
-    {
-        this.mechanics.immediateCommit = true
-        this.mechanics.maxIterations = 1000
-    }
-
-    copyOutput()
-    {
-        for (var pointName in this.outputs) {
-            var point = this.outputs[pointName].point
-            this.points[pointName] = point()
-        }
-    }
-
-    solve(pointArray, paramsArray)
-    {
-        this.ensureMechanicsCreated()
-        this.points = pointArray
-        this.statistics.iterations = this.mechanics.solve()
-        this.copyOutput()
+        mechanics.immediateCommit = true
+        mechanics.maxIterations = 1000
     }
 }
+
+const Mech2dMechanics = (initialize) => (model, priv) => {
+    if (!("model" in priv)) {
+        const builder = new Mech2dBuilder()
+        initialize(builder, model.allCalibGetter());
+        [priv.mechanics, priv.outputs] = builder.createMechanics(model)
+    }
+
+    const iterations = priv.mechanics.solve()
+
+    model.stat("iterations", iterations)
+
+    for (var pointName in priv.outputs) {
+        const point = priv.outputs[pointName]
+        model.point(pointName, point())
+    }
+}
+
+export default Mech2dMechanics
+

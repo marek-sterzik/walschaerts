@@ -1,161 +1,100 @@
-import {Vector, Angle} from "eeg2d"
-import WheelModel from "./mechanics/wheel.js"
-import CalibratedMechanics from "./mechanics/calibrated.js"
-import TranslationMechanics from "./mechanics/translation.js"
-import ConstantMechanics from "./mechanics/constant.js"
-import InterpolateModel from "./mechanics/interpolate.js"
-import UnionModel from "./mechanics/union.js"
-import Mech2dModel from "./mechanics/mech2d.js"
-import CallbackModel from "./mechanics/callback.js"
-//import TempModel from "./temp.js"
+import {Vector} from "eeg2d"
+import {MovementMechanics, ConstantMechanics, NamedMechanics, WheelMechanics, ComposedMechanics, InterpolationMechanics} from "./mechanics/constant.js"
+import TempModel from "./temp.js"
 import {nearestPointOnLine, nearestPointOnArc} from "./geometry.js"
+import Mech2dMechanics from "./mechanics/mech2d_new.js"
 
-const fixedPoints = (calibration) => {
-    const model = new ConstantMechanics(calibration)
-    model.addPoints(["leftWheelCenter", "mainWheelCenter", "rightWheelCenter"])
-    model.addPoints(["smallWheel1Center", "smallWheel2Center"])
-    model.addPoints(["expansionLinkFixedPoint", "reverseArmFixedPoint"])
-    return model
-}
+const valveMovement = MovementMechanics("valveConnectPoint", ["valveCenter"])
 
-const wheels = (calibration) => {
-    const model = new WheelModel(calibration)
-
-    model.addWheel("mainWheelAngle", "leftWheelCenter", ["leftWheelCenter", "leftWheelConnectPoint"])
-    model.addWheel("mainWheelAngle", "mainWheelCenter", ["mainWheelCenter", "mainWheelConnectPoint", "returnCrankConnectPoint"])
-    model.addWheel("mainWheelAngle", "rightWheelCenter", ["rightWheelCenter", "rightWheelConnectPoint"])
-    model.addWheel("smallWheelAngle", "smallWheel1Center", ["smallWheel1Center"])
-    model.addWheel("smallWheelAngle", "smallWheel2Center", ["smallWheel2Center"])
-
-    return model
-}
-
-/*
-const wheelLink = (calibration) => {
-    const pistonMoveDirection = new Vector(1, 0)
-
-    const model1 = new CalibratedMechanics(calibration)
-
-    model1.addDistanceConstraints([
-        ["returnCrankConnectPoint", "expansionLinkConnectPoint"],
-        ["expansionLinkConnectPoint", "expansionLinkFixedPoint"],
-        ["mainWheelConnectPoint", "crossheadConnectPoint"]
-    ])
-
-    model1.addLineConstraints([
-        ['crossheadConnectPoint', pistonMoveDirection],
-        ['pistonCenter', pistonMoveDirection]
-    ])
-
-    model1.addFixedPointConstraints(['expansionLinkFixedPoint'])
-
-    model1.addInputs(['returnCrankConnectPoint', 'mainWheelConnectPoint'])
-
-    model1.addOutputs([
-        'expansionLinkConnectPoint',
-        'crossheadConnectPoint',
-    ])
-
-    const model2 = new WheelModel(calibration)
-
-    model2.addPointDrivenWheel("expansionLinkConnectPoint", "expansionLinkFixedPoint",
-                              ["expansionLinkTopEnd", "expansionLinkBottomEnd", "expansionLinkRadiusCenter"])
-    
-    return new UnionModel([model1, model2])
-}
-*/
-
-const wheelLink = (calibration) => {
-    const crossheadMovementPoint = calibration.crossheadConnectPoint
-    const crossheadMovement = Vector.create(1, 0)
-    const model = new Mech2dModel(calibration)
-    model.massCenter(calibration.returnCrankConnectPoint.interpolate(calibration.crossheadConnectPoint), "radiusBar")
-    model.massCenter(calibration.returnCrankConnectPoint.interpolate(calibration.expansionLinkConnectPoint), "eccentricRod")
-    model.massCenter(calibration.expansionLinkConnectPoint.interpolate(calibration.expansionLinkFixedPoint), "expansionLink")
-    model.inputPoint("returnCrankConnectPoint", "eccentricRod")
-    model.inputPoint("mainWheelConnectPoint", "mainRod")
-    model.outputPoint("expansionLinkConnectPoint", "expansionLink")
-    model.outputPoint("expansionLinkTopEnd", "expansionLink")
-    model.outputPoint("expansionLinkBottomEnd", "expansionLink")
-    model.outputPoint("expansionLinkRadiusCenter", "expansionLink")
-    model.outputPoint("crossheadConnectPoint", "mainRod")
-    model.link("eccentricRod", "expansionLinkConnectPoint", "expansionLink")
-    model.link("expansionLink", "expansionLinkFixedPoint", null)
-    model.link("mainRod", "crossheadConnectPoint", null, (pt) => nearestPointOnLine(pt, crossheadMovementPoint, crossheadMovement))
-    return model
-}
-
-
-const piston = (calibration) => {
-    const model = new TranslationMechanics(calibration)
-
-    model.setInput('crossheadConnectPoint')
-    model.setOutputs(['pistonCenter', 'crossheadUnionLinkConnectPoint'])
-
-    return model
-}
-
-const reverseArm = (calibration) => {
-    const model = new Mech2dModel(calibration)
-    model.inputPoint("reachRodEnd", "reachRod")
-    model.outputPoint("reverseArmA", "reverseArm")
-    model.outputPoint("reverseArmB", "reverseArm")
-    model.link("reachRod", "reverseArmB", "reverseArm")
-    model.link("reverseArm", "reverseArmFixedPoint", null)
-    return model
-}
-
-const reachRod = (calibration) => {
-    const model = new InterpolateModel(calibration)
-    model.addInterpolation("reachRodEndMin", "reachRodEndMax", "reachRodEnd", (params) => (params.expansion + 1) / 2)
-    return model
-}
-
-const valve = (calibration) => {
+const valve = Mech2dMechanics((builder, calibration) => {
     const valveMovement = Vector.create(1, 0)
-    const valveMovementPoint = calibration.valveConnectPoint
-    const model = new Mech2dModel(calibration)
-    //model.massCenter(calibration.radiusBarA.interpolate(calibration.combinationLeverA), "radiusBar")
-    model.massCenter(calibration.expansionLinkRadiusBarConnectPoint, "radiusBar")
-    model.massCenter(calibration.combinationLeverA.interpolate(calibration.combinationLeverB), "combinationLever")
-    model.massCenter(calibration.reverseArmA.interpolate(calibration.radiusBarA), "liftingLine")
-    model.massCenter(calibration.crossheadUnionLinkConnectPoint.interpolate(calibration.combinationLeverB), "unionLink")
-    model.inputPoint("reverseArmA", "liftingLine")
-    model.inputPoint("crossheadUnionLinkConnectPoint", "unionLink")
-    model.link("liftingLine", "radiusBarA", "radiusBar")
-    model.link("radiusBar", "combinationLeverA", "combinationLever")
-    model.link("combinationLever", "combinationLeverB", "unionLink")
-    model.link("combinationLever", "valveConnectPoint", null, (pt) => nearestPointOnLine(pt, valveMovementPoint, valveMovement))
-    model.link("radiusBar", "expansionLinkRadiusBarConnectPoint", null, (pt, getPoint) => nearestPointOnArc(
+    const valveMovementPoint = calibration("valveConnectPoint")
+    //builder.massCenter(calibration("radiusBarA").interpolate(calibration("combinationLeverA")), "radiusBar")
+    builder.massCenter(calibration("expansionLinkRadiusBarConnectPoint"), "radiusBar")
+    builder.massCenter(calibration("combinationLeverA").interpolate(calibration("combinationLeverB")), "combinationLever")
+    builder.massCenter(calibration("reverseArmA").interpolate(calibration("radiusBarA")), "liftingLine")
+    builder.massCenter(calibration("crossheadUnionLinkConnectPoint").interpolate(calibration("combinationLeverB")), "unionLink")
+    builder.inputPoint("reverseArmA", "liftingLine")
+    builder.inputPoint("crossheadUnionLinkConnectPoint", "unionLink")
+    builder.link("liftingLine", "radiusBarA", "radiusBar")
+    builder.link("radiusBar", "combinationLeverA", "combinationLever")
+    builder.link("combinationLever", "combinationLeverB", "unionLink")
+    builder.link("combinationLever", "valveConnectPoint", null, (pt) => nearestPointOnLine(pt, valveMovementPoint, valveMovement))
+    builder.link("radiusBar", "expansionLinkRadiusBarConnectPoint", null, (pt, getPoint) => nearestPointOnArc(
         pt,
         getPoint("expansionLinkRadiusCenter"),
         getPoint("expansionLinkBottomEnd"),
         getPoint("expansionLinkTopEnd")
     ))
         
-    model.outputPoint("radiusBarA", "liftingLine")
-    model.outputPoint("combinationLeverA", "combinationLever")
-    model.outputPoint("combinationLeverB", "combinationLever")
-    model.outputPoint("valveConnectPoint", "combinationLever")
-    model.outputPoint("expansionLinkRadiusBarConnectPoint", "radiusBar")
+    builder.outputPoint("radiusBarA", "liftingLine")
+    builder.outputPoint("combinationLeverA", "combinationLever")
+    builder.outputPoint("combinationLeverB", "combinationLever")
+    builder.outputPoint("valveConnectPoint", "combinationLever")
+    builder.outputPoint("expansionLinkRadiusBarConnectPoint", "radiusBar")
+})
 
-    return model
+const reachRod = InterpolationMechanics("reachRodEndMin", "reachRodEndMax", "reachRodEnd", (model) => (model.param("expansion") + 1) / 2)
+
+const reverseArm = Mech2dMechanics((builder, calibration) => {
+    builder.inputPoint("reachRodEnd", "reachRod")
+    builder.outputPoint("reverseArmA", "reverseArm")
+    builder.outputPoint("reverseArmB", "reverseArm")
+    builder.link("reachRod", "reverseArmB", "reverseArm")
+    builder.link("reverseArm", "reverseArmFixedPoint", null)
+})
+
+const piston = MovementMechanics("crossheadConnectPoint", ["pistonCenter", "crossheadUnionLinkConnectPoint"])
+
+const wheelLink = Mech2dMechanics((builder, calibration) => {
+    const crossheadMovementPoint = calibration("crossheadConnectPoint")
+    const crossheadMovement = Vector.create(1, 0)
+    
+    builder.massCenter(calibration("returnCrankConnectPoint").interpolate(calibration("crossheadConnectPoint")), "radiusBar")
+    builder.massCenter(calibration("returnCrankConnectPoint").interpolate(calibration("expansionLinkConnectPoint")), "eccentricRod")
+    builder.massCenter(calibration("expansionLinkConnectPoint").interpolate(calibration("expansionLinkFixedPoint")), "expansionLink")
+    
+    builder.inputPoint("returnCrankConnectPoint", "eccentricRod")
+    builder.inputPoint("mainWheelConnectPoint", "mainRod")
+    builder.outputPoint("expansionLinkConnectPoint", "expansionLink")
+    builder.outputPoint("expansionLinkTopEnd", "expansionLink")
+    builder.outputPoint("expansionLinkBottomEnd", "expansionLink")
+    builder.outputPoint("expansionLinkRadiusCenter", "expansionLink")
+    builder.outputPoint("crossheadConnectPoint", "mainRod")
+    builder.link("eccentricRod", "expansionLinkConnectPoint", "expansionLink")
+    builder.link("expansionLink", "expansionLinkFixedPoint", null)
+    builder.link("mainRod", "crossheadConnectPoint", null, (pt) => nearestPointOnLine(pt, crossheadMovementPoint, crossheadMovement))
+})
+
+const wheels = ComposedMechanics
+    .add(WheelMechanics("mainWheelAngle", "leftWheelCenter", ["leftWheelCenter", "leftWheelConnectPoint"]))
+    .add(WheelMechanics("mainWheelAngle", "mainWheelCenter", ["mainWheelCenter", "mainWheelConnectPoint", "returnCrankConnectPoint"]))
+    .add(WheelMechanics("mainWheelAngle", "rightWheelCenter", ["rightWheelCenter", "rightWheelConnectPoint"]))
+    .add(WheelMechanics("smallWheelAngle", "smallWheel1Center", ["smallWheel1Center"]))
+    .add(WheelMechanics("smallWheelAngle", "smallWheel2Center", ["smallWheel2Center"]))
+    .create(true)
+
+
+const fixedPoints = ConstantMechanics([
+    "leftWheelCenter", "mainWheelCenter", "rightWheelCenter",
+    "smallWheel1Center", "smallWheel2Center",
+    "expansionLinkFixedPoint", "reverseArmFixedPoint",
+    "reachRodEndMin", "reachRodEndMax"
+])
+
+const mainModel = ComposedMechanics
+    .add(fixedPoints, "fixedPoints")
+    .add(wheels, "wheels")
+    .add(wheelLink, "wheelLink")
+    .add(piston, "piston")
+    .add(reachRod, "reachRod")
+    .add(reverseArm, "reverseArm")
+    .add(valve, "valve")
+    .add(valveMovement, "valveMovement")
+    .create()
+
+const temp = (calibration) => {
+    return new TempModel(calibration, NamedMechanics("main", mainModel))
 }
 
-const valveMovement = (calibration) => {
-    const model = new TranslationMechanics(calibration)
-
-    model.setInput('valveConnectPoint')
-    model.setOutputs(['valveCenter'])
-
-    return model
-}
-
-//const mainModel = (model, priv) => {
-//}
-
-//const temp = (calibration) => {
-//    return new TempModel(calibration, mainModel)
-//}
-
-export default {fixedPoints, wheels, wheelLink, piston, reverseArm, reachRod, valve, valveMovement}
+export default {temp, valveMovement}

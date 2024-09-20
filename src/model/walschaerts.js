@@ -29,15 +29,12 @@ export default class
         this.averages = {}
         this.averageCycles = 10
 
-        //this.addModel("temp", Models.temp)
-        this.addModel("fixedPoints", Models.fixedPoints)
-        this.addModel("wheels", Models.wheels)
-        this.addModel("wheelLink", Models.wheelLink)
-        this.addModel("piston", Models.piston)
-        this.addModel("reachRod", Models.reachRod)
-        this.addModel("reverseArm", Models.reverseArm)
-        this.addModel("valveModel", Models.valve)
-        this.addModel("valveMovementModel", Models.valveMovement)
+        this.addModel("temp", Models.temp)
+        //this.addModel("piston", Models.piston)
+        //this.addModel("reachRod", Models.reachRod)
+        //this.addModel("reverseArm", Models.reverseArm)
+        //this.addModel("valveModel", Models.valve)
+        //this.addModel("valveMovementModel", Models.valveMovement)
 
         this.recalc()
     }

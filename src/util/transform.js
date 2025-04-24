@@ -38,7 +38,7 @@ const getTransformConfig = (svg) => {
 
 const setTransform = (svg, transformation) => {
     const tc = getTransformConfig(svg)
-    const finalTransform = tc.parentInv.compose(transformation.compose(tc.parent)).compose(tc.initial)
+    const finalTransform = tc.parentInv.compose(transformation.compose(tc.initial).compose(tc.parent))
     svg.attr("transform", finalTransform.toString())
 }
 

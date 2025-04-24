@@ -1,4 +1,5 @@
 import move from "./components/move.js"
+import rect from "./components/rect.js"
 import point from "./components/point.js"
 import line from "./components/line.js"
 import circle from "./components/circle.js"
@@ -21,6 +22,12 @@ const updatedComponents = [
     {cls: move, component: "combination-lever", p1: "combinationLeverA", p2: "combinationLeverB"},
     {cls: move, component: "union-link", p1: "crossheadUnionLinkConnectPoint", p2: "combinationLeverB"},
     {cls: move, component: "valve-stem", p1: "valveConnectPoint", p2: "valveCenter"},
+
+    {cls: move, component: "pressure-valve-middle", p1: "valveConnectPoint", p2: "valveCenter"},
+    {cls: rect, component: "pressure-valve-front", "edge": "left", point: "valveCenter"},
+    {cls: rect, component: "pressure-valve-back", "edge": "right", point: "valveCenter"},
+    {cls: rect, component: "pressure-piston-front", "edge": "left", point: "pistonCenter"},
+    {cls: rect, component: "pressure-piston-back", "edge": "right", point: "pistonCenter"},
 
     {cls: point, name: 'leftWheelCenter', stroke: {color: 'red', width: 1}},
     {cls: point, name: 'mainWheelCenter', stroke: {color: 'red', width: 1}},

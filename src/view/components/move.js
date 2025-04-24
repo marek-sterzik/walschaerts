@@ -5,8 +5,8 @@ export default new class
 {
     initialize(state)
     {
-        state.state.components = state.svg.find("#" + state.def.component)
-        
+        const components = state.svg.find("#" + state.def.component)
+        state.state.component = (components.length > 0) ? components[0] : null
     }
 
     normalizeDef(def)
@@ -26,14 +26,13 @@ export default new class
     {
         const p1Id = state.def.p1
         const p2Id = state.def.p2
-        if (state.state.components.length > 0) {
-            const component = state.state.components[0]
+        if (state.state.component !== null) {
             const a1 = state.model("calibration." + state.def.p1)
             const b1 = state.model("calibration." + state.def.p2)
             const a2 = state.model(state.def.p1)
             const b2 = state.model(state.def.p2)
             const transformation = Transformation.twoPoint(a1, b1, a2, b2)
-            setTransform(component, transformation)
+            setTransform(state.state.component, transformation)
         }
     }
 

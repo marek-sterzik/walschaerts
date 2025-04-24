@@ -186,7 +186,7 @@ export default class Model
             if (["calib", "point", "param", "stat"].includes(group)) {
                 return this[group].apply(this, [name, allowMissing ? Model.ALLOW_MISSING : undefined])
             } else {
-                throw "trying to access invalid group"
+                throw `trying to access invalid group ${group}`
             }
         }
     }

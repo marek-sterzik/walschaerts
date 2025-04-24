@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "`dirname "$0"/..`"
+cd "`dirname "$0"`/.."
 
 build="build"
 if [ "$1" = "watch" -o "$1" = "--watch" ]; then

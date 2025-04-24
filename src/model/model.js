@@ -180,7 +180,7 @@ export default class Model
                 group = splitted[0]
                 name = splitted[1]
             }
-            if (group === 'calibration') {
+            if (group === 'calibration' || group === 'consts') {
                 group = "calib"
             }
             if (["calib", "point", "param", "stat"].includes(group)) {

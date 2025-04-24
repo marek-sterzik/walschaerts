@@ -8,9 +8,7 @@ export default class
 {
     constructor(svg)
     {
-        const calibrationData = createCalibrationData(svg)
-        this.calibration = calibrationData.calibration
-        this.consts = calibrationData.consts
+        this.calibration = createCalibrationData(svg)
         
         this.data = new Model(this.calibration)
 
@@ -28,8 +26,8 @@ export default class
 
     addDistance(distance)
     {
-        this.data.param("mainWheelAngle", this.data.param("mainWheelAngle").add(distanceToAngle(distance, this.consts.mainWheelRadius)))
-        this.data.param("smallWheelAngle", this.data.param("smallWheelAngle").add(distanceToAngle(distance, this.consts.mainWheelRadius)))
+        this.data.param("mainWheelAngle", this.data.param("mainWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
+        this.data.param("smallWheelAngle", this.data.param("smallWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
         this.recalc()
     }
 

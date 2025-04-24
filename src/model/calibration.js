@@ -38,7 +38,7 @@ const createCalibrationData = (svg) => {
     calibration.valveConnectPoint = calibration.combinationLeverA.addVector(combinationLeverVector.mul(valveConnectPointRatio))
     calibration.reachRodEnd = calibration.reachRodEndMax
 
-    const ret = {calibration, consts}
+    const ret = {...calibration, ...consts}
     Object.freeze(calibration)
     Object.freeze(consts)
     Object.freeze(ret)

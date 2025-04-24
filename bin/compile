@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd "`dirname "$0"/..`"
+
+build="build"
+if [ "$1" = "watch" -o "$1" = "--watch" ]; then
+    build="watch"
+fi
+
+bin/docker dc run node npm run "$build"

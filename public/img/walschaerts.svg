@@ -531,15 +531,15 @@
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="false"
-     inkscape:zoom="8"
-     inkscape:cx="355.8125"
-     inkscape:cy="57.1875"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="130.4612"
+     inkscape:cy="44.812892"
      inkscape:window-width="1870"
      inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="valve-piston-block"
+     inkscape:current-layer="g8"
      inkscape:snap-object-midpoints="true"
      lock-margins="true"
      fit-margin-top="1"
@@ -1487,7 +1487,7 @@
     <g
        id="expansion-link-fixed"
        style="display:inline"
-       transform="translate(7.6416002,53.117519)">
+       transform="translate(-0.03517648,-0.01506351)">
       <path
          id="rect52975"
          style="opacity:1;fill:#aeaea7;fill-opacity:1;stroke:#121314;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round"

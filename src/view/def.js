@@ -4,6 +4,7 @@ import point from "./components/point.js"
 import line from "./components/line.js"
 import circle from "./components/circle.js"
 import arc from "./components/arc.js"
+import color from "./components/color.js"
 
 const updatedComponents = [
     {cls: move, component: "left-wheel", p1: "leftWheelCenter", p2: "leftWheelConnectPoint"},
@@ -28,6 +29,16 @@ const updatedComponents = [
     {cls: rect, component: "pressure-valve-back", "edge": "right", point: "valveCenter"},
     {cls: rect, component: "pressure-piston-front", "edge": "left", point: "pistonCenter"},
     {cls: rect, component: "pressure-piston-back", "edge": "right", point: "pistonCenter"},
+
+    {cls: color.rect, component: "pressure-valve-front", value: "param.pressureValveFront"},
+    {cls: color.rect, component: "pressure-valve-back", value: "param.pressureValveFront"},
+    {cls: color.rect, component: "pressure-valve-middle", value: "param.pressureValveMiddle"},
+    {cls: color.rect, component: "pressure-piston-front", value: "param.pressurePistonFront"},
+    {cls: color.rect, component: "pressure-piston-back", value: "param.pressurePistonBack"},
+    {cls: color.gradient, component: "gradient-pp-front-top", value: "param.pressurePPFrontTop"},
+    {cls: color.gradient, component: "gradient-pp-front-bottom", value: "param.pressurePistonFront"},
+    {cls: color.gradient, component: "gradient-pp-back-top", value: "param.pressurePPBackTop"},
+    {cls: color.gradient, component: "gradient-pp-back-bottom", value: "param.pressurePistonBack"},
 
     {cls: point, name: 'leftWheelCenter', stroke: {color: 'red', width: 1}},
     {cls: point, name: 'mainWheelCenter', stroke: {color: 'red', width: 1}},

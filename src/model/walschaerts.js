@@ -16,6 +16,13 @@ export default class
         this.data.param("smallWheelAngle", Angle.zero())
         this.data.param("expansion", 1)
 
+        this.data.param("pressureValveFront", 1)
+        this.data.param("pressureValveMiddle", -1)
+        this.data.param("pressurePistonFront", 1)
+        this.data.param("pressurePistonBack", -1)
+        this.data.param("pressurePPFrontTop", 1)
+        this.data.param("pressurePPBackTop", -1)
+
         //statistics and averages
         this.statistics = []
         this.averages = {}

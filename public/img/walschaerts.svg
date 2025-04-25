@@ -21,27 +21,27 @@
      id="defs6">
     <linearGradient
        inkscape:collect="always"
-       id="linearGradient2901">
+       id="linearGradientPPFrontLG">
       <stop
          style="stop-color:#7fff2a;stop-opacity:0.50196081;"
          offset="0"
-         id="stop2897" />
+         id="gradient-pp-front-bottom" />
       <stop
          style="stop-color:#ffcc00;stop-opacity:0.50196081;"
          offset="1"
-         id="stop2899" />
+         id="gradient-pp-front-top" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
-       id="linearGradient1242">
+       id="linearGradientPPBackLG">
       <stop
          style="stop-color:#ffcc00;stop-opacity:0.50196081;"
          offset="0"
-         id="stop1238" />
+         id="gradient-pp-back-bottom" />
       <stop
          style="stop-color:#7fff2a;stop-opacity:0.50196081;"
          offset="1"
-         id="stop1240" />
+         id="gradient-pp-back-top" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
@@ -541,8 +541,8 @@
        y2="84.364883" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient1242"
-       id="linearGradient1244"
+       xlink:href="#linearGradientPPBackLG"
+       id="linearGradientPPBack"
        x1="354.9707"
        y1="62.958984"
        x2="354.9758"
@@ -550,8 +550,8 @@
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient2901"
-       id="linearGradient2903"
+       xlink:href="#linearGradientPPFrontLG"
+       id="linearGradientPPFront"
        x1="387.52469"
        y1="63.007507"
        x2="387.52469"
@@ -573,15 +573,15 @@
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="false"
-     inkscape:zoom="39.815619"
-     inkscape:cx="309.8156"
-     inkscape:cy="48.134377"
+     inkscape:zoom="11.927384"
+     inkscape:cx="323.62503"
+     inkscape:cy="44.812844"
      inkscape:window-width="1870"
      inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="valve-piston-block"
+     inkscape:current-layer="g8"
      inkscape:snap-object-midpoints="true"
      lock-margins="true"
      fit-margin-top="1"
@@ -1045,14 +1045,14 @@
          x="374.06262"
          y="63.007507" />
       <rect
-         style="fill:url(#linearGradient1244);fill-opacity:1;stroke-width:1.88976;stroke-linecap:round"
+         style="fill:url(#linearGradientPPBack);fill-opacity:1;stroke-width:1.88976;stroke-linecap:round"
          id="pressure-pass-back"
          width="7.934906"
          height="6.0260119"
          x="354.9758"
          y="56.981495" />
       <rect
-         style="fill:url(#linearGradient2903);fill-opacity:1;stroke-width:1.89;stroke-linecap:round;stroke:none;stroke-dasharray:none"
+         style="fill:url(#linearGradientPPFront);fill-opacity:1;stroke-width:1.89;stroke-linecap:round;stroke:none;stroke-dasharray:none"
          id="pressure-pass-front"
          width="7.934906"
          height="6.0260119"
@@ -1928,6 +1928,34 @@
        id="pt.valve-f"
        cx="394.30585"
        cy="48.154938"
+       r="0.43280602"
+       class="pt" />
+    <circle
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.pressure-pass-back-a"
+       cx="358.8017"
+       cy="56.91383"
+       r="0.43280602"
+       class="pt" />
+    <circle
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.pressure-pass-back-b"
+       cx="362.41711"
+       cy="56.91383"
+       r="0.43280602"
+       class="pt" />
+    <circle
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.pressure-pass-front-a"
+       cx="387.75903"
+       cy="56.91383"
+       r="0.43280602"
+       class="pt" />
+    <circle
+       style="display:inline;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="pt.pressure-pass-front-b"
+       cx="391.47348"
+       cy="56.91383"
        r="0.43280602"
        class="pt" />
   </g>

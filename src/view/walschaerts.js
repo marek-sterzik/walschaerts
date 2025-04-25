@@ -17,6 +17,7 @@ export default class
         this.pointsVisible = false
 
         this.initialize()
+        this.update()
     }
 
     createComponents(model, svg, componentsDef)

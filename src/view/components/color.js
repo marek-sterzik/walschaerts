@@ -15,10 +15,21 @@ const normalizeValue = (value) => {
 
 const getColorByValue = (value) => (value < 0) ? '#0000ff' : '#ff0000'
 
-const getOpacityByValue = (value) => Math.abs(value) * 0.8
+const getOpacityByValue = (value) => Math.abs(value) * 0.5
 
-const rect = new class
+class Color
 {
+    constructor(type)
+    {
+        if (type === 'rect') {
+            this.css = (color, opacity) => ({"fill": color, "fill-opacity": opacity})
+        } else if (type === 'gradient') {
+            this.css = (color, opacity) => ({"stop-color": color, "stop-opacity": opacity})
+        } else {
+            throw `Invalid color type: ${type}`
+        }
+    }
+
     initialize(state)
     {
         const components = state.svg.find("#" + state.def.component)
@@ -45,8 +56,7 @@ const rect = new class
         const opacity = getOpacityByValue(value)
 
         if (state.state.component !== null) {
-            state.state.component.fill({color, opacity})
-            console.log(state.state.component)
+            state.state.component.css(this.css(color, opacity))
         }
     }
 
@@ -56,39 +66,4 @@ const rect = new class
     }
 }
 
-const gradient = new class
-{
-    initialize(state)
-    {
-        const components = state.svg.find("#" + state.def.component)
-        state.state.component = (components.length > 0) ? components[0] : null
-    }
-
-    normalizeDef(def)
-    {
-        return def
-    }
-
-    enablePointMode(state)
-    {
-    }
-
-    disablePointMode(state)
-    {
-    }
-
-    update(state)
-    {
-        const value = normalizeValue(state.model(state.def.value))
-        const color = getColorByValue(value)
-        const opacity = getOpacityByValue(value)
-    }
-
-    needsUpdate(state)
-    {
-        return true
-    }
-}
-
-
-export default {rect, gradient}
+export default {rect: new Color("rect"), gradient: new Color("gradient")}

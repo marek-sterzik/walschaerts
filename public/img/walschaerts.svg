@@ -21,6 +21,30 @@
      id="defs6">
     <linearGradient
        inkscape:collect="always"
+       id="linearGradient2901">
+      <stop
+         style="stop-color:#7fff2a;stop-opacity:0.50196081;"
+         offset="0"
+         id="stop2897" />
+      <stop
+         style="stop-color:#ffcc00;stop-opacity:0.50196081;"
+         offset="1"
+         id="stop2899" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient1242">
+      <stop
+         style="stop-color:#ffcc00;stop-opacity:0.50196081;"
+         offset="0"
+         id="stop1238" />
+      <stop
+         style="stop-color:#7fff2a;stop-opacity:0.50196081;"
+         offset="1"
+         id="stop1240" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
        id="linearGradient7426">
       <stop
          style="stop-color:#e7dede;stop-opacity:1"
@@ -515,6 +539,24 @@
        y1="73.874275"
        x2="345.98514"
        y2="84.364883" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1242"
+       id="linearGradient1244"
+       x1="354.9707"
+       y1="62.958984"
+       x2="354.9758"
+       y2="56.981495"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2901"
+       id="linearGradient2903"
+       x1="387.52469"
+       y1="63.007507"
+       x2="387.52469"
+       y2="56.981495"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="namedview4"
@@ -531,15 +573,15 @@
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="false"
-     inkscape:zoom="5.6568543"
-     inkscape:cx="130.4612"
-     inkscape:cy="44.812892"
+     inkscape:zoom="39.815619"
+     inkscape:cx="309.8156"
+     inkscape:cy="48.134377"
      inkscape:window-width="1870"
      inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g8"
+     inkscape:current-layer="valve-piston-block"
      inkscape:snap-object-midpoints="true"
      lock-margins="true"
      fit-margin-top="1"
@@ -1003,14 +1045,14 @@
          x="374.06262"
          y="63.007507" />
       <rect
-         style="fill:#ffcc00;fill-opacity:0.50196081;stroke-width:1.88976;stroke-linecap:round"
+         style="fill:url(#linearGradient1244);fill-opacity:1;stroke-width:1.88976;stroke-linecap:round"
          id="pressure-pass-back"
          width="7.934906"
          height="6.0260119"
          x="354.9758"
          y="56.981495" />
       <rect
-         style="fill:#7fff2a;fill-opacity:0.50196081;stroke-width:1.88976;stroke-linecap:round"
+         style="fill:url(#linearGradient2903);fill-opacity:1;stroke-width:1.89;stroke-linecap:round;stroke:none;stroke-dasharray:none"
          id="pressure-pass-front"
          width="7.934906"
          height="6.0260119"
@@ -1023,7 +1065,7 @@
          cy="43.900669"
          r="3.987407" />
       <rect
-         style="fill:#ffcc00;fill-opacity:0.501961;stroke-width:1.88976;stroke-linecap:round"
+         style="fill:#7fff2a;fill-opacity:0.50196081;stroke-width:1.88976;stroke-linecap:round"
          id="pressure-valve-front"
          width="7.0753174"
          height="17.737667"
@@ -1036,7 +1078,7 @@
          cy="47.566998"
          r="7.808681" />
       <rect
-         style="fill:#7fff2a;fill-opacity:0.50196081;stroke-width:1.88976;stroke-linecap:round"
+         style="fill:#ffcc00;fill-opacity:0.50196081;stroke-width:1.88976;stroke-linecap:round"
          id="pressure-valve-middle"
          width="29.1875"
          height="17.737667"
@@ -1049,7 +1091,7 @@
          cy="43.930634"
          r="3.987407" />
       <rect
-         style="fill:#ffcc00;fill-opacity:0.501961;stroke-width:1.88976;stroke-linecap:round"
+         style="fill:#7fff2a;fill-opacity:0.50196081;stroke-width:1.88976;stroke-linecap:round"
          id="pressure-valve-back"
          width="15.976869"
          height="17.737663"

@@ -2,7 +2,7 @@ import {Vector} from "eeg2d"
 import Components from "./components.js"
 import {nearestPointOnLine, nearestPointOnArc} from "./geometry.js"
 
-const valveMovement = Components.Movement("valveConnectPoint", ["valveCenter"])
+const valveMovement = Components.Movement("valveConnectPoint", ["valveCenter", "valveA", "valveB", "valveC", "valveD"])
 
 const valve = Components.Mech2d((builder, calibration) => {
     const valveMovement = Vector.create(1, 0)
@@ -77,8 +77,31 @@ const fixedPoints = Components.Constant([
     "leftWheelCenter", "mainWheelCenter", "rightWheelCenter",
     "smallWheel1Center", "smallWheel2Center",
     "expansionLinkFixedPoint", "reverseArmFixedPoint",
-    "reachRodEndMin", "reachRodEndMax"
+    "reachRodEndMin", "reachRodEndMax",
+    "pressurePassBackA", "pressurePassBackB",
+    "pressurePassFrontA", "pressurePassFrontB",
 ])
+
+const valvePasses = Components.Compose
+    .add(Components.ValvePass("pressurePassBackA", "pressurePassBackB", "valveA", true, "pressurePassBack2Suction"))
+    .add(Components.ValvePass("pressurePassBackA", "pressurePassBackB", "valveB", false, "pressurePassBack2Pressure"))
+    .add(Components.ValvePass("pressurePassFrontA", "pressurePassFrontB", "valveC", true, "pressurePassFront2Pressure"))
+    .add(Components.ValvePass("pressurePassFrontA", "pressurePassFrontB", "valveD", false, "pressurePassFront2Suction"))
+    .create()
+
+const pressure = (model, priv) => {
+    
+    model.param("pressureValveFront", -1)
+    model.param("pressureValveMiddle", 1)
+    
+    const pressureBack = model.param("pressurePassBack2Pressure") - model.param("pressurePassBack2Suction")
+    const pressureFront = model.param("pressurePassFront2Pressure") - model.param("pressurePassFront2Suction")
+
+    model.param("pressurePPFrontTop", pressureFront)
+    model.param("pressurePPBackTop", pressureBack)
+    model.param("pressurePistonFront", pressureFront)
+    model.param("pressurePistonBack", pressureBack)
+}
 
 const mainModel = Components.Name("main", Components.Compose
     .add(fixedPoints, "fixedPoints")
@@ -89,6 +112,8 @@ const mainModel = Components.Name("main", Components.Compose
     .add(reverseArm, "reverseArm")
     .add(valve, "valve")
     .add(valveMovement, "valveMovement")
+    .add(valvePasses, "valvePasses")
+    .add(pressure, "pressure")
     .create()
 )
 

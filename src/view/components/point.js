@@ -7,6 +7,9 @@ export default new class
 
     normalizeDef(def)
     {
+        if (!("size" in def)) {
+            def.size = 10
+        }
         return def
     }
 
@@ -14,7 +17,7 @@ export default new class
     {
         const point = state.model(state.def.name)
         const group = state.svg.group()
-        const size = 3.5
+        const size = 3.5 * state.def.size / 10
         group.line(-size, -size, size, size).stroke(state.def.stroke)
         group.line(-size, size, size, -size).stroke(state.def.stroke)
         group.center(point.x, point.y)

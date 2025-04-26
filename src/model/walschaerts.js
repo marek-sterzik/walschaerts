@@ -16,19 +16,6 @@ export default class
         this.data.param("smallWheelAngle", Angle.zero())
         this.data.param("expansion", 1)
 
-        this.data.param("pressureValveFront", -1)
-        this.data.param("pressureValveMiddle", 1)
-
-        this.data.param("pressurePistonFront", 1)
-        this.data.param("pressurePistonBack", -1)
-        this.data.param("pressurePPFrontTop", 1)
-        this.data.param("pressurePPBackTop", -1)
-        
-        const pressurePiston = 1
-        const pressureValve = 1
-
-        this.setPressure(0, 0)
-
         //statistics and averages
         this.statistics = []
         this.averages = {}
@@ -37,17 +24,10 @@ export default class
         this.recalc()
     }
 
-    setPressure(pressure)
-    {
-        this.data.param("pressurePistonFront", pressure)
-        this.data.param("pressurePistonBack", -pressure)
-    }
-
     addDistance(distance)
     {
         this.data.param("mainWheelAngle", this.data.param("mainWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
         this.data.param("smallWheelAngle", this.data.param("smallWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
-        this.setPressure(this.data.param("mainWheelAngle").sin())
         this.recalc()
     }
 

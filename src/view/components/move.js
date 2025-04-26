@@ -14,12 +14,15 @@ export default new class
         return def
     }
 
-    enablePointMode(state)
+    enable(state)
     {
     }
 
-    disablePointMode(state)
+    disable(state)
     {
+        if (state.state.component !== null) {
+            setTransform(state.state.component, Transformation.identity())
+        }
     }
 
     update(state)
@@ -34,10 +37,5 @@ export default new class
             const transformation = Transformation.twoPoint(a1, b1, a2, b2)
             setTransform(state.state.component, transformation)
         }
-    }
-
-    needsUpdate(state)
-    {
-        return true
     }
 }

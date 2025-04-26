@@ -6,16 +6,8 @@ export default class
 {
     constructor(model, svg)
     {
-        this.model = model.data.universalGetter()
-        this.svg = svg
-
-        this.createComponents(this.model, svg, updatedComponents)
-
-        this.circles = {}
-        this.arcs = {}
-        this.objectsCreated = false
-        this.pointsVisible = false
-
+        this.viewMode = {points: false, pressure: true}
+        this.createComponents(model.data.universalGetter(), svg, updatedComponents)
         this.initialize()
         this.update()
     }
@@ -24,35 +16,35 @@ export default class
     {
         this.components = []
         for (var c in componentsDef) {
-            this.components.push(new ComponentState(svg, model, componentsDef[c], componentsDef[c].cls))
+            this.components.push(new ComponentState(svg, model, componentsDef[c], componentsDef[c].cls, this.viewMode))
         }
+    }
+
+    updateViewMode(viewMode)
+    {
+        for (var key in viewMode) {
+            this.viewMode[key] = viewMode[key]
+        }
+        for (var c of this.components) {
+            c.updateEnable()
+        }
+        this.updatedComponents = this.components.filter(c => c.isEnabled())
+        console.log("numberOfUpdatedComponents", this.updatedComponents.length)
     }
 
     togglePoints()
     {
-        this.pointsVisible = !this.pointsVisible
-        this.updatePointMode()
+        this.updateViewMode({points: !this.viewMode.points})
     }
 
     enablePoints()
     {
-        this.pointsVisible = true
-        this.updatePointMode()
+        this.updateViewMode({points: true})
     }
 
     disablePoints()
     {
-        this.pointsVisible = false
-        this.updatePointMode()
-    }
-
-    updatePointMode()
-    {
-        for (var c of this.components) {
-            c.enablePointMode(this.pointsVisible)
-        }
-        this.updatedComponents = this.components.filter(c => c.needsUpdate())
-        console.log("numberOfUpdatedComponents", this.updatedComponents.length)
+        this.updateViewMode({points: false})
     }
 
     initialize()
@@ -60,7 +52,7 @@ export default class
         for (var c of this.components) {
             c.initialize()
         }
-        this.updatePointMode()
+        this.updateViewMode({})
     }
 
     update()

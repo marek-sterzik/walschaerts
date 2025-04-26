@@ -10,7 +10,7 @@ export default new class
         return def
     }
 
-    enablePointMode(state)
+    enable(state)
     {
         const p1 = state.model(state.def.p1)
         const p2 = state.model(state.def.p2)
@@ -18,9 +18,11 @@ export default new class
         state.state.component = line
     }
 
-    disablePointMode(state)
+    disable(state)
     {
-        state.state.component.remove()
+        if (state.state.component !== null) {
+            state.state.component.remove()
+        }
         state.state.component = null
     }
 
@@ -32,10 +34,4 @@ export default new class
             state.state.component.plot(p1.x, p1.y, p2.x, p2.y)
         }
     }
-
-    needsUpdate(state)
-    {
-        return (state.state.component !== null) ? true : false
-    }
 }
-

@@ -1,16 +1,19 @@
 
 export default class
 {
-    constructor(svg, model, def, componentClass)
+    constructor(svg, model, def, componentClass, viewMode)
     {
         this.svg = svg
         this.model = model
+        this.when = def.when
         def = {...def}
         delete def.cls
+        delete def.when
         this.def = componentClass.normalizeDef(def)
         this.state = {}
-        this.pointModeEnabled = false
+        this.enabled = null
         this.componentClass = componentClass
+        this.viewMode = viewMode
     }
 
     initialize()
@@ -18,25 +21,31 @@ export default class
         this.componentClass.initialize(this)
     }
 
-    enablePointMode(pointModeEnabled)
+    updateEnable()
     {
-        if (this.pointModeEnabled !== pointModeEnabled) {
-            if (pointModeEnabled) {
-                this.componentClass.enablePointMode(this)
+        const enabled = this.isEnabled()
+        if (this.enabled !== enabled) {
+            if (enabled) {
+                this.componentClass.enable(this)
             } else {
-                this.componentClass.disablePointMode(this)
+                this.componentClass.disable(this)
             }
-            this.pointModeEnabled = pointModeEnabled
+            this.enabled = enabled
         }
     }
 
     update()
     {
-        this.componentClass.update(this)
+        if (this.enabled) {
+            this.componentClass.update(this)
+        }
     }
 
-    needsUpdate()
+    isEnabled()
     {
-        return this.componentClass.needsUpdate(this)
+        if (this.when === undefined || this.when === null || this.when === 'always') {
+            return true
+        }
+        return this.viewMode[this.when] ? true : false
     }
 }

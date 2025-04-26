@@ -13,7 +13,7 @@ export default new class
         return def
     }
 
-    enablePointMode(state)
+    enable(state)
     {
         const point = state.model(state.def.name)
         const group = state.svg.group()
@@ -24,9 +24,11 @@ export default new class
         state.state.component = group
     }
 
-    disablePointMode(state)
+    disable(state)
     {
-        state.state.component.remove()
+        if (state.state.component !== null) {
+            state.state.component.remove()
+        }
         state.state.component = null
     }
 
@@ -36,10 +38,5 @@ export default new class
             const point = state.model(state.def.name)
             state.state.component.center(point.x, point.y)
         }
-    }
-
-    needsUpdate(state)
-    {
-        return (state.state.component !== null) ? true : false
     }
 }

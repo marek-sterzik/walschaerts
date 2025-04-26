@@ -23,12 +23,14 @@ export default new class
         return def
     }
 
-    enablePointMode(state)
+    enable(state)
     {
     }
 
-    disablePointMode(state)
+    disable(state)
     {
+        const values = state.state.initialValues
+        state.state.component.x(values.x).y(values.y).width(values.width).height(values.height)
     }
 
     update(state)
@@ -39,11 +41,6 @@ export default new class
             this.shiftValues(values, shift, state.def.edge)
             state.state.component.x(values.x).y(values.y).width(values.width).height(values.height)
         }
-    }
-
-    needsUpdate(state)
-    {
-        return true
     }
 
     shiftValues(values, shift, edge)

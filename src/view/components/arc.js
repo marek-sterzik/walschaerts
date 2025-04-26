@@ -12,7 +12,7 @@ export default new class
         return def
     }
 
-    enablePointMode(state)
+    enable(state)
     {
         const pathArray = this.getArcPathArray(state)
         const arc = state.svg.path(pathArray).stroke(state.def.stroke).fill('none')
@@ -20,9 +20,11 @@ export default new class
         state.state.component = arc
     }
 
-    disablePointMode(state)
+    disable(state)
     {
-        state.state.component.remove()
+        if (state.state.component !== null) {
+            state.state.component.remove()
+        }
         state.state.component = null
     }
 
@@ -32,11 +34,6 @@ export default new class
             const pathArray = this.getArcPathArray(state)
             state.state.component.plot(pathArray)
         }
-    }
-
-    needsUpdate(state)
-    {
-        return (state.state.component !== null) ? true : false
     }
 
     getArcPathArray(state)

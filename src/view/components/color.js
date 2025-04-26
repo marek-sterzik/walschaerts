@@ -41,28 +41,29 @@ class Color
         return def
     }
 
-    enablePointMode(state)
+    enable(state)
     {
     }
 
-    disablePointMode(state)
+    disable(state)
     {
+        this.setToValue(state, null)
     }
 
     update(state)
     {
-        const value = normalizeValue(state.model(state.def.value))
+        this.setToValue(state, state.model(state.def.value))
+    }
+
+    setToValue(state, value)
+    {
+        value = normalizeValue(value)
         const color = getColorByValue(value)
         const opacity = getOpacityByValue(value)
 
         if (state.state.component !== null) {
             state.state.component.css(this.css(color, opacity))
         }
-    }
-
-    needsUpdate(state)
-    {
-        return true
     }
 }
 

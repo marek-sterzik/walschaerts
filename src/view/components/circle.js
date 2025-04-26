@@ -10,7 +10,7 @@ export default new class
         return def
     }
 
-    enablePointMode(state)
+    enable(state)
     {
         const center = state.model(state.def.center)
         const radius = state.model(state.def.radius)
@@ -19,9 +19,11 @@ export default new class
         state.state.component = circle
     }
 
-    disablePointMode(state)
+    disable(state)
     {
-        state.state.component.remove()
+        if (state.state.component !== null) {
+            state.state.component.remove()
+        }
         state.state.component = null
     }
 
@@ -33,10 +35,5 @@ export default new class
             state.state.component.radius(radius)
             state.state.component.move(center.x - radius, center.y - radius)
         }
-    }
-
-    needsUpdate(state)
-    {
-        return (state.state.component !== null) ? true : false
     }
 }

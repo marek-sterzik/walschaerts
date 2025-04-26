@@ -6,6 +6,9 @@ export default class
         this.svg = svg
         this.model = model
         this.when = def.when
+        if (this.when === undefined || this.when === null) {
+            this.when = "all"
+        }
         def = {...def}
         delete def.cls
         delete def.when
@@ -44,9 +47,10 @@ export default class
 
     isEnabled()
     {
-        if (this.when === undefined || this.when === null || this.when === 'always') {
-            return true
+        var enabled = this.viewMode[this.when]
+        if (enabled === undefined || enabled === null) {
+            enabled = true
         }
-        return this.viewMode[this.when] ? true : false
+        return enabled ? true : false
     }
 }

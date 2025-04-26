@@ -6,7 +6,7 @@ export default class
 {
     constructor(model, svg)
     {
-        this.viewMode = {points: false, pressure: true}
+        this.viewMode = {points: false, pressure: true, all: true}
         this.createComponents(model.data.universalGetter(), svg, updatedComponents)
         this.initialize()
         this.update()
@@ -34,13 +34,18 @@ export default class
 
     setViewMode(key, enable)
     {
+        if (key === "move") {
+            key = "all"
+        }
         if (enable === "toggle") {
             enable = !this.viewMode[key]
         }
         if (enable !== true && enable !== false) {
             throw `invalid view mode for key ${key}, needs to be boolean or "toggle"`
         }
-        this.updateViewMode({[key]: enable})
+        if (key in this.viewMode) {
+            this.updateViewMode({[key]: enable})
+        }
     }
 
     setPoints(enable)

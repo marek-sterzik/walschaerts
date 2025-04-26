@@ -38,6 +38,11 @@ export default class
         this.view.setPressure("toggle")
     }
 
+    setViewMode(key, enabled)
+    {
+        this.view.setViewMode(key, enabled)
+    }
+
     running()
     {
         return this.runFlag

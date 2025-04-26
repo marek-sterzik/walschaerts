@@ -30,7 +30,12 @@ export default class
 
     togglePoints()
     {
-        this.view.togglePoints()
+        this.view.setPoints("toggle")
+    }
+
+    togglePressure()
+    {
+        this.view.setPressure("toggle")
     }
 
     running()

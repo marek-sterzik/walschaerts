@@ -31,6 +31,7 @@ export default class
                 this.componentClass.disable(this)
             }
             this.enabled = enabled
+            this.update()
         }
     }
 

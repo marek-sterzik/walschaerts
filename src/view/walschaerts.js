@@ -32,19 +32,25 @@ export default class
         console.log("numberOfUpdatedComponents", this.updatedComponents.length)
     }
 
-    togglePoints()
+    setViewMode(key, enable)
     {
-        this.updateViewMode({points: !this.viewMode.points})
+        if (enable === "toggle") {
+            enable = !this.viewMode[key]
+        }
+        if (enable !== true && enable !== false) {
+            throw `invalid view mode for key ${key}, needs to be boolean or "toggle"`
+        }
+        this.updateViewMode({[key]: enable})
     }
 
-    enablePoints()
+    setPoints(enable)
     {
-        this.updateViewMode({points: true})
+        this.setViewMode("points", enable)
     }
 
-    disablePoints()
+    setPressure(enable)
     {
-        this.updateViewMode({points: false})
+        this.setViewMode("pressure", enable)
     }
 
     initialize()

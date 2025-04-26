@@ -32,6 +32,9 @@ $(window).on("load", () => {
         $('#toggle-points').bind("click", function() {
             walschaertsValveGear.togglePoints()
         })
+        $('#toggle-pressure').bind("click", function() {
+            walschaertsValveGear.togglePressure()
+        })
 })
 
 function setExpansion(value)

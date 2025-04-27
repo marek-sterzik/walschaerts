@@ -7,7 +7,7 @@ export default class
     constructor(model, svg)
     {
         this.viewMode = {points: false, pressure: true, all: true}
-        this.createComponents(model.data.universalGetter(), svg, updatedComponents)
+        this.createComponents(model.data.proxy("m1", true).universalGetter(), svg, updatedComponents)
         this.initialize()
         this.update()
     }

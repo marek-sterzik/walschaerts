@@ -1,4 +1,4 @@
-import {Vector} from "eeg2d"
+import {Vector, Angle} from "eeg2d"
 import Components from "./components.js"
 import {nearestPointOnLine, nearestPointOnArc} from "../geometry.js"
 
@@ -70,7 +70,7 @@ const wheels = Components.Compose
     .add(Components.Wheel("mainWheelAngle", "rightWheelCenter", ["rightWheelCenter", "rightWheelConnectPoint"]))
     .add(Components.Wheel("smallWheelAngle", "smallWheel1Center", ["smallWheel1Center"]))
     .add(Components.Wheel("smallWheelAngle", "smallWheel2Center", ["smallWheel2Center"]))
-    .create(true)
+    .create()
 
 
 const fixedPoints = Components.Constant([
@@ -103,7 +103,7 @@ const pressure = (model, priv) => {
     model.param("pressurePistonBack", pressureBack)
 }
 
-const mainModel = Components.Name("main", Components.Compose
+const mainModel = Components.Compose
     .add(fixedPoints, "fixedPoints")
     .add(wheels, "wheels")
     .add(wheelLink, "wheelLink")
@@ -115,6 +115,20 @@ const mainModel = Components.Name("main", Components.Compose
     .add(valvePasses, "valvePasses")
     .add(pressure, "pressure")
     .create()
-)
 
-export default mainModel
+const copyToMainModels = Components.Copy({
+    "param.m1.mainWheelAngle": "param.mainWheelAngle",
+    "param.m1.smallWheelAngle": "param.smallWheelAngle",
+    "param.m1.expansion": "param.expansion",
+    "param.m2.mainWheelAngle": (model) =>  model("param.mainWheelAngle").add(Angle.right()),
+    "param.m2.smallWheelAngle": "param.smallWheelAngle",
+    "param.m2.expansion": "param.expansion",
+})
+
+const completeModel = Components.Compose
+    .add(copyToMainModels, "copy")
+    .add(mainModel, "m1", true)
+    .add(mainModel, "m2", true)
+    .create()
+
+export default completeModel

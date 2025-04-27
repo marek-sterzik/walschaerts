@@ -10,15 +10,10 @@ export default class
         this.calibration = calibration
         
         this.data = new Model(this.calibration)
-        this.data2 = new Model(this.calibration)
 
         this.data.param("mainWheelAngle", Angle.zero())
         this.data.param("smallWheelAngle", Angle.zero())
         this.data.param("expansion", 1)
-        
-        this.data2.param("mainWheelAngle", Angle.right())
-        this.data2.param("smallWheelAngle", Angle.zero())
-        this.data2.param("expansion", 1)
 
         //statistics and averages
         this.statistics = []
@@ -32,8 +27,6 @@ export default class
     {
         this.data.param("mainWheelAngle", this.data.param("mainWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
         this.data.param("smallWheelAngle", this.data.param("smallWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
-        this.data2.param("mainWheelAngle", this.data.param("mainWheelAngle").add(Angle.right()))
-        this.data2.param("smallWheelAngle", this.data.param("smallWheelAngle"))
         this.recalc()
     }
 
@@ -67,38 +60,22 @@ export default class
             "value": 0,
         })
 
-        var l1t0 = performance.now()
+        var lt0 = performance.now()
         this.data.apply(walschaertsModel)
-        var l1t1 = performance.now()
+        var lt1 = performance.now()
         
-        var l2t0 = performance.now()
-        this.data2.apply(walschaertsModel)
-        var l2t1 = performance.now()
 
         statistics.push({
             "model": "model1",
             "param": "solveTime",
-            "value": l1t1 - l1t0
+            "value": lt1 - lt0
         })
         const modelStats = this.data.allStats()
         for (var s in modelStats) {
             statistics.push({
-                "model": "model1",
+                "model": "model",
                 "param": s,
                 "value": modelStats[s],
-            })
-        }
-        statistics.push({
-            "model": "model2",
-            "param": "solveTime",
-            "value": l2t1 - l2t0
-        })
-        const modelStats2 = this.data2.allStats()
-        for (var s in modelStats2) {
-            statistics.push({
-                "model": "model2",
-                "param": s,
-                "value": modelStats2[s],
             })
         }
 

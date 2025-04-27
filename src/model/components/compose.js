@@ -1,41 +1,36 @@
-import Name from "./name.js"
-
 export default class Compose
 {
-    static add(model, name = undefined)
+    static add(model, name = undefined, namespaced = false)
     {
-        return new Compose(model, name)
+        return new Compose(model, name, namespaced)
     }
 
-    constructor(model, name = undefined)
+    constructor(model, name = undefined, namespaced = false)
     {
         this.models = []
-        this.add(model, name)
+        this.add(model, name, namespaced)
     }
 
-    add(model, name = undefined)
+    add(model, name = undefined, namespaced = false)
     {
-        if (name !== null && name !== undefined) {
-            model = Name(name, model)
+        if (name === null && name === undefined) {
+            name = null
         }
-        this.models.push(model)
+        this.models.push([name, model, namespaced])
         return this
     }
 
-    create(inlined = false)
+    create()
     {
         const models = this.models
-        if (inlined) {
-            return (model, priv) => {
-                for (var mod of models) {
-                    mod(model, priv)
+        return (model, priv) => {
+            var index = 1
+            for (var mod of models) {
+                var name = mod[0]
+                if (name === null || name === undefined) {
+                    name = "" + (index++)
                 }
-            }
-        } else {
-            return (model, priv) => {
-                for (var mod of models) {
-                    model.apply(mod)
-                }
+                model.proxy(name, mod[2]).apply(mod[1])
             }
         }
     }

@@ -10,10 +10,15 @@ export default class
         this.calibration = calibration
         
         this.data = new Model(this.calibration)
+        this.data2 = new Model(this.calibration)
 
         this.data.param("mainWheelAngle", Angle.zero())
         this.data.param("smallWheelAngle", Angle.zero())
         this.data.param("expansion", 1)
+        
+        this.data2.param("mainWheelAngle", Angle.right())
+        this.data2.param("smallWheelAngle", Angle.zero())
+        this.data2.param("expansion", 1)
 
         //statistics and averages
         this.statistics = []
@@ -27,6 +32,8 @@ export default class
     {
         this.data.param("mainWheelAngle", this.data.param("mainWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
         this.data.param("smallWheelAngle", this.data.param("smallWheelAngle").add(distanceToAngle(distance, this.calibration.mainWheelRadius)))
+        this.data2.param("mainWheelAngle", this.data.param("mainWheelAngle").add(Angle.right()))
+        this.data2.param("smallWheelAngle", this.data.param("smallWheelAngle"))
         this.recalc()
     }
 
@@ -60,45 +67,49 @@ export default class
             "value": 0,
         })
 
-        var lt0 = performance.now()
+        var l1t0 = performance.now()
         this.data.apply(walschaertsModel)
-        var lt1 = performance.now()
+        var l1t1 = performance.now()
+        
+        var l2t0 = performance.now()
+        this.data2.apply(walschaertsModel)
+        var l2t1 = performance.now()
+
         statistics.push({
-            "model": "model",
+            "model": "model1",
             "param": "solveTime",
-            "value": lt1 - lt0
+            "value": l1t1 - l1t0
         })
         const modelStats = this.data.allStats()
         for (var s in modelStats) {
             statistics.push({
-                "model": "model",
+                "model": "model1",
                 "param": s,
                 "value": modelStats[s],
             })
         }
-
-        this._recalcStatistics(statistics, t0)
-    }
-
-    _recalcStatistics(statistics, t0)
-    {
-        var totalSolveTimeIndex = null
-        for (var i = 0; i < statistics.length; i++) {
-            var statRecord = statistics[i]
-            if (statRecord.model == 'total' && statRecord.param == 'solveTime') {
-                totalSolveTimeIndex = i
-            } else {
-                statRecord.value = this._updateAverage(statRecord.model+"."+statRecord.param, statRecord.value)
-            }
+        statistics.push({
+            "model": "model2",
+            "param": "solveTime",
+            "value": l2t1 - l2t0
+        })
+        const modelStats2 = this.data2.allStats()
+        for (var s in modelStats2) {
+            statistics.push({
+                "model": "model2",
+                "param": s,
+                "value": modelStats2[s],
+            })
         }
 
-        if (totalSolveTimeIndex != null) {
-            var totalSolveTime = performance.now() - t0
-            var statRecord = statistics[totalSolveTimeIndex]
-            statRecord.value = this._updateAverage(statRecord.model+"."+statRecord.param, totalSolveTime)
+        for (var i = 1; i < statistics.length; i++) {
+            statistics[i].value = this._updateAverage(statistics[i].model+"."+statistics[i].param, statistics[i].value)
         }
+        statistics[0].value = performance.now() - t0
+        statistics[0].value = this._updateAverage(statistics[0].model+"."+statistics[0].param, statistics[0].value)
 
         this.statistics = statistics
+
     }
 
     _updateAverage (id, value)

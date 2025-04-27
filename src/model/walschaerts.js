@@ -1,14 +1,13 @@
 import {Angle} from "eeg2d"
-import createCalibrationData from "./calibration.js"
-import {distanceToAngle} from "./geometry.js"
+import {distanceToAngle} from "../geometry.js"
 import walschaertsModel from "./mechanics.js"
 import Model from "./model.js"
 
 export default class
 {
-    constructor(svg)
+    constructor(calibration)
     {
-        this.calibration = createCalibrationData(svg)
+        this.calibration = calibration
         
         this.data = new Model(this.calibration)
 

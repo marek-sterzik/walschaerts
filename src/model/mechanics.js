@@ -1,6 +1,6 @@
 import {Vector} from "eeg2d"
 import Components from "./components.js"
-import {nearestPointOnLine, nearestPointOnArc} from "./geometry.js"
+import {nearestPointOnLine, nearestPointOnArc} from "../geometry.js"
 
 const valveMovement = Components.Movement("valveConnectPoint", ["valveCenter", "valveA", "valveB", "valveC", "valveD"])
 

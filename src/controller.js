@@ -3,13 +3,15 @@ import {SVG} from '@svgdotjs/svg.js'
 import ValveGearView from "./view/walschaerts.js"
 import ValveGearModel from "./model/walschaerts.js"
 import StatsView from "./view/stats.js"
+import createCalibrationData from "./calibration/calibration.js"
 
 export default class
 {
     constructor(element)
     {
         const svg = SVG($($("#valvegear-image")[0].contentDocument).find("svg")[0])
-        this.model = new ValveGearModel(svg)
+        const calibration = createCalibrationData(svg)
+        this.model = new ValveGearModel(calibration)
         this.expansion = this.model.getExpansion()
         this.view = new ValveGearView(this.model, svg)
         this.statView = new StatsView(this.model, $('#statistics'))

@@ -1,6 +1,6 @@
 import {Mechanics, Body} from "../../mech2d/mech2d.js"
 import {Point} from "eeg2d"
-import {calcMassCenter} from "../geometry.js"
+import {calcMassCenter} from "../../geometry.js"
 
 class Mech2dBuilder
 {

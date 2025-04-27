@@ -1,5 +1,5 @@
 import {Point, Vector, Transformation} from "eeg2d"
-import {circleCenterFrom3Points, lineCircleIntersections} from "./geometry.js"
+import {circleCenterFrom3Points, lineCircleIntersections} from "../geometry.js"
 import loadPointsFromSvg from "./svg.js"
 
 const createCalibrationData = (svg) => {
